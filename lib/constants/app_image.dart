@@ -13,4 +13,8 @@ class AppImage {
   static const appleIcon = 'assets/images/appleIcon.png';
   static const userIcon = 'assets/images/userIcon.png';
   static const doYouHaveCar = 'assets/images/DoYouHAveACar.png';
+  static const city = 'assets/images/city.png';
+  static const svgsmallcar = 'assets/images/smallCar.svg';
+  static const svgsroutine =
+      'assets/images/material-symbols_routine-outline.svg';
 }
