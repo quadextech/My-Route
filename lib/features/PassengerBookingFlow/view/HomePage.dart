@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myroute/constants/constant.dart';
 import 'package:myroute/features/PassengerBookingFlow/global_file/global_file.dart';
+import 'package:myroute/features/PassengerBookingFlow/view/select_car_prefence.dart';
 
 class PassengerHome extends StatefulWidget {
   const PassengerHome({super.key});
@@ -22,15 +23,43 @@ class _PassengerHomeState extends State<PassengerHome> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        centerTitle: true,
+        title: Swicher(),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: AppColor.whiteColor),
-            child: Icon(
-              Icons.menu,
-              color: AppColor.blackColor,
-            )),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SelecteCar(),
+                ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CircleAvatar(
+                backgroundColor: AppColor.whiteColor,
+                radius: 20,
+                child: Icon(
+                  Icons.menu,
+                  color: AppColor.blackColor,
+                  size: 15,
+                )),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: CircleAvatar(
+                backgroundColor: AppColor.whiteColor,
+                radius: 20,
+                child: Icon(
+                  Icons.notifications,
+                  color: AppColor.blackColor,
+                  size: 15,
+                )),
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -54,7 +83,7 @@ class _PassengerHomeState extends State<PassengerHome> {
               height: size.height * 0.35,
               width: size.width,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
@@ -68,28 +97,28 @@ class _PassengerHomeState extends State<PassengerHome> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GlobaltextField(
                         keyboardType: TextInputType.none,
                         u: true,
                         controller: whereEditingController,
-                        preficIcon: Icon(Icons.radio_button_checked),
+                        preficIcon: const Icon(Icons.radio_button_checked),
                         label: "Where are you leaving From"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     GlobaltextField(
                         keyboardType: TextInputType.none,
                         u: true,
                         controller: goingToEditingController,
-                        preficIcon: Icon(
+                        preficIcon: const Icon(
                           Icons.location_on,
                           color: Colors.green,
                         ),
                         label: "Where are you going to?"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -101,10 +130,10 @@ class _PassengerHomeState extends State<PassengerHome> {
                               keyboardType: TextInputType.none,
                               u: true,
                               controller: whenEditingController,
-                              preficIcon: Icon(Icons.calendar_month),
+                              preficIcon: const Icon(Icons.calendar_month),
                               label: "When are you going"),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Container(
@@ -113,7 +142,7 @@ class _PassengerHomeState extends State<PassengerHome> {
                               keyboardType: TextInputType.none,
                               u: true,
                               controller: howManyEditingController,
-                              preficIcon: Icon(Icons.person),
+                              preficIcon: const Icon(Icons.person),
                               label: "How many Seats?"),
                         )
                       ],
@@ -125,28 +154,6 @@ class _PassengerHomeState extends State<PassengerHome> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 1,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: AppColor.primaryColor,
-          items: [
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  AppImage.svgsmallcar,
-                  color: Colors.blue,
-                ),
-                label: "Book Ride"),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(AppImage.svgsroutine),
-                label: "Routine Rides"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.abc,
-                ),
-                label: "My Rides"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.abc), label: "Conversations"),
-          ]),
     );
   }
 }

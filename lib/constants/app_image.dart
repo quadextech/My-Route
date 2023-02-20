@@ -15,6 +15,11 @@ class AppImage {
   static const doYouHaveCar = 'assets/images/DoYouHAveACar.png';
   static const city = 'assets/images/city.png';
   static const svgsmallcar = 'assets/images/smallCar.svg';
+  static const svgConversations = 'assets/images/conversations.svg';
+  static const svgtitlePeople = 'assets/images/titlePeople.svg';
+  static const svgroute = 'assets/images/gis_route.svg';
+  static const svgmytitleCar = 'assets/images/titleCar.svg';
+  static const svgmyRides = 'assets/images/myRides.svg';
   static const svgsroutine =
       'assets/images/material-symbols_routine-outline.svg';
 }
