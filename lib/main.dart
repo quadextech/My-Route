@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/features/PassengerBookingFlow/view/BottomNavigatorBar.dart';
+import 'package:myroute/features/Splash/views/Slash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: BottomNav(),
+      home: Splash1(),
     );
   }
 }
