@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myroute/constants/constant.dart';
-import 'package:myroute/features/Splash/views/slash2.dart';
+import 'package:myroute/features/Splash/views/splash2.dart';
 
 class Splash1 extends StatefulWidget {
   const Splash1({super.key});

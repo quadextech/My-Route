@@ -21,7 +21,7 @@ class _Splash2State extends State<Splash2> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: ((context) => const OnBoarddinngScreeen())));
+              builder: ((context) => const OnboardingScreen())));
     });
   }
 
