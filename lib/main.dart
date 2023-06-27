@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/features/Splash/views/splash.dart';
-import 'package:myroute/features/onboarding/onboarding.dart';
+import 'package:myroute/flows/Splash/views/splash.dart';
+import 'package:myroute/flows/onboarding/onboarding.dart';
 
 void main() {
   runApp(const MyApp());

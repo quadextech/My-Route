@@ -1,25 +1,22 @@
-class AppImage {
-  static const appLogo = 'assets/images/my.png';
-  static const appLogo2 = 'assets/images/MYROUTE2.png';
-  static const onboardingImage = 'assets/images/onboarding.png';
-  static const onboarding2Image = 'assets/images/onboarding2.png';
-  static const onboarding3Image = 'assets/images/onboarding3.png';
-  static const onboarding4Image = 'assets/images/onboarding4.png';
-  static const onboarding5Image = 'assets/images/onboarding5.png';
-  static const swipeIcon = 'assets/images/swipeIcon.png';
-  static const backgroungImage = 'assets/images/backgroundLogo.png';
-  static const facebookIcon = 'assets/images/facebookIcon.png';
-  static const googleIcon = 'assets/images/Googlelogo.png';
-  static const appleIcon = 'assets/images/appleIcon.png';
-  static const userIcon = 'assets/images/userIcon.png';
-  static const doYouHaveCar = 'assets/images/DoYouHAveACar.png';
-  static const city = 'assets/images/city.png';
-  static const svgsmallcar = 'assets/images/smallCar.svg';
-  static const svgConversations = 'assets/images/conversations.svg';
-  static const svgtitlePeople = 'assets/images/titlePeople.svg';
-  static const svgroute = 'assets/images/gis_route.svg';
-  static const svgmytitleCar = 'assets/images/titleCar.svg';
-  static const svgmyRides = 'assets/images/myRides.svg';
-  static const svgsroutine =
-      'assets/images/material-symbols_routine-outline.svg';
-}
+const appLogo = 'assets/images/my.png';
+const appLogo2 = 'assets/images/MYROUTE2.png';
+const onboardingImage = 'assets/images/onboarding.png';
+const onboarding2Image = 'assets/images/onboarding2.png';
+const onboarding3Image = 'assets/images/onboarding3.png';
+const onboarding4Image = 'assets/images/onboarding4.png';
+const onboarding5Image = 'assets/images/onboarding5.png';
+const swipeIcon = 'assets/images/swipeIcon.png';
+const backgroungImage = 'assets/images/backgroundLogo.png';
+const facebookIcon = 'assets/images/facebookIcon.png';
+const googleIcon = 'assets/images/Googlelogo.png';
+const appleIcon = 'assets/images/appleIcon.png';
+const userIcon = 'assets/images/userIcon.png';
+const doYouHaveCar = 'assets/images/DoYouHAveACar.png';
+const city = 'assets/images/city.png';
+const svgsmallcar = 'assets/images/smallCar.svg';
+const svgConversations = 'assets/images/conversations.svg';
+const svgtitlePeople = 'assets/images/titlePeople.svg';
+const svgroute = 'assets/images/gis_route.svg';
+const svgmytitleCar = 'assets/images/titleCar.svg';
+const svgmyRides = 'assets/images/myRides.svg';
+const svgsroutine = 'assets/images/material-symbols_routine-outline.svg';
