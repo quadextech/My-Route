@@ -2,7 +2,8 @@ import "package:flutter/material.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myroute/constants/constant.dart';
 import 'package:myroute/features/PassengerBookingFlow/global_file/global_file.dart';
-import 'package:myroute/features/PassengerBookingFlow/view/select_car_prefence.dart';
+import 'package:myroute/features/PassengerBookingFlow/view/BottomNavigatorBar.dart';
+import 'package:myroute/features/PassengerBookingFlow/view/select_ride_prefences.dart';
 
 class PassengerHome extends StatefulWidget {
   const PassengerHome({super.key});
@@ -154,6 +155,7 @@ class _PassengerHomeState extends State<PassengerHome> {
           )
         ],
       ),
+
     );
   }
 }

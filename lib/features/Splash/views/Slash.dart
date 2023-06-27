@@ -17,7 +17,7 @@ class _Splash1State extends State<Splash1> {
   }
 
   navigat() {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.push(
           context,
           MaterialPageRoute(

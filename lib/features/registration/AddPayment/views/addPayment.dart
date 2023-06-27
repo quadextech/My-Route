@@ -48,7 +48,7 @@ class AppPayment extends StatelessWidget {
                 height: 20,
               ),
               mytextField(
-                label: "Card Number",
+                label: "cw",
                 keyboardType: TextInputType.text,
                 controller: cardNumberController,
               ),
@@ -58,13 +58,16 @@ class AppPayment extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 180,
+
+                  Expanded(
                     child: mytextField(
                         controller: expiryDateController, label: "Expiry date"),
                   ),
                   SizedBox(
-                    width: 180,
+                    width: 15,
+                  ),
+                  
+                  Expanded(
                     child: mytextField(
                         controller: expiryDateController, label: "Secure code"),
                   )
@@ -74,6 +77,7 @@ class AppPayment extends StatelessWidget {
                 height: 30,
               ),
               AppButton(onPressed: () {}, label: "Add card"),
+
               const SizedBox(
                 height: 20,
               ),

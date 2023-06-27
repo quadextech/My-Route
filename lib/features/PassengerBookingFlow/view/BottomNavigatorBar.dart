@@ -5,21 +5,17 @@ import 'package:myroute/features/PassengerBookingFlow/view/HomePage.dart';
 
 class BottomNav extends StatefulWidget {
   BottomNav({super.key});
-
   @override
   State<BottomNav> createState() => _BottomNavState();
 }
-
 class _BottomNavState extends State<BottomNav> {
   int _index = 0;
-
   List pages = [
     const PassengerHome(),
     const Center(child: Text("Routine")),
     const Center(child: Text("my Ride")),
     const Center(child: Text("Conversations")),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +25,6 @@ class _BottomNavState extends State<BottomNav> {
         fixedColor: AppColor.primaryColor,
         type: BottomNavigationBarType.fixed,
         elevation: 0,
-
         // selectedItemColor: AppColor.primaryColor,
         items: [
           BottomNavigationBarItem(
