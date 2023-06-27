@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myroute/constants/constant.dart';
+import 'package:myroute/features/PassengerBookingFlow/view/BottomNavigatorBar.dart';
 import 'package:myroute/features/registration/SignUp/views/Sign_up.dart';
 import 'package:myroute/features/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/features/registration/Reg_global_File/globalFile.dart';
@@ -90,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => BottomNav(),
                           ));
                     },
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/features/PassengerBookingFlow/view/BottomNavigatorBar.dart';
+import 'package:myroute/features/Splash/views/Slash.dart';
 
 import 'features/Splash/views/Slash.dart';
 

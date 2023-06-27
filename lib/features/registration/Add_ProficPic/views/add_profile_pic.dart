@@ -19,6 +19,10 @@ class _AddProfilePicState extends State<AddProfilePic> {
   ImageUpload imageUpload = ImageUpload();
   bool isLoading = false;
 
+  bool isImageGood() {
+      return _imageFile !=null;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +145,7 @@ class _AddProfilePicState extends State<AddProfilePic> {
               child: isLoading ? const Center(child: CircularProgressIndicator(
                 strokeWidth: 2,
               )) :
-              imageUpload.isImageGood() ? AppButton(
+              isImageGood() ? AppButton(
                 onPressed: () {
                   Navigator.push(
                     context,
