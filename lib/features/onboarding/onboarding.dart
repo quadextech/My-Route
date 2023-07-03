@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myroute/constants/constant.dart';
-import 'package:myroute/features/registration/SignUp/views/Sign_up.dart';
-import 'package:myroute/features/registration/login/views/login_sreen.dart';
-import 'package:myroute/features/registration/Reg_global_File/AppButton.dart';
+import '../../constants/app_color.dart';
+import '../../constants/app_image.dart';
+import '../../flows/registration/Reg_global_File/App_button.dart';
+import '../../flows/registration/SignUp/views/Sign_up.dart';
+import '../../flows/registration/login/views/login_sreen.dart';
 
 class OnBoarddinngScreeen extends StatefulWidget {
   const OnBoarddinngScreeen({super.key});
@@ -24,10 +26,10 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
           SizedBox(
             height: 300,
             width: MediaQuery.of(context).size.width,
-            child: Image.asset(AppImage.onboardingImage),
+            child: Image.asset(onboardingImage),
           ),
           Image.asset(
-            AppImage.swipeIcon,
+            swipeIcon,
             height: 30,
             width: 30,
           ),
@@ -45,7 +47,7 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: AppColor.primaryColor,
+                    color: primaryColor,
                   ))
             ],
           ),
@@ -74,7 +76,7 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
           ),
           AppButton(
             label: "Login",
-            buttonColor: AppColor.whiteColor,
+            buttonColor: Colors.white,
             textColor: Colors.black,
             onPressed: () {
               Navigator.push(

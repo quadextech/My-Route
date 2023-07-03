@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/features/Splash/views/Slash.dart';
+import 'package:myroute/flows/Splash/views/splash.dart';
+import 'package:myroute/flows/onboarding/onboarding.dart';
+import 'package:date_format/date_format.dart';
+import 'features/onboarding/onboarding.dart';
+import 'flows/PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
+import 'package:provider/provider.dart';
 
-import 'features/Splash/views/Slash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: Splash1(),
+      home: BottomNav(),
     );
   }
 }
