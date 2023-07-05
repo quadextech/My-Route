@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import '../../constants/app_color.dart';
 import '../../constants/app_image.dart';
 import '../../flows/registration/Reg_global_File/App_button.dart';

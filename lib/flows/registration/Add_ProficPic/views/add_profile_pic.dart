@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/AddPayment/views/addPayment.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 
@@ -12,25 +11,20 @@ import '../utilities.dart';
 class AddProfilePic extends StatefulWidget {
   const AddProfilePic({super.key});
 
-
   State<AddProfilePic> createState() => _AddProfilePicState();
 }
-class _AddProfilePicState extends State<AddProfilePic> {
 
+class _AddProfilePicState extends State<AddProfilePic> {
   XFile? _imageFile;
   ImageUpload imageUpload = ImageUpload();
   bool isLoading = false;
 
   bool isImageGood() {
-      return _imageFile !=null;
+    return _imageFile != null;
   }
-
 
   @override
   Widget build(BuildContext context) {
-
-    Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -97,29 +91,28 @@ class _AddProfilePicState extends State<AddProfilePic> {
                 child: Stack(
               children: [
                 CircleAvatar(
-                    backgroundColor: grey,
-                    radius: 80,
-                    backgroundImage: _imageFile == null ? Image.asset(userIcon).image : FileImage(File(_imageFile!.path)),
-                  ),
-
-
+                  backgroundColor: grey,
+                  radius: 80,
+                  backgroundImage: _imageFile == null
+                      ? Image.asset(userIcon).image
+                      : FileImage(File(_imageFile!.path)),
+                ),
                 Positioned(
                   bottom: 9,
                   right: 15,
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       imageUpload.uploadImage(context, (pickedImg) {
                         setState(() {
                           _imageFile = pickedImg;
                           isLoading = true;
                         });
 
-                        Future.delayed(Duration(seconds: 5), (){
+                        Future.delayed(Duration(seconds: 5), () {
                           setState(() {
                             isLoading = false;
                           });
                         });
-
                       });
                     },
                     child: Container(
@@ -132,39 +125,36 @@ class _AddProfilePicState extends State<AddProfilePic> {
                           shape: BoxShape.circle,
                           color: white,
                         ),
-                        child: const Icon(Icons.edit)
-                    ),
+                        child: const Icon(Icons.edit)),
                   ),
                 )
-
               ],
             )),
             const SizedBox(
               height: 20,
             ),
-
             Container(
-              child: isLoading ? const Center(child: CircularProgressIndicator(
-                strokeWidth: 2,
-              )) :
-              isImageGood() ? AppButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AppPayment(),
-                    ),
-                  );
-                },
-                label: "Looks good! Proceed",) : null
-            )
-
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ))
+                    : isImageGood()
+                        ? AppButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AppPayment(),
+                                ),
+                              );
+                            },
+                            label: "Looks good! Proceed",
+                          )
+                        : null)
           ],
         ),
-
       ),
-
-
     );
   }
 }

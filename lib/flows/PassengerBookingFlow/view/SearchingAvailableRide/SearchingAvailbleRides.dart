@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myroute/flows/PassengerBookingFlow/view/select_car_preferences/select_car_preference.dart';
 import '../../../../constants/app_color.dart';
@@ -17,7 +16,6 @@ class _SearchingRideState extends State<SearchingRide> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement initState
     super.didChangeDependencies();
     Future.delayed(Duration(seconds: 6), () {
 

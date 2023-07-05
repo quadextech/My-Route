@@ -20,3 +20,5 @@ const svgroute = 'assets/images/gis_route.svg';
 const svgmytitleCar = 'assets/images/titleCar.svg';
 const svgmyRides = 'assets/images/myRides.svg';
 const svgsroutine = 'assets/images/material-symbols_routine-outline.svg';
+const routine = 'assets/images/routine.png';
+const map = 'assets/images/map.png';
