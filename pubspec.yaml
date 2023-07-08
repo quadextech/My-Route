@@ -41,6 +41,10 @@ dependencies:
   date_format: ^2.0.7
   intl: ^0.18.1
   provider: ^6.0.0
+  http: ^0.13.4
+  flutter_riverpod: ^2.3.6
+  loading_animation_widget: ^1.2.0+4
+  connectivity: ^3.0.6
 
 dev_dependencies:
   flutter_test:

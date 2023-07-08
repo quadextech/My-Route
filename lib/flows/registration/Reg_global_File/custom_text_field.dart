@@ -4,6 +4,7 @@ class mytextField extends StatelessWidget {
   String label;
   bool ispassword;
   bool isobsure;
+  TextEditingController controller;
   TextInputType keyboardType;
 
   mytextField(
@@ -15,7 +16,7 @@ class mytextField extends StatelessWidget {
       required this.label})
       : super(key: key);
 
-  final TextEditingController controller;
+
 
   @override
   Widget build(BuildContext context) {

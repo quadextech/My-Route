@@ -1,36 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Verification/views/verification_screen.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
+import 'package:myroute/services/user_authentication.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   TextEditingController firstNameController = TextEditingController();
-
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordCcontroller = TextEditingController();
   TextEditingController passwordCcontroller2 = TextEditingController();
-
+  bool isLoading = false;
   bool isPicked = false;
 
   var sex = "Male";
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    phoneNumberController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordCcontroller.dispose();
+    passwordCcontroller2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final signUpref = ref.watch(userAuthProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   mytextField(
                       keyboardType: TextInputType.phone,
-                      controller: emailController,
+                      controller: phoneNumberController,
                       label: "Phone Number*"),
                   const SizedBox(
                     height: 20,
@@ -145,16 +156,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  AppButton(
-                    label: "Sign Up",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const VerificationScreen(),
-                          ));
-                    },
-                  ),
+                  isLoading
+                      ?  Center(child: LoadingAnimationWidget.inkDrop(color: primaryColor, size: 25))
+                      : AppButton(
+                          label: "Sign Up",
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                           
+                          String message =  await signUpref.userSignUp(
+                                emailController.text,
+                                passwordCcontroller.text,
+                                firstNameController.text,
+                                lastNameController.text,
+                                phoneNumberController.text,
+                                sex
+                                );
+                                if (message == 'Sign Up Successful'){
+                                  
+                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: black,
+                          content: Text('Sign Up Successful',
+                          
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 16)),
+                             ));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const VerificationScreen(),
+                                ));
+                                 setState(() {
+                              isLoading = false;
+                            });
+                                }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.red,
+                          content: Text(message,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 16))));
+                    
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                    
+                                }
+                                
+                           
+                          },
+                        ),
                   const SizedBox(
                     height: 15,
                   ),

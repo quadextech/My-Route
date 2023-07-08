@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
-
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/connectivity_provider.dart';
+import '../../../../services/user_authentication.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordCcontroller = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+    final connectivityState = ref.watch(connectivityProvider);
+
+    final loginref = ref.watch(userAuthProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -30,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     )),
                 child: Center(
                   child: Image.asset(
-                   appLogo,
+                    appLogo,
                     width: 100,
                     height: 100,
                   ),
@@ -88,22 +100,74 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  AppButton(
-                    label: "Login",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BottomNav(),
-                          ));
-                    },
-                  ),
+                  isLoading
+                      ? Center(
+                          child: LoadingAnimationWidget.inkDrop(
+                              color: primaryColor, size: 25))
+                      : AppButton(
+                          label: "Login",
+                          onPressed: () async {
+                            if (connectivityState.status ==
+                                ConnectivityStatus.disconnected) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('No internet connection'),
+                                  ),
+                                );
+                              });
+                            } else {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              if (emailController.text.isNotEmpty &&
+                                  passwordCcontroller.text.isNotEmpty) {
+                                String message = await loginref.userLogin(
+                                    emailController.text,
+                                    passwordCcontroller.text);
+
+                                if (message == 'Login Successful') {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BottomNav(),
+                                      ));
+                                } else {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(message,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    fontSize: 16))));
+                                  });
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              }else{ setState(() {
+                                    isLoading = false;
+                                  });
+                                WidgetsBinding.instance.addPostFrameCallback((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(  backgroundColor: Colors.red,
+
+                                    content: Text('Fill up all fields', textAlign: TextAlign.center,),
+                                  ),
+                                );
+                              });
+                              }
+                            }
+                          },
+                        ),
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Divider(),
                       Text("Or Log In with"),
                       Divider(
