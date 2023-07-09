@@ -51,7 +51,7 @@ class _LicensingRegState extends State<LicensingReg> {
             const SizedBox(
               height: 20,
             ),
-            mytextField(
+            mytextField(error: '',
                 controller: driverLicenseController,
                 label: "Driver license or JTB Form Number*"),
             const SizedBox(

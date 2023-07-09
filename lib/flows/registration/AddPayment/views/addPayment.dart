@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Do_you_have_car/views/do_you_have_a_car.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 
@@ -57,7 +56,7 @@ class _AppPaymentState extends State<AppPayment> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',errorCondition: false,
                 label: "cw",
                 keyboardType: TextInputType.text,
                 controller: cardNumberController,
@@ -70,7 +69,8 @@ class _AppPaymentState extends State<AppPayment> {
                 children: [
 
                   Expanded(
-                    child: mytextField(
+                    child: mytextField(errorCondition: false,
+                      error: '',
                         controller: expiryDateController, label: "Expiry date"),
                   ),
                   const SizedBox(
@@ -78,7 +78,7 @@ class _AppPaymentState extends State<AppPayment> {
                   ),
                   
                   Expanded(
-                    child: mytextField(
+                    child: mytextField(error: '',errorCondition: false,
                         controller: expiryDateController, label: "Secure code"),
                   )
                 ],

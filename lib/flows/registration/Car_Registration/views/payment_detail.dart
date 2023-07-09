@@ -56,21 +56,21 @@ class _PaymentDetailState extends State<PaymentDetail> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',
                 controller: adrressController,
                 label: "Address*",
               ),
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',
                 controller: accountNameController,
                 label: "Bank account holder name*",
               ),
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error:'',
                 keyboardType: TextInputType.number,
                 controller: accountNumberController,
                 label: "Bank account number*",
@@ -78,7 +78,7 @@ class _PaymentDetailState extends State<PaymentDetail> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',
                 controller: bankNameController,
                 label: "Bank name*",
               ),

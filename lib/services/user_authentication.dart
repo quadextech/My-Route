@@ -39,7 +39,6 @@ class UserAuth {
     } else {
       message = response.body;
       return message;
-     
     }
   }
 
@@ -48,7 +47,8 @@ class UserAuth {
     final url =
         Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/login');
     final response = await http.post(
-      url,headers: {
+      url,
+      headers: {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({
@@ -57,10 +57,9 @@ class UserAuth {
       }),
     );
     if (response.statusCode == 200) {
-      print('Login successful');
     } else {
-      print('Login failed');
-      print('Response body: ${response.body}');
+      message = response.body;
+      return message;
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 
@@ -10,7 +9,7 @@ import '../widget/upload_Button.dart';
 class UploadFlieReg extends StatelessWidget {
   UploadFlieReg({super.key});
 
-  TextEditingController expiryDateController = TextEditingController();
+  final TextEditingController expiryDateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,7 @@ class UploadFlieReg extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',
                   controller: expiryDateController,
                   label: "Driver’s License expiry date*"),
               const Text("License number on your Driver’s documents"),

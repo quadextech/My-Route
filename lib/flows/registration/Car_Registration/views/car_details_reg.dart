@@ -54,7 +54,7 @@ class _CarDetailsRegState extends State<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: '',
                 controller: referralCodeController,
                 label: "Referral code",
               ),
@@ -100,7 +100,7 @@ class _CarDetailsRegState extends State<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(
+              mytextField(error: 'Enter a valid plate number',
                   controller: plateNumbercontroller,
                   label: "License plate number*"),
               const SizedBox(

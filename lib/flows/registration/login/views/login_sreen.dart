@@ -21,6 +21,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordCcontroller = TextEditingController();
   bool isLoading = false;
+  bool emailError = false;
+  bool passwordError = false;
   @override
   Widget build(BuildContext context) {
     final connectivityState = ref.watch(connectivityProvider);
@@ -67,11 +69,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  mytextField(controller: emailController, label: "Email"),
+                  mytextField(errorCondition: emailError,
+                      error: 'Enter a valid email',
+                      controller: emailController,
+                      label: "Email"),
                   const SizedBox(
                     height: 20,
                   ),
-                  mytextField(
+                  mytextField(errorCondition: passwordError,
+                    error: 'Incorrect password',
                     label: "Password",
                     controller: passwordCcontroller,
                     ispassword: true,
@@ -147,17 +153,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     isLoading = false;
                                   });
                                 }
-                              }else{ setState(() {
-                                    isLoading = false;
-                                  });
-                                WidgetsBinding.instance.addPostFrameCallback((_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(  backgroundColor: Colors.red,
-
-                                    content: Text('Fill up all fields', textAlign: TextAlign.center,),
-                                  ),
-                                );
-                              });
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Fill up all fields',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                });
                               }
                             }
                           },

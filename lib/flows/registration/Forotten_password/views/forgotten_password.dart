@@ -66,7 +66,7 @@ class ForgetPassword extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            mytextField(controller: emailController, label: "E-mail"),
+            mytextField(controller: emailController, label: "E-mail", error: 'Enter a valid email',),
             const SizedBox(
               height: 30,
             ),

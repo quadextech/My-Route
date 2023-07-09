@@ -9,6 +9,7 @@ import 'package:myroute/services/user_authentication.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/connectivity_provider.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -24,10 +25,22 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordCcontroller = TextEditingController();
   TextEditingController passwordCcontroller2 = TextEditingController();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode phoneNumberFocusNode = FocusNode();
+  FocusNode confirmPasswordFocusNode = FocusNode();
+  bool phoneError = false;
+  bool emailError = false;
+  bool nameError = false;
+  bool passwordMismatch = false;
   bool isLoading = false;
   bool isPicked = false;
-
   var sex = "Male";
+  bool isValidEmail(String email) {
+    final RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   void dispose() {
     firstNameController.dispose();
@@ -41,6 +54,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final connectivityState = ref.watch(connectivityProvider);
     final signUpref = ref.watch(userAuthProvider);
     return Scaffold(
       body: SingleChildScrollView(
@@ -84,30 +98,48 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     height: 15,
                   ),
                   mytextField(
-                      controller: firstNameController, label: "First Name*"),
+                      error: 'Enter a valid name',
+                      errorCondition: nameError,
+                      controller: firstNameController,
+                      label: "First Name"),
                   const SizedBox(
                     height: 20,
                   ),
                   mytextField(
-                      controller: lastNameController, label: "Last Name*"),
+                      error: 'Enter a valid name',
+                      errorCondition: nameError,
+                      controller: lastNameController,
+                      label: "Last Name"),
                   const SizedBox(
                     height: 20,
                   ),
-                  mytextField(controller: emailController, label: "E-mail*"),
+                  mytextField(
+                    errorCondition: emailError,
+                    focusNode: emailFocusNode,
+                    controller: emailController,
+                    label: "E-mail",
+                    error: 'Enter a valid email address',
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
                   mytextField(
-                      keyboardType: TextInputType.phone,
-                      controller: phoneNumberController,
-                      label: "Phone Number*"),
+                    errorCondition: phoneError,
+                    keyboardType: TextInputType.phone,
+                    controller: phoneNumberController,
+                    label: "Phone Number",
+                    focusNode: phoneNumberFocusNode,
+                    error: 'Enter a valid phone number',
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   selectGender(),
                   mytextField(
+                    error: '',
+                    errorCondition: passwordMismatch,
                     isobsure: true,
-                    label: "Password*",
+                    label: "Password",
                     controller: passwordCcontroller,
                     ispassword: true,
                   ),
@@ -115,10 +147,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     height: 20,
                   ),
                   mytextField(
+                    error: 'Passowrds do not match',
+                    errorCondition: passwordMismatch,
                     isobsure: true,
-                    label: "Password*",
+                    label: "Password",
                     controller: passwordCcontroller2,
                     ispassword: true,
+                    focusNode: passwordFocusNode,
                   ),
                   const SizedBox(
                     height: 10,
@@ -157,63 +192,108 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     height: 15,
                   ),
                   isLoading
-                      ?  Center(child: LoadingAnimationWidget.inkDrop(color: primaryColor, size: 25))
+                      ? Center(
+                          child: LoadingAnimationWidget.inkDrop(
+                              color: primaryColor, size: 25))
                       : AppButton(
                           label: "Sign Up",
                           onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                           
-                          String message =  await signUpref.userSignUp(
-                                emailController.text,
-                                passwordCcontroller.text,
-                                firstNameController.text,
-                                lastNameController.text,
-                                phoneNumberController.text,
-                                sex
+                            if (connectivityState.status ==
+                                ConnectivityStatus.disconnected) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'No internet connection',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 );
-                                if (message == 'Sign Up Successful'){
-                                  
-                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: black,
-                          content: Text('Sign Up Successful',
-                          
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 16)),
-                             ));
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const VerificationScreen(),
-                                ));
-                                 setState(() {
-                              isLoading = false;
-                            });
-                                }else{
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Colors.red,
-                          content: Text(message,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 16))));
-                    
+                              });
+                            } else {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              if (lastNameController.text.isEmpty) {
+                                setState(() {
+                                  nameError = true;
+                                  isLoading = false;
+                                });
+                              }
 
-                      setState(() {
-                        isLoading = false;
-                      });
-                    
+                              if (passwordCcontroller.text !=
+                                  passwordCcontroller2.text || passwordCcontroller.text.isEmpty||passwordCcontroller2.text.isEmpty) {
+                                setState(() {
+                                  passwordMismatch = true;
+                                  isLoading = false;
+                                });
+                              }
+
+                              if (!isValidEmail(emailController.text)) {
+                                setState(() {
+                                  emailError = true;
+                                  isLoading = false;
+                                });
+                              }
+
+                              if (phoneNumberController.text.length != 11) {
+                                setState(() {
+                                  phoneError = true;
+                                  isLoading = false;
+                                });
+                              }
+                              if (isLoading == true) {
+                                String message = await signUpref.userSignUp(
+                                    emailController.text,
+                                    passwordCcontroller.text,
+                                    firstNameController.text,
+                                    lastNameController.text,
+                                    phoneNumberController.text,
+                                    sex);
+
+                                if (message == 'Sign Up Successful') {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      backgroundColor: black,
+                                      content: const Text('Sign Up Successful',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 16)),
+                                    ));
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const VerificationScreen(),
+                                      ));
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: Colors.red,
+                                          content: Text(message,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 16))));
+
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                                
-                           
+                              }
+                            }
                           },
                         ),
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Divider(),
                       Text("Or Sign Up with"),
                       Divider(
@@ -260,9 +340,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             builder: (context) => LoginScreen(),
                           ));
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text("Already have an account?"),
                         Text(
                           " Log In",
