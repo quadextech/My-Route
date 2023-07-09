@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myroute/flows/registration/Reg_global_File/drop_textfield.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
-
+import 'package:myroute/services/verify_card.dart';
 import '../../../../constants/app_image.dart';
 import '../widget/text_header.dart';
 import 'Licensing_details.dart';
 
-class CarDetailsReg extends StatefulWidget {
+class CarDetailsReg extends ConsumerStatefulWidget {
   CarDetailsReg({super.key});
 
   @override
-  State<CarDetailsReg> createState() => _CarDetailsRegState();
+  ConsumerState<CarDetailsReg> createState() => _CarDetailsRegState();
 }
 
-class _CarDetailsRegState extends State<CarDetailsReg> {
+class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
   TextEditingController referralCodeController = TextEditingController();
 
   TextEditingController plateNumbercontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+     final carDetailsRef = ref.watch(cardVerificationProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -118,6 +119,7 @@ class _CarDetailsRegState extends State<CarDetailsReg> {
               ),
               AppButton(
                 onPressed: () {
+                  carDetailsRef.verifyCardDetails(cardNumber, expirationDate, cvv)
                   Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -57,6 +57,8 @@ class UserAuth {
       }),
     );
     if (response.statusCode == 200) {
+       message = 'Login Successful';
+      return message;
     } else {
       message = response.body;
       return message;
