@@ -6,6 +6,7 @@ import 'package:myroute/flows/registration/Car_Registration/views/payment_detail
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/SignUp/views/Sign_up.dart';
 
+import 'flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'flows/registration/Car_Registration/views/car_details_reg.dart';
 import 'flows/registration/login/views/login_sreen.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: PaymentDetail(),
+      home: AddProfilePic(),
     );
   }
 }

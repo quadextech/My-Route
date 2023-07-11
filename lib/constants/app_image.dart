@@ -22,3 +22,5 @@ const svgmyRides = 'assets/images/myRides.svg';
 const svgsroutine = 'assets/images/material-symbols_routine-outline.svg';
 const routine = 'assets/images/routine.png';
 const map = 'assets/images/map.png';
+const svgerror = 'assets/images/ic_outline-error-outline.svg';
+const success = 'assets/images/mdi_success-circle-outline.svg';

@@ -1,23 +1,37 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:myroute/flows/registration/AddPayment/views/addPayment.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myroute/services/connectivity_provider.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/user_authentication.dart';
 import '../utilities.dart';
 
-class AddProfilePic extends StatefulWidget {
+class AddProfilePic extends ConsumerStatefulWidget {
   const AddProfilePic({super.key});
 
-  State<AddProfilePic> createState() => _AddProfilePicState();
+  ConsumerState<AddProfilePic> createState() => _AddProfilePicState();
 }
 
-class _AddProfilePicState extends State<AddProfilePic> {
+class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   XFile? _imageFile;
-  ImageUpload imageUpload = ImageUpload();
+  final storage = new FlutterSecureStorage();
   bool isLoading = false;
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordCcontroller = TextEditingController();
+  TextEditingController passwordCcontroller2 = TextEditingController();
+  var sex = "Male";
+
+
+  //bool isLLoading = false;
 
   bool isImageGood() {
     return _imageFile != null;
@@ -25,6 +39,10 @@ class _AddProfilePicState extends State<AddProfilePic> {
 
   @override
   Widget build(BuildContext context) {
+    final connectivityState = ref.watch(connectivityProvider);
+    final ImageUploadref = ref.watch(userImageProvider);
+    final signUpref = ref.watch(userAuthProvider);
+    final Imageref = ref.watch(userAuthProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -102,17 +120,17 @@ class _AddProfilePicState extends State<AddProfilePic> {
                   right: 15,
                   child: GestureDetector(
                     onTap: () {
-                      imageUpload.uploadImage(context, (pickedImg) {
+                      ImageUploadref.uploadImage(context, (pickedImg) {
                         setState(() {
                           _imageFile = pickedImg;
                           isLoading = true;
                         });
 
-                        Future.delayed(Duration(seconds: 5), () {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        });
+                        // Future.delayed(Duration(seconds: 5), () {
+                        //   setState(() {
+                        //     isLoading = false;
+                        //   });
+                        // });
                       });
                     },
                     child: Container(
@@ -139,19 +157,70 @@ class _AddProfilePicState extends State<AddProfilePic> {
                         child: CircularProgressIndicator(
                         strokeWidth: 2,
                       ))
-                    : isImageGood()
-                        ? AppButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AppPayment(),
-                                ),
-                              );
-                            },
-                            label: "Looks good! Proceed",
-                          )
-                        : null)
+                    :
+                //isImageGood()
+                       // ?
+                AppButton(
+                  onPressed: () async {
+                    if (connectivityState.status == ConnectivityStatus.disconnected) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'No internet connection',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      });
+                    } else {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      String message = await signUpref.userSignUp(
+                        emailController.text,
+                        passwordCcontroller.text,
+                        firstNameController.text,
+                        lastNameController.text,
+                        phoneNumberController.text,
+                        sex,
+                      );
+
+                      if (message == 'Sign Up Successful') {
+                        if (_imageFile != null) {
+                          var imageResponse = await Imageref.userAvatar(_imageFile!.path);
+                          if (imageResponse.statusCode == 200) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AppPayment(),
+                              ),
+                            );
+                          }
+                        } else {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const AppPayment(),
+                          //   ),
+                          // );
+                        }
+                      } else {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    }
+                  },
+                  label: "Submit",
+                ))
           ],
         ),
       ),
