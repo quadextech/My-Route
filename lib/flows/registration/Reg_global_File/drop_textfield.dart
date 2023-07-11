@@ -1,47 +1,53 @@
 import 'package:flutter/material.dart';
 
-class DroptextField extends StatefulWidget {
-  String selected;
+import '../../../constants/app_color.dart';
+import '../../../constants/textstyle.dart';
+
+class DroptextField extends StatelessWidget {
+  String hintText;
+  String? selected;
   List listTextFied;
-  DroptextField({required this.selected, required this.listTextFied, Key? key})
+  final ValueChanged<dynamic> onChanged;
+  final String error;
+  final errorCondition;
+  DroptextField({required this.onChanged,  this.selected, required this.listTextFied, required this.hintText, required this.error, required this.errorCondition, Key? key})
       : super(key: key);
 
   @override
-  State<DroptextField> createState() => _DroptextFieldState();
-}
-
-class _DroptextFieldState extends State<DroptextField> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Center(
-          child: DropdownButtonFormField(
-            value: widget.selected,
-            onChanged: (value) {
-              setState(() {
-                widget.selected = value as String;
-              });
-            },
-            items: widget.listTextFied
-                .map((e) => DropdownMenuItem(
-                      child: Text(e.toString()),
-                      value: e,
-                    ))
-                .toList(),
-            // ignore: prefer_const_constructors
-            decoration: InputDecoration(
-              border: InputBorder.none,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 55,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: errorCondition? Colors.red:black),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Center(
+              child: DropdownButtonFormField(
+                hint: Text(hintText),
+                value: selected,
+                onChanged: onChanged,
+                items: listTextFied
+                    .map((e) => DropdownMenuItem(
+                          child: Text(e.toString()),
+                          value: e,
+                        ))
+                    .toList(),
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ),
             ),
           ),
         ),
-      ),
+        if (errorCondition)
+          Text(error, style: body4(Colors.red),)
+      ],
     );
   }
 }

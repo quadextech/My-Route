@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/constants/constant.dart';
+import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 
+import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/banks_services.dart';
+import '../../../../services/connectivity_provider.dart';
+import '../../../PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
+import '../../../PassengerBookingFlow/view/SearchingAvailableRide/SearchavailableRide_method.dart';
 import '../widget/text_header.dart';
 
-class PaymentDetail extends StatefulWidget {
+class PaymentDetail extends ConsumerStatefulWidget {
   PaymentDetail({super.key});
 
   @override
-  State<PaymentDetail> createState() => _PaymentDetailState();
+  ConsumerState<PaymentDetail> createState() => _PaymentDetailState();
 }
 
-class _PaymentDetailState extends State<PaymentDetail> {
+class _PaymentDetailState extends ConsumerState<PaymentDetail> {
   TextEditingController adrressController = TextEditingController();
-
   TextEditingController accountNameController = TextEditingController();
-
   TextEditingController accountNumberController = TextEditingController();
-
   TextEditingController bankNameController = TextEditingController();
+  bool addressError = false;
+  bool accountNameError = false;
+  bool accountNumberError = false;
+  bool bankNameError = false;
+  bool isLoading = false;
+  bool ismessage = false;
 
   @override
   Widget build(BuildContext context) {
+    final connectivityState = ref.watch(connectivityProvider);
+    final bankServiceRef = ref.watch(BankServiceProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -56,21 +69,27 @@ class _PaymentDetailState extends State<PaymentDetail> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: '',
+              mytextField(
+                error: "Address cannot be null",
+                errorCondition: addressError,
                 controller: adrressController,
                 label: "Address*",
               ),
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: '',
+              mytextField(
+                error: "Account name cannot be null",
+                errorCondition: accountNameError,
                 controller: accountNameController,
                 label: "Bank account holder name*",
               ),
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error:'',
+              mytextField(
+                error: "Account number invalid",
+                errorCondition: accountNumberError,
                 keyboardType: TextInputType.number,
                 controller: accountNumberController,
                 label: "Bank account number*",
@@ -78,14 +97,103 @@ class _PaymentDetailState extends State<PaymentDetail> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: '',
+              mytextField(
+                error: "Bank name can't be null",
+                errorCondition: bankNameError,
                 controller: bankNameController,
                 label: "Bank name*",
               ),
               const SizedBox(
                 height: 20,
               ),
-              AppButton(onPressed: () {}, label: "Finish"),
+              isLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                          color: primaryColor, size: 25))
+                  : AppButton(
+                label: "Finish",
+                onPressed: () async{
+                if (connectivityState.status ==
+                    ConnectivityStatus.disconnected) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'No internet connection',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  });
+                } else{
+                  setState(() {
+                    isLoading = true;
+                  });
+                  if(adrressController.text.isEmpty){
+                    setState(() {
+                      isLoading = false;
+                      addressError = true;
+                    });
+                  }
+                  if(accountNameController.text.isEmpty){
+                    setState(() {
+                      isLoading = false;
+                      accountNameError = true;
+                    });
+                  }
+                  if(accountNumberController.text.isEmpty){
+                    setState(() {
+                      isLoading = false;
+                      accountNumberError = true;
+                    });
+                  } if(bankNameController.text.isEmpty){
+                    setState(() {
+                      isLoading = false;
+                      bankNameError = true;
+                    });
+
+                  }
+                  if (isLoading == true) {
+                    String message = await bankServiceRef.verifyBankDetails(accountNameController.text, accountNumberController.text, bankNameController.text, adrressController.text);
+
+                    if (message == 'Bank details added Successfully') {
+
+    setState(() {
+    ismessage = true;
+    });
+
+    }
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => CustomPopUpContainer(
+                          height: 60,
+                          child: ismessage ? Column(
+                            children: [
+                              Icon(Icons.sms_failed_outlined),
+                            Text('Error', style:  body2(Colors.red),),
+                              Text('Sorry, Complete your Car registration before you proceed.',
+                              style: body1(black),
+                              )
+                            ],
+                          ) : const Text('Failed'),
+                        ),
+
+                        isDismissible: false, isScrollControlled: true,
+
+                      );
+                      setState(() {
+                        isLoading = false;
+                      });
+
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => BottomNav(),
+                      //     ));
+                    }
+                  }
+                }
+              )
             ],
           ),
         ),

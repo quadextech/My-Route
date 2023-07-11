@@ -19,6 +19,7 @@ class ConnectivityProvider extends StateNotifier<ConnectivityState> {
   ConnectivityProvider(this.connectivity,  ref)
       : super(ConnectivityState(ConnectivityStatus.disconnected)) {
     checkConnectivity();
+
     connectivity.onConnectivityChanged.listen((result) {
       if (result == ConnectivityResult.none) {
         state = ConnectivityState(ConnectivityStatus.disconnected);

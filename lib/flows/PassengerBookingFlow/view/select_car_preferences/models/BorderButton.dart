@@ -34,29 +34,3 @@ class BorderButton extends StatelessWidget {
     );
   }
 }
-
-
-// InkWell(
-// onTap: () {
-// Navigator.of(context).pop();
-// },
-// child: Padding(
-// padding: const EdgeInsets.all(12.0),
-// child: Container(
-// decoration: BoxDecoration(
-// borderRadius: BorderRadius.circular(20),
-// border: Border.all(
-// width: 0.3,
-// color: black,
-//
-// ),
-// color: white,
-//
-// ),
-// child: Icon(
-// Icons.arrow_back,
-// color: black,
-// size: 20,
-// )),
-// ),
-// ),
