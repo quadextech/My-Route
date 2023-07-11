@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-//<<<<<<< HEAD:lib/features/registration/Forotten_password/views/forgotten_password.dart
 import 'package:myroute/constants/app_image.dart';
-
 import '../../SignUp/views/Sign_up.dart';
-//=======
 import 'package:myroute/flows/registration/Reg_global_File/custom_text_field.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
 import 'package:myroute/flows/registration/Reg_global_File/back_button.dart';
-//>>>>>>> 9fc6c228187d12ddffd1dff45922e25478b1e51b:lib/flows/registration/Forotten_password/views/forgotten_password.dart
 
-class ForgetPassword extends StatelessWidget {
+class ForgetPassword extends StatefulWidget {
   ForgetPassword({super.key});
+
+  @override
+  State<ForgetPassword> createState() => _ForgetPasswordState();
+}
+
+class _ForgetPasswordState extends State<ForgetPassword> {
+
+  bool emailError = false;
   TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +71,8 @@ class ForgetPassword extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            mytextField(controller: emailController, label: "E-mail", error: 'Enter a valid email',),
+            mytextField(controller: emailController, label: "E-mail", error: 'Enter a valid email', ispassword: false, errorCondition: emailError,),
+
             const SizedBox(
               height: 30,
             ),

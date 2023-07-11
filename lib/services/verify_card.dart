@@ -17,10 +17,14 @@ class AddPayment {
     
 
     if (response.statusCode == 201) {
+      message = "Card added successfully";
       final responseBody = json.encode(response.body);
       print(responseBody);
+      return message;
     } else {
+      message = response.body;
       print('Request failed with status code: ${response.statusCode}');
+      return message;
     }
   }
 }

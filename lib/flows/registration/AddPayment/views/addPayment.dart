@@ -7,6 +7,7 @@ import 'package:myroute/services/verify_card.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/connectivity_provider.dart';
 
 class AppPayment extends ConsumerStatefulWidget {
   const AppPayment({super.key});
@@ -17,8 +18,13 @@ class AppPayment extends ConsumerStatefulWidget {
 
 class _AppPaymentState extends ConsumerState<AppPayment> {
   TextEditingController cardNumberController = TextEditingController();
-
   TextEditingController expiryDateController = TextEditingController();
+  TextEditingController secureCodeController = TextEditingController();
+  bool cvvError = false;
+  bool expiryDateError = false;
+  bool secureCodeError = false;
+
+
   bool isLoading = false;
 
   @override
@@ -31,6 +37,7 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
   @override
   Widget build(BuildContext context) {
     final verifyCardRef = ref.watch(cardVerificationProvider);
+    final connectivityState = ref.watch(connectivityProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -69,9 +76,9 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                 height: 20,
               ),
               mytextField(
-                error: '',
-                errorCondition: false,
-                label: "cw",
+                error: "Invalid cvv",
+                errorCondition: cvvError,
+                label: "cvv",
                 keyboardType: TextInputType.text,
                 controller: cardNumberController,
               ),
@@ -83,8 +90,8 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                 children: [
                   Expanded(
                     child: mytextField(
-                        errorCondition: false,
-                        error: '',
+                        errorCondition: expiryDateError,
+                        error: "Expiry date invalid",
                         controller: expiryDateController,
                         label: "Expiry date"),
                   ),
@@ -93,9 +100,9 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                   ),
                   Expanded(
                     child: mytextField(
-                        error: '',
-                        errorCondition: false,
-                        controller: expiryDateController,
+                        error: "Secure code incorrect",
+                        errorCondition: secureCodeError,
+                        controller: secureCodeController,
                         label: "Secure code"),
                   )
                 ],
@@ -106,50 +113,84 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
               isLoading
                       ? Center(
                           child: LoadingAnimationWidget.inkDrop(
-                              color: primaryColor, size: 25))
-                      : AppButton(onPressed: ()
- async {
-                  setState(() {
-                    isLoading = true;
-                  });
+                              color: primaryColor, size: 25),)
+                      : AppButton(onPressed: () async {
+   if (connectivityState.status ==
+       ConnectivityStatus.disconnected) {
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+       ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+           content: Text(
+             'No internet connection',
+             textAlign: TextAlign.center,
+           ),
+         ),
+       );
+     });
+   }
 
-                  String message = await verifyCardRef.verifyCardDetails(
-                      'cardNumber', 'expirationDate', 'cvv');
+   else{
+     setState(() {
+       isLoading = true;
+     });
+     if (cardNumberController.text.isEmpty){
+       setState(() {
+         isLoading = false;
+         cvvError = true;
+       });
+     }
+     if (expiryDateController.text.isEmpty){
+       setState(() {
+         isLoading = false;
+         expiryDateError = true;
+       });
+     }
+     if (secureCodeController.text.isEmpty){
+       setState(() {
+         isLoading = false;
+         secureCodeError = true;
+       });
+     }
+     if(isLoading== true) {
+       String message = await verifyCardRef.verifyCardDetails(
+           cardNumberController.text, expiryDateController.text, secureCodeController.text);
 
-if (message == 'verification successful'){
-   WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      backgroundColor: black,
-                                      content: const Text('Verification successful',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 16)),
-                                    ));
-                                  });
-                                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DoYouHaveACar(),
-                      ));
-                       setState(() {
-                                    isLoading = false;
-                                  });
-} else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(message,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 16))));
+       if (message == 'Card added successfully'){
+         WidgetsBinding.instance
+             .addPostFrameCallback((_) {
+           ScaffoldMessenger.of(context)
+               .showSnackBar(SnackBar(
+             backgroundColor: black,
+             content: const Text('Card added successfully',
+                 textAlign: TextAlign.center,
+                 style: TextStyle(fontSize: 16)),
+           ));
+         });
+         Navigator.push(
+             context,
+             MaterialPageRoute(
+               builder: (context) => const DoYouHaveACar(),
+             ));
+         setState(() {
+           isLoading = false;
+         });
+       }
+       else {
+         ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(
+                 backgroundColor: Colors.red,
+                 content: Text(message,
+                     textAlign: TextAlign.center,
+                     style: const TextStyle(
+                         fontSize: 16))));
 
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                }
+         setState(() {
+           isLoading = false;
+         });
+       }
+     }
+   }}, label: "Add card"),
 
-                      }, label: "Add card"),
               const SizedBox(
                 height: 20,
               ),

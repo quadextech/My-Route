@@ -65,7 +65,7 @@ class _mytextFieldState extends State<mytextField> {
                               });
                             },
                             icon: Icon(
-                                                                widget.isobsure
+                                widget.isobsure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                                 //color: grey,
