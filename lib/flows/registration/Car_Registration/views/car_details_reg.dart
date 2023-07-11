@@ -119,7 +119,7 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
               ),
               AppButton(
                 onPressed: () {
-                  carDetailsRef.verifyCardDetails(cardNumber, expirationDate, cvv)
+//carDetailsRef.verifyCardDetails(cardNumber, expirationDate, cvv)
                   Navigator.push(
                       context,
                       MaterialPageRoute(
