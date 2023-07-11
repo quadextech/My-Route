@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/constants/constant.dart';
 import 'package:myroute/constants/textstyle.dart';
@@ -11,6 +12,7 @@ import '../../../../services/banks_services.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
 import '../../../PassengerBookingFlow/view/SearchingAvailableRide/SearchavailableRide_method.dart';
+import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 import '../widget/text_header.dart';
 
 class PaymentDetail extends ConsumerStatefulWidget {
@@ -166,16 +168,99 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) => CustomPopUpContainer(
-                          height: 60,
-                          child: ismessage ? Column(
+                          height: 350,
+                          child: ismessage ?  Expanded(
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Image.asset(success),
+                                  Text('Success!', style:  body2(Colors.red),),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('Your car has been registered successfully',
+                                    style: body3(black),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  AppButton(
+                                      buttonColor: black,
+                                      onPressed: (){
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => const DoYouHaveACar(),
+                                            ));
+                                      }, label: "Go to Fleet"),
+
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  AppButton(
+                                    textColor: black,
+                                      buttonColor: white,
+                                      onPressed: (){
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BottomNav(),
+                                            ));
+                                      }, label: "Exit registration"),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ): Column(
                             children: [
-                              Icon(Icons.sms_failed_outlined),
-                            Text('Error', style:  body2(Colors.red),),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              SvgPicture.asset(svgerror),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text('Error!', style:  body2(Colors.red),),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text('Sorry, Complete your Car registration before you proceed.',
-                              style: body1(black),
-                              )
+                                style: body3(grey),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              AppButton(
+                                  buttonColor: black,
+                                  onPressed: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const DoYouHaveACar(),
+                                        ));
+                                  }, label: "Return to Registration"),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              AppButton(
+                                  buttonColor: white,
+                                  onPressed: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BottomNav(),
+                                        ));
+                                  }, label: "Exit registration"),
+                              SizedBox(
+                                height: 20,
+                              ),
                             ],
-                          ) : const Text('Failed'),
+                          ),
                         ),
 
                         isDismissible: false, isScrollControlled: true,

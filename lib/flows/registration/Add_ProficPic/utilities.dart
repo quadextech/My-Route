@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../constants/app_color.dart';
+
+final userImageProvider = Provider<ImageUpload>((ref) => ImageUpload());
 
 class ImageUpload{
   XFile? pickedImg;

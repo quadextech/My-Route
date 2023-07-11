@@ -6,7 +6,7 @@ import 'package:myroute/flows/registration/Forotten_password/views/forgotten_pas
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
 import 'package:myroute/services/user_authentication.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
@@ -25,6 +25,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordCcontroller = TextEditingController();
   TextEditingController passwordCcontroller2 = TextEditingController();
+  var sex = "Male";
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
   FocusNode phoneNumberFocusNode = FocusNode();
@@ -35,7 +36,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool passwordMismatch = false;
   bool isLoading = false;
   bool isPicked = false;
-  var sex = "Male";
+
+  final storage = new FlutterSecureStorage();
   bool isValidEmail(String email) {
     final RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
     return emailRegex.hasMatch(email);
