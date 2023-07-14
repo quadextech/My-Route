@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myroute/flows/registration/AddPayment/views/addPayment.dart';
 import 'package:myroute/flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
+import 'package:myroute/flows/registration/Car_Registration/views/upload_reg.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/SignUp/views/Sign_up.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: AddProfilePic(),
+      home: UploadFlieReg(),
     );
   }
 }

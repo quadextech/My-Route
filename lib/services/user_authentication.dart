@@ -37,7 +37,7 @@ class UserAuth {
         'gender': gender,
       }),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       message = 'Sign Up Successful';
       Map<String, dynamic> output = jsonDecode(response.body);
       print(output["token"]);

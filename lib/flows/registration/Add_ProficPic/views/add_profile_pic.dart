@@ -126,11 +126,11 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                           isLoading = true;
                         });
 
-                        // Future.delayed(Duration(seconds: 5), () {
-                        //   setState(() {
-                        //     isLoading = false;
-                        //   });
-                        // });
+                        Future.delayed(Duration(seconds: 5), () {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        });
                       });
                     },
                     child: Container(

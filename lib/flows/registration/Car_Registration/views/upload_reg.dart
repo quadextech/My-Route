@@ -1,18 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
-
+import 'package:file_picker/file_picker.dart';
+import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/drivers_services.dart';
 import '../widget/text_header.dart';
 import '../widget/upload_Button.dart';
+import 'package:path/path.dart' as path;
 
-class UploadFlieReg extends StatelessWidget {
-  UploadFlieReg({super.key});
+class UploadFlieReg extends ConsumerStatefulWidget {
+  const UploadFlieReg({super.key});
 
+  @override
+  ConsumerState<UploadFlieReg> createState() => _UploadFlieRegState();
+}
+
+class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   final TextEditingController expiryDateController = TextEditingController();
+  late var driversLicensePath;
+  late var exteriorPhotoPath;
+  late var interiorPhotoPath;
+  var driversLicense = '';
+  var exteriorPhoto = '';
+  var interiorPhoto = '';
+  var isLoading = false;
+  late List<String> filePaths = [
+    driversLicensePath,
+    exteriorPhotoPath,
+    interiorPhotoPath,
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final uploadFilesRef = ref.watch(driverServiceProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -47,9 +70,9 @@ class UploadFlieReg extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     "Driver’s License",
                     style: TextStyle(
@@ -73,20 +96,33 @@ class UploadFlieReg extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const UpLoadButton(),
+              Row(
+                children: [
+                  UpLoadButton(onPressed: () async {
+                    driversLicensePath = await pickFile();
+                    setState(() {
+                      driversLicense = path.basename(driversLicensePath);
+                    });
+                  }),
+                  const SizedBox(width: 5),
+                  Text(driversLicense),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: '',
+              mytextField(
+                  error: '',
+                  errorCondition: false,
                   controller: expiryDateController,
                   label: "Driver’s License expiry date*"),
               const Text("License number on your Driver’s documents"),
               const SizedBox(
                 height: 15,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     "Exterior Photo of your Cars",
                     style: TextStyle(
@@ -113,13 +149,24 @@ class UploadFlieReg extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const UpLoadButton(),
+              Row(
+                children: [
+                  UpLoadButton(onPressed: () async {
+                    exteriorPhotoPath = await pickFile();
+                    setState(() {
+                      exteriorPhoto = path.basename(exteriorPhotoPath);
+                    });
+                  }),
+                  const SizedBox(width: 5),
+                  Text(exteriorPhoto),
+                ],
+              ),
               const SizedBox(
                 height: 15,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     "Interior Photo of your Car",
                     style: TextStyle(
@@ -146,19 +193,86 @@ class UploadFlieReg extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const UpLoadButton(),
+              Row(
+                children: [
+                  UpLoadButton(onPressed: () async {
+                    interiorPhotoPath = await pickFile();
+
+                    setState(() {
+                      interiorPhoto = path.basename(interiorPhotoPath);
+                    });
+                  }),
+                  const SizedBox(width: 5),
+                  Text(interiorPhoto),
+                ],
+              ),
               const SizedBox(
                 height: 30,
               ),
-              AppButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PaymentDetail(),
-                        ));
-                  },
-                  label: "Next"),
+              isLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                          color: primaryColor, size: 25),
+                    )
+                  : AppButton(
+                      onPressed: () async {
+                       
+                        if (driversLicensePath != '' &&
+                            interiorPhotoPath != '' &&
+                            exteriorPhotoPath != '' &&
+                            expiryDateController.text.isNotEmpty) {
+                               setState(() {
+                          isLoading = true;
+                        });
+                          var message = await uploadFilesRef.uploadFiles(
+                              filePaths, expiryDateController.text);
+
+                          if (message == 'File uploaded') {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'File Uploaded',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentDetail(),
+                              )); } else {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    message,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            });
+                          }
+
+                         
+                        }else{
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(backgroundColor: Colors.red,
+                                  content: Text(
+                                    'Fill up all fields',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            });
+                        }
+                      },
+                      label: "Next"),
               const SizedBox(
                 height: 30,
               ),
@@ -167,5 +281,17 @@ class UploadFlieReg extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<String> pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      return file.path!;
+    } else {
+      String message = 'File picking canceled';
+      return message;
+    }
   }
 }

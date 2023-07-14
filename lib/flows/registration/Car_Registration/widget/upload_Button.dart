@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 
 class UpLoadButton extends StatelessWidget {
+  final VoidCallback onPressed;
   const UpLoadButton({
-    Key? key,
+    Key? key, required this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onPressed,
       child: Container(
         width: 130,
         height: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), border: Border.all()),
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               Icons.add,
               color: Colors.green,
             ),
-            const SizedBox(
+            SizedBox(
               height: 10,
             ),
-            const Text("Upload file")
+            Text("Upload file")
           ],
         ),
       ),
