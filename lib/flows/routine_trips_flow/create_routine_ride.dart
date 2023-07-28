@@ -25,7 +25,7 @@ class _CreateRoutineRideScreenState extends State<CreateRoutineRideScreen> {
         centerTitle: true,
         title: Text(
           'Routine Ride',
-          style: body1(black),
+          style: body1(black, TextDecoration.none),
         ),
       ),
       body: Padding(
@@ -47,13 +47,13 @@ class _CreateRoutineRideScreenState extends State<CreateRoutineRideScreen> {
               children: [
                 Text(
               '•',
-                  style: body3(black),
+                  style: body3(black, TextDecoration.none),
                 ),
                 SizedBox(width:size.width*0.85,
                   child: Padding( padding: const EdgeInsets.only(top:15.0),
                     child: Text(
                       ' These are trips you take regularly through the week either a a passenger,driver or both!',
-                      style: body3(black),
+                      style: body3(black, TextDecoration.none),
                     ),
                   ),
                 ),
@@ -62,19 +62,19 @@ class _CreateRoutineRideScreenState extends State<CreateRoutineRideScreen> {
             const SizedBox(height: 20),
             Text(
               '• Add as many routine trips as you like.',
-              style: body3(black),
+              style: body3(black, TextDecoration.none),
             ),
             const SizedBox(height: 7),
             Row(
               children: [Text(
               '•',
-                  style: body3(black),
+                  style: body3(black, TextDecoration.none),
                 ),
                 SizedBox(width:size.width*0.85,
                   child: Padding( padding: const EdgeInsets.only(top:15.0),
                     child: Text(
                       'This will help MyRoute quickly match you with a ride request or booking.',
-                      style: body3(black),
+                      style: body3(black, TextDecoration.none),
                     ),
                   ),
                 ),
@@ -83,7 +83,7 @@ class _CreateRoutineRideScreenState extends State<CreateRoutineRideScreen> {
             const SizedBox(height: 20),
             Text(
               '• Try it out now',
-              style: body3(black),
+              style: body3(black, TextDecoration.none),
             ),
               const SizedBox(height: 70),
               AppButton(onPressed: (){}, label: 'Create Routine Ride')

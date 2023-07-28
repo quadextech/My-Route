@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
@@ -9,6 +8,7 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
+import '../../Car_Registration/views/car_details_reg.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
@@ -136,7 +136,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => BottomNav(),
+                                        builder: (context) => CarDetailsReg(),
                                       ));
                                 } else {
                                   WidgetsBinding.instance

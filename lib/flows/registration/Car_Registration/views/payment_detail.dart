@@ -10,7 +10,7 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/banks_services.dart';
 import '../../../../services/connectivity_provider.dart';
-import '../../../PassengerBookingFlow/view/BookRideHomePage/BookRideHomePage.dart';
+import '../../../PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
 import '../../../PassengerBookingFlow/view/SearchingAvailableRide/SearchavailableRide_method.dart';
 import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 import '../widget/text_header.dart';
@@ -177,12 +177,12 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                     height: 20,
                                   ),
                                   Image.asset(success),
-                                  Text('Success!', style:  body2(Colors.red),),
+                                  Text('Success!', style:  body2(Colors.red, TextDecoration.none),),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Text('Your car has been registered successfully',
-                                    style: body3(black),
+                                    style: body3(black, TextDecoration.none),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -204,11 +204,11 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                     textColor: black,
                                       buttonColor: white,
                                       onPressed: (){
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => BottomNav(),
-                                            ));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder: (context) => BottomNav(),
+                                        //     ));
                                       }, label: "Exit registration"),
                                   SizedBox(
                                     height: 20,
@@ -225,12 +225,12 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text('Error!', style:  body2(Colors.red),),
+                              Text('Error!', style:  body2(Colors.red, TextDecoration.none),),
                               SizedBox(
                                 height: 10,
                               ),
                               Text('Sorry, Complete your Car registration before you proceed.',
-                                style: body3(grey),
+                                style: body3(grey, TextDecoration.none),
                               ),
                               SizedBox(
                                 height: 20,
@@ -253,7 +253,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => BottomNav(),
+                                          builder: (context) => PassengerHome(),
                                         ));
                                   }, label: "Exit registration"),
                               SizedBox(

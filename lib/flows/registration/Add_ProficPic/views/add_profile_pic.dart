@@ -147,7 +147,8 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                   ),
                 )
               ],
-            )),
+            ),
+            ),
             const SizedBox(
               height: 20,
             ),

@@ -16,7 +16,7 @@ class RoutineTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(contentPadding: EdgeInsets.all(20),
         hintText: hint,
-        hintStyle: body3(hintColor),
+        hintStyle: body3(hintColor, TextDecoration.none),
         filled: true,
         fillColor: grey,
         enabledBorder: OutlineInputBorder(

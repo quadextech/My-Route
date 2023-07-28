@@ -70,7 +70,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -120,11 +120,11 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+            Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Exterior Photo of your Cars",
+                    "Exterior Photo of your Car",
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
@@ -164,7 +164,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(

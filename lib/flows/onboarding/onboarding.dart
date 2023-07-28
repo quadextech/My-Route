@@ -22,6 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     onboarding4Image,
     onboarding5Image
   ];
+
   List texts = [
     "Share a ride with ",
     "Earn money driving with ",
@@ -29,6 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     "Save your funds with ",
     "Get rewarded with "
   ];
+
   List subTexts = [
     "Effortlessly Connect with Others and Make Your Commute a Breeze.",
     "Join Our Community of Earn-While-You-Drive Carpooles and Maximize Your Commute.",
@@ -36,6 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'Keep some money aside for your car maintenance either from income made driving or a deposit.',
     'Enjoy benefits from carpooling with us and saving the economy.'
   ];
+
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -75,6 +78,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             : grey),
                   );
                 })),
+
             const SizedBox(height: 10),
             SizedBox(height: 20, child: Image.asset(swipeIcon)),
             const SizedBox(height: 10),

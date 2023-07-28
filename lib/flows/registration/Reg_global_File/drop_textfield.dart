@@ -46,7 +46,7 @@ class DroptextField extends StatelessWidget {
           ),
         ),
         if (errorCondition)
-          Text(error, style: body4(Colors.red),)
+          Text(error, style: body4(Colors.red, TextDecoration.none),)
       ],
     );
   }

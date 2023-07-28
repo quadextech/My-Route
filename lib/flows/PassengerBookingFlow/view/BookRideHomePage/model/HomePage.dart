@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_file.dart';
-import 'package:myroute/flows/PassengerBookingFlow/view/select_car_preferences/select_car_preference.dart';
-
 import '../../../../../constants/app_color.dart';
 import '../../../../../constants/app_image.dart';
+import '../../../../../constants/textstyle.dart';
 import '../../SearchingAvailableRide/SearchavailableRide_method.dart';
 
 class PassengerHome extends StatefulWidget {
@@ -114,30 +114,11 @@ void didChangeDependencies() {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: black),
         centerTitle: true,
         title: const Swicher(),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SelectCarNow(),
-                ));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: CircleAvatar(
-                backgroundColor: white,
-                radius: 20,
-                child: Icon(
-                  Icons.menu,
-                  color: black,
-                  size: 15,
-                )),
-          ),
-        ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -151,6 +132,123 @@ void didChangeDependencies() {
                 )),
           ),
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: black,
+              ),
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: grey,
+                          radius: 30,
+                          backgroundImage: Image.asset(userIcon).image,
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                            },
+                            child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: primaryColor,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  color: white,
+                                ),
+                                child: const Icon(Icons.edit,  size: 15,)),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Jennifer Boluwatife', style: headline1(white)),
+                        Text('Point score: 500', style: body3(primaryColor, TextDecoration.none),),
+                        TextButton(onPressed: (){}, child: Text('Edit profile', style: body3(white, TextDecoration.underline),))
+                      ],
+                    )
+                  ],
+                )),
+            ListTile(
+              leading: SvgPicture.asset(svgwallet),
+              title: Text('MyWallet'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(mdicarsports),
+              title: Text('My CarRegistration'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(svgmyAutoDoc),
+              title: Text('My AutoDoc'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(svgAutosave),
+              title: Text('My AutoSave'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(svgautoinsure),
+              title: Text('My AutoInsure'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(svgnaira),
+              title: Text('My CarEarn'),
+              onTap: (){
+
+              },
+            ),
+            ListTile(
+              leading: SvgPicture.asset(svgPointsandreward),
+              title: Text('Points and Reward'),
+              onTap: (){
+
+              },
+            ),
+
+            Container(
+              color: grey,
+              height: 5,
+            ),
+
+            ListTile(
+              leading: SvgPicture.asset(svglogout),
+              title: Text('Log out'),
+              onTap: (){
+
+              },
+            ),
+
+          ],
+        ),
       ),
       body: Stack(
         children: [

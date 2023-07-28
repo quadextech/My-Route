@@ -293,7 +293,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                   const Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Divider(),
@@ -342,7 +342,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             builder: (context) => LoginScreen(),
                           ));
                     },
-                    child: const Row(
+                    child:Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Already have an account?"),

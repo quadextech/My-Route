@@ -114,16 +114,16 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                     ),
                     Text(
                       'You are currently on passenger mode',
-                      style: body4(black),
+                      style: body4(black, TextDecoration.none),
                     ),
                     const SizedBox(height: 20),
-                    Text('Trip title', style: body3(black)),
+                    Text('Trip title', style: body3(black, TextDecoration.none)),
                     const SizedBox(height: 10),
                     RoutineTextField(
                         controller: tripTitleController,
                         hint: 'Give your trip a name'),
                     const SizedBox(height: 20),
-                    Text('What\'s your preferred route?', style: body3(black)),
+                    Text('What\'s your preferred route?', style: body3(black, TextDecoration.none)),
                     const SizedBox(height: 10),
                     GlobalDroptextField(
                         prificIcon: SvgPicture.asset(svgroute),
@@ -135,7 +135,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                           "BolaLe Street",
                         ]),
                     const SizedBox(height: 20),
-                    Text('Journey Details', style: body3(black)),
+                    Text('Journey Details', style: body3(black, TextDecoration.none)),
                     const SizedBox(height: 10),
                     GlobaltextField(
                         controller: currentMapController,

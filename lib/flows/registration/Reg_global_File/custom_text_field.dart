@@ -80,7 +80,7 @@ class _mytextFieldState extends State<mytextField> {
           ),
         ),
         if(widget.errorCondition)
-        Text(widget.error, style: body4(Colors.red),)
+        Text(widget.error, style: body4(Colors.red, TextDecoration.none),)
       ],
     );
   }

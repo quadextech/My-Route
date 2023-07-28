@@ -9,15 +9,15 @@ headline2(color) {
 headline3(color) {
   return TextStyle( fontFamily: "Avenir", fontSize:15, fontWeight:FontWeight.bold, color:color);
 }
-body1(color) {
-  return TextStyle( fontFamily: "Avenir", fontSize:20,  color:color);
+body1(color, decoration) {
+  return TextStyle( fontFamily: "Avenir", fontSize:20,  color:color, decoration: decoration);
 }
-body2(color) {
-  return TextStyle( fontFamily: "Avenir", fontSize:18, color:color);
+body2(color, decoration) {
+  return TextStyle( fontFamily: "Avenir", fontSize:18, color:color, decoration: decoration);
 }
-body3(color) {
-  return TextStyle( fontFamily: "Avenir", fontSize:15, color:color);
+body3(color, decoration) {
+  return TextStyle( fontFamily: "Avenir", fontSize:15, color:color, decoration: decoration);
 }
-body4(color) {
-  return TextStyle( fontFamily: "Avenir", fontSize:13, color:color);
+body4(color, decoration) {
+  return TextStyle( fontFamily: "Avenir", fontSize:13, color:color, decoration: decoration);
 }

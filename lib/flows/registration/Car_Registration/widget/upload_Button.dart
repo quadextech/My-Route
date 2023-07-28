@@ -15,7 +15,7 @@ class UpLoadButton extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), border: Border.all()),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

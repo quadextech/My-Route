@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../BookRideHomePage/model/HomePage.dart';
+import '../../BookRideHomePage/model/homepageUI.dart';
 import 'BorderButton.dart';
 
 
@@ -376,7 +377,7 @@ class _SelectedCarState extends State<SelectedCar> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PassengerHome(),
+                    builder: (context) => const PassengerHomeScreen(),
                   ));},
           ),
 

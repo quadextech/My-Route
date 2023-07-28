@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/flows/PassengerBookingFlow/view/select_car_preferences/select_car_preference.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../global_file/swicher.dart';
+import '../BookRideHomePage/model/homepageUI.dart';
 import 'SearchavailableRide_method.dart';
 
 class SearchingRide extends StatefulWidget {
@@ -49,7 +49,7 @@ class _SearchingRideState extends State<SearchingRide> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SelectCarNow(),
+                  builder: (context) => const PassengerHomeScreen(),
                 ));
           },
           child: Padding(
