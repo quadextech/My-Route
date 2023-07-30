@@ -58,7 +58,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey,
+                      color: grey1,
                     ),
                     width: 50,
                     child: Center(
@@ -87,41 +87,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey,
-                    ),
-                    width: 50,
-                    child: Center(
-                        child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          String nevalue = ("$code$value");
-
-                          code = nevalue;
-                        });
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        } else {
-                          if (value.isEmpty) {
-                            FocusScope.of(context).previousFocus();
-                          }
-                        }
-                      },
-                      onSaved: (newValue3) {},
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    )),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: grey,
+                      color: grey1,
                     ),
                     width: 50,
                     child: Center(
@@ -155,7 +121,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey,
+                      color: grey1,
                     ),
                     width: 50,
                     child: Center(
@@ -189,7 +155,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey,
+                      color: grey1,
                     ),
                     width: 50,
                     child: Center(
@@ -223,7 +189,41 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey,
+                      color: grey1,
+                    ),
+                    width: 50,
+                    child: Center(
+                        child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          String nevalue = ("$code$value");
+
+                          code = nevalue;
+                        });
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        } else {
+                          if (value.isEmpty) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                        }
+                      },
+                      onSaved: (newValue3) {},
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                    )),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: grey1,
                     ),
                     width: 50,
                     child: Center(

@@ -27,7 +27,8 @@ const routine = 'assets/images/routine.png';
 const map = 'assets/images/map.png';
 const svgerror = 'assets/images/ic_outline-error-outline.svg';
 const success = 'assets/images/mdi_success-circle-outline.svg';
-const svgarrowoutward = 'assets/images/material-symbols_arrow-outward-rounded.svg';
+const svgarrowoutward =
+    'assets/images/material-symbols_arrow-outward-rounded.svg';
 const svgarrowbottomleftred = 'assets/images/mdi_arrow-bottom-left.svg';
 const svgarrowbottomleftgreen = 'assets/images/mdi_arrow-bottom-left (1).svg';
 const svgcall = 'assets/images/material-symbols_call.svg';
@@ -38,3 +39,5 @@ const svglogout = 'assets/images/ic_twotone-logout.svg';
 const svgnaira = 'assets/images/mdi_naira.svg';
 const svgAutosave = 'assets/images/material-symbols_savings-outline-sharp.svg';
 const svgautoinsure = 'assets/images/icon-park-outline_protect.svg';
+const svgcard = 'assets/images/card.png';
+const bank = 'assets/images/bank.png';

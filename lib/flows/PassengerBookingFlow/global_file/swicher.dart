@@ -54,9 +54,7 @@ class _SwicherState extends State<Swicher> {
                       height: 20,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: isCostomer
-                            ? primaryColor
-                            : black,
+                        color: isCostomer ? primaryColor : black,
                       ),
                     ),
                   ),
@@ -75,9 +73,7 @@ class _SwicherState extends State<Swicher> {
                       height: 20,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: isCostomer
-                            ? black
-                            : primaryColor,
+                        color: isCostomer ? black : primaryColor,
                       ),
                     ),
                   ),
@@ -88,7 +84,7 @@ class _SwicherState extends State<Swicher> {
         ),
         SvgPicture.asset(
           svgmytitleCar,
-          color: isCostomer ? grey : primaryColor,
+          color: isCostomer ? grey1 : primaryColor,
         ),
       ]),
     );

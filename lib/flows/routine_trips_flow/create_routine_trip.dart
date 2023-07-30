@@ -93,7 +93,8 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
           backgroundColor: Colors.transparent,
           leading: AppBackButton(),
         ),
-        body: SingleChildScrollView(physics: const BouncingScrollPhysics(),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -114,16 +115,16 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                     ),
                     Text(
                       'You are currently on passenger mode',
-                      style: body4(black, TextDecoration.none),
+                      style: body4(black),
                     ),
                     const SizedBox(height: 20),
-                    Text('Trip title', style: body3(black, TextDecoration.none)),
+                    Text('Trip title', style: body3(black)),
                     const SizedBox(height: 10),
                     RoutineTextField(
                         controller: tripTitleController,
                         hint: 'Give your trip a name'),
                     const SizedBox(height: 20),
-                    Text('What\'s your preferred route?', style: body3(black, TextDecoration.none)),
+                    Text('What\'s your preferred route?', style: body3(black)),
                     const SizedBox(height: 10),
                     GlobalDroptextField(
                         prificIcon: SvgPicture.asset(svgroute),
@@ -135,7 +136,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                           "BolaLe Street",
                         ]),
                     const SizedBox(height: 20),
-                    Text('Journey Details', style: body3(black, TextDecoration.none)),
+                    Text('Journey Details', style: body3(black)),
                     const SizedBox(height: 10),
                     GlobaltextField(
                         controller: currentMapController,
@@ -154,7 +155,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                           color: Colors.green,
                         ),
                         label: "Where are you going to?"),
-                        const SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const Text(
                       'When are you going?',
                       style: TextStyle(
@@ -167,7 +168,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                       height: 55,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
-                        color: grey,
+                        color: grey1,
                       ),
                       child: InkWell(
                         onTap: () {
@@ -232,7 +233,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
-                        color: grey,
+                        color: grey1,
                       ),
                       child: InkWell(
                         onTap: () {
@@ -279,26 +280,26 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                              const Text(
-                                'How many seats are you booking?',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
+                    const Text(
+                      'How many seats are you booking?',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Container(
                         height: 55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          color: grey,
+                          color: grey1,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Row(
                             children: [
                               BorderButton(
-                                  backgroundColor: grey,
+                                  backgroundColor: grey1,
                                   color: Colors.black45,
                                   onTap: () {
                                     setState(() {
@@ -326,7 +327,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                                 width: 14,
                               ),
                               BorderButton(
-                                  backgroundColor: grey,
+                                  backgroundColor: grey1,
                                   color: Colors.black45,
                                   onTap: () {
                                     setState(() {

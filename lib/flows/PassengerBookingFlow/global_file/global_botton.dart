@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class GlobalAppButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String label;
-  Color buttonColor;
-  Color textColor;
-  Widget bottonIcon;
-  GlobalAppButton({
+ final VoidCallback onPressed;
+  final String label;
+ final Color buttonColor;
+ final Color textColor;
+ final Widget bottonIcon;
+  const GlobalAppButton({
     this.bottonIcon = const Text(""),
     required this.onPressed,
     required this.label,

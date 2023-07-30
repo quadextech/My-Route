@@ -30,7 +30,6 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   TextEditingController passwordCcontroller2 = TextEditingController();
   var sex = "Male";
 
-
   //bool isLLoading = false;
 
   bool isImageGood() {
@@ -106,48 +105,48 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
               height: 20,
             ),
             Center(
-                child: Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor: grey,
-                  radius: 80,
-                  backgroundImage: _imageFile == null
-                      ? Image.asset(userIcon).image
-                      : FileImage(File(_imageFile!.path)),
-                ),
-                Positioned(
-                  bottom: 9,
-                  right: 15,
-                  child: GestureDetector(
-                    onTap: () {
-                      ImageUploadref.uploadImage(context, (pickedImg) {
-                        setState(() {
-                          _imageFile = pickedImg;
-                          isLoading = true;
-                        });
-
-                        Future.delayed(Duration(seconds: 5), () {
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: grey1,
+                    radius: 80,
+                    backgroundImage: _imageFile == null
+                        ? Image.asset(userIcon).image
+                        : FileImage(File(_imageFile!.path)),
+                  ),
+                  Positioned(
+                    bottom: 9,
+                    right: 15,
+                    child: GestureDetector(
+                      onTap: () {
+                        ImageUploadref.uploadImage(context, (pickedImg) {
                           setState(() {
-                            isLoading = false;
+                            _imageFile = pickedImg;
+                            isLoading = true;
+                          });
+
+                          Future.delayed(Duration(seconds: 5), () {
+                            setState(() {
+                              isLoading = false;
+                            });
                           });
                         });
-                      });
-                    },
-                    child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: primaryColor,
+                      },
+                      child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: primaryColor,
+                            ),
+                            shape: BoxShape.circle,
+                            color: white,
                           ),
-                          shape: BoxShape.circle,
-                          color: white,
-                        ),
-                        child: const Icon(Icons.edit)),
-                  ),
-                )
-              ],
-            ),
+                          child: const Icon(Icons.edit)),
+                    ),
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -159,69 +158,71 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                         strokeWidth: 2,
                       ))
                     :
-                //isImageGood()
-                       // ?
-                AppButton(
-                  onPressed: () async {
-                    if (connectivityState.status == ConnectivityStatus.disconnected) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'No internet connection',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      });
-                    } else {
-                      setState(() {
-                        isLoading = true;
-                      });
-
-                      String message = await signUpref.userSignUp(
-                        emailController.text,
-                        passwordCcontroller.text,
-                        firstNameController.text,
-                        lastNameController.text,
-                        phoneNumberController.text,
-                        sex,
-                      );
-
-                      if (message == 'Sign Up Successful') {
-                        if (_imageFile != null) {
-                          var imageResponse = await Imageref.userAvatar(_imageFile!.path);
-                          if (imageResponse.statusCode == 200) {
-                            setState(() {
-                              isLoading = false;
+                    //isImageGood()
+                    // ?
+                    AppButton(
+                        onPressed: () async {
+                          if (connectivityState.status ==
+                              ConnectivityStatus.disconnected) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'No internet connection',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
                             });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AppPayment(),
-                              ),
+                          } else {
+                            setState(() {
+                              isLoading = true;
+                            });
+
+                            String message = await signUpref.userSignUp(
+                              emailController.text,
+                              passwordCcontroller.text,
+                              firstNameController.text,
+                              lastNameController.text,
+                              phoneNumberController.text,
+                              sex,
                             );
+
+                            if (message == 'Sign Up Successful') {
+                              if (_imageFile != null) {
+                                var imageResponse =
+                                    await Imageref.userAvatar(_imageFile!.path);
+                                if (imageResponse.statusCode == 200) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const AppPayment(),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const AppPayment(),
+                                //   ),
+                                // );
+                              }
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
                           }
-                        } else {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const AppPayment(),
-                          //   ),
-                          // );
-                        }
-                      } else {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                    }
-                  },
-                  label: "Submit",
-                ))
+                        },
+                        label: "Submit",
+                      ))
           ],
         ),
       ),

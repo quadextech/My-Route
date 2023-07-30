@@ -8,8 +8,6 @@ import '../../../../../constants/app_image.dart';
 import '../../../../registration/Reg_global_File/App_button.dart';
 import '../../../../registration/SignUp/views/Sign_up.dart';
 
-
-
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +15,6 @@ import 'package:intl/intl.dart';
 import '../../BookRideHomePage/model/HomePage.dart';
 import '../../BookRideHomePage/model/homepageUI.dart';
 import 'BorderButton.dart';
-
 
 class SelectedCar extends StatefulWidget {
   const SelectedCar({super.key});
@@ -42,7 +39,6 @@ class _SelectedCarState extends State<SelectedCar> {
   DateTime selectedDate = DateTime.now();
 
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -78,7 +74,6 @@ class _SelectedCarState extends State<SelectedCar> {
     }
   }
 
-
   @override
   void initState() {
     _dateController.text = DateFormat.yMd().format(DateTime.now());
@@ -89,16 +84,10 @@ class _SelectedCarState extends State<SelectedCar> {
     super.initState();
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -114,25 +103,27 @@ class _SelectedCarState extends State<SelectedCar> {
             size: 20,
           ),
         ),
-        title: Text("Select Ride Preferences",
+        title: Text(
+          "Select Ride Preferences",
           style: TextStyle(
             color: black,
           ),
         ),
         centerTitle: true,
       ),
-
       body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-            const Text("Journey details", style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w500,
-            ),),
-
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Journey details",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 18),
               child: GlobaltextField(
@@ -155,7 +146,8 @@ class _SelectedCarState extends State<SelectedCar> {
             const SizedBox(
               height: 30,
             ),
-            const Text("What’s your preferred route?",
+            const Text(
+              "What’s your preferred route?",
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
@@ -165,7 +157,6 @@ class _SelectedCarState extends State<SelectedCar> {
               padding: const EdgeInsets.only(top: 15, bottom: 30),
               child: GlobalDroptextField(
                   prificIcon: SvgPicture.asset(svgroute),
-
                   selected: 'Ikeja - Ikorodu way',
                   listTextFied: const [
                     'Ikeja - Ikorodu way',
@@ -174,219 +165,222 @@ class _SelectedCarState extends State<SelectedCar> {
                     "BolaLe Street",
                   ]),
             ),
-            const Text('When are you going?',
+            const Text(
+              'When are you going?',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),
             ),
-
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 30),
-            child: Container(
-              height: 55,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: grey,
-              ),
-              child: InkWell(
-                onTap: () {
-                  _selectDate(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Icon(Icons.calendar_month,
-                        color: black,
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          height: 55,
-                          alignment: Alignment.center,
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 15),
-                            textAlign: TextAlign.center,
-                            enabled: false,
-                            keyboardType: TextInputType.text,
-                            controller: _dateController,
-                            onSaved: (val) {
-                              _setDate = val;
-                            },
-                            decoration: const InputDecoration(
-                              disabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none,
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 30),
+              child: Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: grey1,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.calendar_month,
+                          color: black,
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: 100,
+                            height: 55,
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 15),
+                              textAlign: TextAlign.center,
+                              enabled: false,
+                              keyboardType: TextInputType.text,
+                              controller: _dateController,
+                              onSaved: (val) {
+                                _setDate = val;
+                              },
+                              decoration: const InputDecoration(
+                                disabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                // labelText: 'Time',
+                                contentPadding: EdgeInsets.only(top: 0.0),
                               ),
-                              // labelText: 'Time',
-                              contentPadding: EdgeInsets.only(top: 0.0),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Icon(Icons.arrow_drop_down,
-                        color: primaryColor,),
-                    ],
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: primaryColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-
-          const Text('What time are you going?',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w500,
-            ),),
-
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 30),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: grey,
+            const Text(
+              'What time are you going?',
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
               ),
-              child: InkWell(
-                onTap: () {
-                  _selectTime(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Icon(Icons.access_time,
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 100,
-                          height: 55,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-
-                              borderRadius: BorderRadius.circular(12),
-                              border: null
-
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(fontSize: 15),
-                            textAlign: TextAlign.center,
-                            onSaved: (val) {
-                              _setTime = val;
-                            },
-                            enabled: false,
-                            keyboardType: TextInputType.text,
-                            controller: _timeController,
-                            decoration: const InputDecoration(
-                              disabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide.none,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 30),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: grey1,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    _selectTime(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Icon(
+                          Icons.access_time,
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: 100,
+                            height: 55,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: null),
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 15),
+                              textAlign: TextAlign.center,
+                              onSaved: (val) {
+                                _setTime = val;
+                              },
+                              enabled: false,
+                              keyboardType: TextInputType.text,
+                              controller: _timeController,
+                              decoration: const InputDecoration(
+                                disabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                // labelText: 'Time',
+                                contentPadding: EdgeInsets.all(5),
                               ),
-                              // labelText: 'Time',
-                              contentPadding: EdgeInsets.all(5),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 180,
-                      ),
-                      const Icon(Icons.arrow_drop_down,
-                        color: primaryColor,),
-                    ],
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: primaryColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-
-          const Text('How many seats are you booking?',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w500,
-            ),),
-
-        Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 6),
-          child: Container(
-            height: 55,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: grey,
+            const Text(
+              'How many seats are you booking?',
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
               ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Row(
-                children: [
-                  BorderButton(
-                      backgroundColor: grey,
-                      color: Colors.black45,
-                      onTap: (){
-                        setState(() {
-                          while(true){
-                            if(numberOfSeats == 1){
-                              break;
-                            } else {
-                              numberOfSeats--;}}
-                        });
-                      }, Icons: Icons.horizontal_rule,
-                      size: 25),
-
-                  const SizedBox(
-                    width: 14,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 6),
+              child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: grey1,
                   ),
-
-                  Text('$numberOfSeats',
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),),
-
-                  const SizedBox(
-                    width: 14,
-                  ),
-
-                  BorderButton(
-                    backgroundColor: grey,
-                      color: Colors.black45,
-                      onTap: (){
-                        setState(() {
-                          numberOfSeats++;
-                        });
-                      }, Icons: Icons.add,
-                      size: 25),
-                ],
-              ),
-            )
-          ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      children: [
+                        BorderButton(
+                            backgroundColor: grey1,
+                            color: Colors.black45,
+                            onTap: () {
+                              setState(() {
+                                while (true) {
+                                  if (numberOfSeats == 1) {
+                                    break;
+                                  } else {
+                                    numberOfSeats--;
+                                  }
+                                }
+                              });
+                            },
+                            Icons: Icons.horizontal_rule,
+                            size: 25),
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        Text(
+                          '$numberOfSeats',
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        BorderButton(
+                            backgroundColor: grey1,
+                            color: Colors.black45,
+                            onTap: () {
+                              setState(() {
+                                numberOfSeats++;
+                              });
+                            },
+                            Icons: Icons.add,
+                            size: 25),
+                      ],
+                    ),
+                  )),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            AppButton(
+              buttonColor: black,
+              label: "Search for ride",
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PassengerHomeScreen(),
+                    ));
+              },
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
         ),
-          const SizedBox(
-            height: 30,
-          ),
-
-          AppButton(
-            buttonColor: black,
-            label: "Search for ride",
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PassengerHomeScreen(),
-                  ));},
-          ),
-
-          const SizedBox(
-            height: 30,
-          ),
-        ],
-      ),
-          )),
+      )),
     );
   }
 }

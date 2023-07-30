@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'flows/PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import 'package:myroute/flows/my%20wallet/views/mywallet.dart';
 
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: PassengerHomeScreen(),
+      home: MyWalletScreen(),
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myroute/constants/app_color.dart';
+import 'package:myroute/constants/textstyle.dart';
 
 class AppButton extends StatelessWidget {
   VoidCallback onPressed;
@@ -27,11 +29,7 @@ class AppButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: textColor,
-            ),
+            style: body3(white)
           ),
         ),
       ),

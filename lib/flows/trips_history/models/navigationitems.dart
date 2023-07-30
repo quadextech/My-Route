@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/textstyle.dart';
 
-
 class MyRidesContainer extends StatelessWidget {
   final color;
   final textName;
@@ -13,16 +12,15 @@ class MyRidesContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text(textName, style: body3(textColor, TextDecoration.none),
-          ),
+        child: Text(
+          textName,
+          style: body3(textColor),
+        ),
       ),
       height: 40,
       width: 95,
       decoration:
-      BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(30)
-      ),
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(30)),
     );
   }
 }

@@ -20,7 +20,7 @@ class mytextField extends StatefulWidget {
       this.ispassword = false,
       this.isobsure = false,
       required this.label,
-     required this.error,
+      required this.error,
       this.isFocused = false,
       this.errorCondition,
       this.focusNode})
@@ -33,13 +33,15 @@ class mytextField extends StatefulWidget {
 class _mytextFieldState extends State<mytextField> {
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           height: 55,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: widget.errorCondition? Colors.red:black),
+            border:
+                Border.all(color: widget.errorCondition ? Colors.red : black),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -56,9 +58,8 @@ class _mytextFieldState extends State<mytextField> {
                 controller: widget.controller,
                 decoration: InputDecoration(
                     hintText: widget.label,
-                    
-                    suffixIcon:
-                        widget.ispassword ?  IconButton(
+                    suffixIcon: widget.ispassword
+                        ? IconButton(
                             onPressed: () {
                               setState(() {
                                 widget.isobsure = !widget.isobsure;
@@ -68,8 +69,9 @@ class _mytextFieldState extends State<mytextField> {
                                 widget.isobsure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                //color: grey,
-                                size: 15)): null,
+                                //color: grey1,
+                                size: 15))
+                        : null,
                     hintStyle: const TextStyle(
                       fontSize: 18,
                     ),
@@ -79,8 +81,11 @@ class _mytextFieldState extends State<mytextField> {
             ),
           ),
         ),
-        if(widget.errorCondition)
-        Text(widget.error, style: body4(Colors.red, TextDecoration.none),)
+        if (widget.errorCondition)
+          Text(
+            widget.error,
+            style: body4(Colors.red),
+          )
       ],
     );
   }

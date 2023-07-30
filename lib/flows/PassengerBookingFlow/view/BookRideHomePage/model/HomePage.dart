@@ -21,91 +21,90 @@ class _PassengerHomeState extends State<PassengerHome> {
 
   double _dragSheetExtent = 0.0;
 
-double? contentHeight;
+  double? contentHeight;
 
-@override
-void didChangeDependencies() {
-  // TODO: implement initState
-  super.didChangeDependencies();
-  Future.delayed(Duration(seconds: 6), () {
-
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.45,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(child: Icon(
-              Icons.horizontal_rule, size: 70, color: grey,
-
-            )),
-            SizedBox(
-              height: 7,
-            ),
-
-            Column(
+  @override
+  void didChangeDependencies() {
+    // TODO: implement initState
+    super.didChangeDependencies();
+    Future.delayed(
+      Duration(seconds: 6),
+      () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => CustomPopUpContainer(
+            height: MediaQuery.of(context).size.height * 0.45,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                GlobaltextField(
-                  keyboardType: TextInputType.none,
-                  u: true,
-                  controller: whereEditingController,
-                  preficIcon: const Icon(Icons.radio_button_checked),
-                  label: "Where are you leaving From",
-                ),
-                const SizedBox(height: 20),
-                GlobaltextField(
-                  keyboardType: TextInputType.none,
-                  u: true,
-                  controller: goingToEditingController,
-                  preficIcon: const Icon(
-                    Icons.location_on,
-                    color: Colors.green,
-                  ),
-                  label: "Where are you going to?",
-                ),
-                const SizedBox(height: 20),
-
-                Row(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.42,
-                      child: GlobaltextField(
-                        keyboardType: TextInputType.none,
-                        u: true,
-                        controller: whenEditingController,
-                        preficIcon: const Icon(Icons.calendar_month),
-                        label: "When are you going",
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.42,
-                      child: GlobaltextField(
-                        keyboardType: TextInputType.none,
-                        u: true,
-                        controller: howManyEditingController,
-                        preficIcon: const Icon(Icons.person),
-                        label: "How many Seats?",
-                      ),
-                    ),
-                  ],
-                ),
+                Center(
+                    child: Icon(
+                  Icons.horizontal_rule,
+                  size: 70,
+                  color: grey1,
+                )),
                 SizedBox(
-                  height: 20,
+                  height: 7,
+                ),
+                Column(
+                  children: [
+                    GlobaltextField(
+                      keyboardType: TextInputType.none,
+                      u: true,
+                      controller: whereEditingController,
+                      preficIcon: const Icon(Icons.radio_button_checked),
+                      label: "Where are you leaving From",
+                    ),
+                    const SizedBox(height: 20),
+                    GlobaltextField(
+                      keyboardType: TextInputType.none,
+                      u: true,
+                      controller: goingToEditingController,
+                      preficIcon: const Icon(
+                        Icons.location_on,
+                        color: Colors.green,
+                      ),
+                      label: "Where are you going to?",
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.42,
+                          child: GlobaltextField(
+                            keyboardType: TextInputType.none,
+                            u: true,
+                            controller: whenEditingController,
+                            preficIcon: const Icon(Icons.calendar_month),
+                            label: "When are you going",
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.42,
+                          child: GlobaltextField(
+                            keyboardType: TextInputType.none,
+                            u: true,
+                            controller: howManyEditingController,
+                            preficIcon: const Icon(Icons.person),
+                            label: "How many Seats?",
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
                 )
-
               ],
-            )
-          ],
-        ),
-      ),
-      isScrollControlled: true,
-
+            ),
+          ),
+          isScrollControlled: true,
+        );
+      },
     );
-  },
-  );
-}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,15 +136,15 @@ void didChangeDependencies() {
         child: ListView(
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: black,
-              ),
+                decoration: BoxDecoration(
+                  color: black,
+                ),
                 child: Row(
                   children: [
                     Stack(
                       children: [
                         CircleAvatar(
-                          backgroundColor: grey,
+                          backgroundColor: grey1,
                           radius: 30,
                           backgroundImage: Image.asset(userIcon).image,
                         ),
@@ -153,8 +152,7 @@ void didChangeDependencies() {
                           bottom: 0,
                           right: 10,
                           child: GestureDetector(
-                            onTap: () {
-                            },
+                            onTap: () {},
                             child: Container(
                                 width: 20,
                                 height: 20,
@@ -165,7 +163,10 @@ void didChangeDependencies() {
                                   shape: BoxShape.circle,
                                   color: white,
                                 ),
-                                child: const Icon(Icons.edit,  size: 15,)),
+                                child: const Icon(
+                                  Icons.edit,
+                                  size: 15,
+                                )),
                           ),
                         )
                       ],
@@ -178,8 +179,18 @@ void didChangeDependencies() {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Jennifer Boluwatife', style: headline1(white)),
-                        Text('Point score: 500', style: body3(primaryColor, TextDecoration.none),),
-                        TextButton(onPressed: (){}, child: Text('Edit profile', style: body3(white, TextDecoration.underline),))
+                        Text(
+                          'Point score: 500',
+                          style: body3(primaryColor),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text('Edit profile',
+                                style: TextStyle(
+                                    fontFamily: "Avenir",
+                                    fontSize: 15,
+                                    color: white,
+                                    decoration: TextDecoration.underline)))
                       ],
                     )
                   ],
@@ -187,86 +198,63 @@ void didChangeDependencies() {
             ListTile(
               leading: SvgPicture.asset(svgwallet),
               title: Text('MyWallet'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(mdicarsports),
               title: Text('My CarRegistration'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(svgmyAutoDoc),
               title: Text('My AutoDoc'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(svgAutosave),
               title: Text('My AutoSave'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(svgautoinsure),
               title: Text('My AutoInsure'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(svgnaira),
               title: Text('My CarEarn'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: SvgPicture.asset(svgPointsandreward),
               title: Text('Points and Reward'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
-
             Container(
-              color: grey,
+              color: grey1,
               height: 5,
             ),
-
             ListTile(
               leading: SvgPicture.asset(svglogout),
               title: Text('Log out'),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
-
           ],
         ),
       ),
-      body: Stack(
-        children: [
+      body: Stack(children: [
         Container(
-              height: size.height,
-              width: size.width,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage(
-                  city,
-                ),
-                fit: BoxFit.fill,
-              )),
+          height: size.height,
+          width: size.width,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage(
+              city,
             ),
-          
-    ]
-      ),
-
+            fit: BoxFit.fill,
+          )),
+        ),
+      ]),
     );
   }
 }

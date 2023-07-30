@@ -5,13 +5,16 @@ import '../../../constants/app_color.dart';
 
 class GlobalDroptextField extends StatefulWidget {
   final Widget prificIcon;
- 
-   String? selected;
- final List? listTextFied;
 
-   GlobalDroptextField(
-      {this.selected, this.listTextFied, required this.prificIcon, Key? key, })
-      : super(key: key);
+  String? selected;
+  final List? listTextFied;
+
+  GlobalDroptextField({
+    this.selected,
+    this.listTextFied,
+    required this.prificIcon,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<GlobalDroptextField> createState() => _DroptextFieldState();
@@ -23,7 +26,7 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-          color: grey, borderRadius: BorderRadius.circular(12), border: null),
+          color: grey1, borderRadius: BorderRadius.circular(12), border: null),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Center(
@@ -45,10 +48,10 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
                 .toList(),
             // ignore: prefer_const_constructors
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(20),
-                prefixIcon: widget.prificIcon,
-                border: InputBorder.none,
-               ),
+              contentPadding: EdgeInsets.all(20),
+              prefixIcon: widget.prificIcon,
+              border: InputBorder.none,
+            ),
           ),
         ),
       ),

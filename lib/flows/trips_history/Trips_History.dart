@@ -16,7 +16,6 @@ class TripHistory extends StatefulWidget {
 }
 
 class _TripHistoryState extends State<TripHistory> {
-
   List TripsPages = [
     Package(),
     Text('dan'),
@@ -29,7 +28,6 @@ class _TripHistoryState extends State<TripHistory> {
     Colors.black,
   ];
 
-
   List<String> textName = [
     'Completed',
     'Pending',
@@ -38,7 +36,6 @@ class _TripHistoryState extends State<TripHistory> {
 
   int _currentIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -46,8 +43,14 @@ class _TripHistoryState extends State<TripHistory> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 1,
-        title: Padding(padding: EdgeInsets.symmetric(horizontal: 75),
-        child: Text('My Rides', style: body1(black, TextDecoration.none),)),
+        title: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 75),
+            child: Text(
+              'My Rides',
+              style: body1(
+                black,
+              ),
+            )),
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
           child: BorderButton(
@@ -60,62 +63,61 @@ class _TripHistoryState extends State<TripHistory> {
             size: 20,
           ),
         ),
-
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-         Material(
-           elevation: 1,
-           child: Container(
-             height: 60,
-             child: Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: List.generate(TripsPages.length, (index) {
-                   return Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                     child: MyRidesContainer(
-                       textName: _currentIndex == index ? textName[index] : textName[index],
-                         color: _currentIndex == index
-                             ? color[index]
-                             : null,
-                       textColor: _currentIndex == index ? white : hintColor,
-                     ),
-                   );
-                 })),
-           ),
-         ),
-         SizedBox(
-           height: 25,
-         ),
-         Padding(
-             padding: EdgeInsets.symmetric(horizontal: 10),
-             child: Text('This month', style: body3(black, TextDecoration.none),)),
-
-         SizedBox(
-           height: 10,
-         ),
-
-         Padding(
-           padding: EdgeInsets.symmetric(horizontal: 10),
-           child: ConstrainedBox(
-             constraints: BoxConstraints(maxHeight: size.height * 0.6),
-             child: Stack(children: [
-               PageView.builder(
-                   itemCount: TripsPages.length,
-                   onPageChanged: (index) {
-                     setState(() {
-                       _currentIndex = index;
-                     });
-                   },
-                   itemBuilder: (context, index) {
-                     return TripsPages[index];
-
-                   }),
-             ]),
-           ),
-         ),
-       ],
+        children: [
+          Material(
+            elevation: 1,
+            child: Container(
+              height: 60,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(TripsPages.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: MyRidesContainer(
+                        textName: _currentIndex == index
+                            ? textName[index]
+                            : textName[index],
+                        color: _currentIndex == index ? color[index] : null,
+                        textColor: _currentIndex == index ? white : hintColor,
+                      ),
+                    );
+                  })),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'This month',
+                style: body3(black),
+              )),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: size.height * 0.6),
+              child: Stack(children: [
+                PageView.builder(
+                    itemCount: TripsPages.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return TripsPages[index];
+                    }),
+              ]),
+            ),
+          ),
+        ],
       ),
     );
   }
