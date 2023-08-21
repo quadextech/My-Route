@@ -11,23 +11,24 @@ class RoutineTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(cursorColor: black,
-    
+    return TextField(
+      cursorColor: black,
       controller: controller,
-      decoration: InputDecoration(contentPadding: EdgeInsets.all(20),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(20),
         hintText: hint,
-        hintStyle: body3(hintColor, TextDecoration.none),
+        hintStyle: body3(hintColor,TextDecoration.none),
         filled: true,
-        fillColor: grey,
+        fillColor: grey1,
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
           width: 2,
-          color: grey,
+          color: grey1,
         )),
-       focusedBorder: OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
           width: 2,
-          color: grey,
+          color: grey1,
         )),
       ),
     );

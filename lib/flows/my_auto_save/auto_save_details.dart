@@ -90,7 +90,7 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
               ),
               SizedBox(height: 10,),
               Container(
-                color: grey,
+                color: grey1,
                 height: 2,
                 width: size.width,
               ),
@@ -101,7 +101,7 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
               ),
               SizedBox(height: 10,),
               Container(
-                color: grey,
+                color: grey1,
                 height: 2,
                 width: size.width,
               ),
@@ -112,7 +112,7 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
               ),
               SizedBox(height: 10,),
               Container(
-                color: grey,
+                color: grey1,
                 height: 2,
                 width: size.width,
               ),
@@ -123,7 +123,7 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
               ),
               SizedBox(height: 10,),
               Container(
-                color: grey,
+                color: grey1,
                 height: 2,
                 width: size.width,
               ),
@@ -134,7 +134,7 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
               ),
               SizedBox(height: 10,),
               Container(
-                color: grey,
+                color: grey1,
                 height: 2,
                 width: size.width,
               ),

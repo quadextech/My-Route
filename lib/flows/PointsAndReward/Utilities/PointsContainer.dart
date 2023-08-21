@@ -18,7 +18,7 @@ class PointsContainer extends StatelessWidget {
         border: Border(
           top: BorderSide(
             width: 1.0,
-            color: grey,
+            color: grey1,
           )
         )
       ),

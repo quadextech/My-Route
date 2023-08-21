@@ -16,7 +16,6 @@ class TripHistory extends StatefulWidget {
 }
 
 class _TripHistoryState extends State<TripHistory> {
-
   List TripsPages = [
     Package(),
     Text('dan'),
@@ -29,7 +28,6 @@ class _TripHistoryState extends State<TripHistory> {
     Colors.black,
   ];
 
-
   List<String> textName = [
     'Completed',
     'Pending',
@@ -38,7 +36,6 @@ class _TripHistoryState extends State<TripHistory> {
 
   int _currentIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -46,8 +43,14 @@ class _TripHistoryState extends State<TripHistory> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 1,
-        title: Padding(padding: EdgeInsets.symmetric(horizontal: 75),
-        child: Text('My Rides', style: body1(black, TextDecoration.none),)),
+        title: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 75),
+            child: Text(
+              'My Rides',
+              style: body1(
+                black,TextDecoration.none
+              ),
+            )),
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
           child: BorderButton(
@@ -60,7 +63,6 @@ class _TripHistoryState extends State<TripHistory> {
             size: 20,
           ),
         ),
-
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

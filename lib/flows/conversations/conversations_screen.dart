@@ -16,8 +16,8 @@ class Conversations extends StatefulWidget {
 class _ConversationsState extends State<Conversations> {
 
   List conversationPages = [
-    MessagesBox(),
-    PhonecallBox(),
+    const MessagesBox(),
+    const PhonecallBox(),
   ];
 
   List<String> textName = [
@@ -35,7 +35,7 @@ class _ConversationsState extends State<Conversations> {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 1,
-        title: Padding(padding: EdgeInsets.symmetric(horizontal: 70),
+        title: Padding(padding: const EdgeInsets.symmetric(horizontal: 70),
             child: Text('Conversations', style: body1(black, TextDecoration.none),)),
         leading: Padding(
           padding: const EdgeInsets.all(12.0),

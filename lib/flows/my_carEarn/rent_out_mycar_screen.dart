@@ -58,7 +58,7 @@ class _RentOutMyCarState extends State<RentOutMyCar> {
                           border: Border.all(
                               color: isRented ? primaryColor : black
                           ),
-                          color: grey,
+                          color: grey1,
                           borderRadius: BorderRadius.circular(10)
                       ),
                       height: 100,

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../constants/app_color.dart';
 
 class GlobaltextField extends StatelessWidget {
-  String label;
-  bool u;
-  Widget preficIcon;
-  TextInputType keyboardType;
+  final String label;
+  final bool u;
+  final Widget preficIcon;
+  final TextInputType keyboardType;
 
-  GlobaltextField(
+  const GlobaltextField(
       {Key? key,
       this.keyboardType = TextInputType.text,
       required this.controller,
@@ -24,7 +24,7 @@ class GlobaltextField extends StatelessWidget {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-        color: grey,
+        color: grey1,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Padding(

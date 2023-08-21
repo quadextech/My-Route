@@ -10,7 +10,14 @@ class DroptextField extends StatelessWidget {
   final ValueChanged<dynamic> onChanged;
   final String error;
   final errorCondition;
-  DroptextField({required this.onChanged,  this.selected, required this.listTextFied, required this.hintText, required this.error, required this.errorCondition, Key? key})
+  DroptextField(
+      {required this.onChanged,
+      this.selected,
+      required this.listTextFied,
+      required this.hintText,
+      required this.error,
+      required this.errorCondition,
+      Key? key})
       : super(key: key);
 
   @override
@@ -22,7 +29,7 @@ class DroptextField extends StatelessWidget {
           height: 55,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: errorCondition? Colors.red:black),
+            border: Border.all(color: errorCondition ? Colors.red : black),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,7 +53,10 @@ class DroptextField extends StatelessWidget {
           ),
         ),
         if (errorCondition)
-          Text(error, style: body4(Colors.red, TextDecoration.none),)
+          Text(
+            error,
+            style: body4(Colors.red, TextDecoration.none),
+          )
       ],
     );
   }

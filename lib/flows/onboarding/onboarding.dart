@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
@@ -73,12 +72,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: SliderContainer(
-                        color: _currentIndex == index
-                            ? primaryColor
-                            : grey),
+                        color: _currentIndex == index ? primaryColor : grey1),
                   );
                 })),
-
             const SizedBox(height: 10),
             SizedBox(height: 20, child: Image.asset(swipeIcon)),
             const SizedBox(height: 10),
@@ -107,24 +103,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ])));
                 })),
               ],
-            ),const SizedBox(
+            ),
+            const SizedBox(
               height: 20,
             ),
-            Stack(//mainAxisAlignment: MainAxisAlignment.start,
+            Stack(
+                //mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(subTexts.length, (index) {
-              return SizedBox(width: double.infinity,
+              return SizedBox(
+                width: double.infinity,
                 child: Text(
                   _currentIndex == index ? subTexts[index] : '',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.fade,
-                  style: TextStyle(color:black),
+                  style: TextStyle(color: black),
                 ),
               );
             })),
             const SizedBox(
               height: 20,
             ),
-           
             AppButton(
               label: "Sign Up",
               onPressed: () {

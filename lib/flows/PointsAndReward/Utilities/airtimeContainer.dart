@@ -16,7 +16,7 @@ class AirtimeContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-      color: grey,
+      color: grey1,
           borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       height: size.height*0.1,

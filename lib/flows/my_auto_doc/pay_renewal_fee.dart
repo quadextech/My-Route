@@ -87,7 +87,7 @@ class _PayRenewalFeeState extends State<PayRenewalFee> {
               Text('Description', style: body2(black, TextDecoration.none),),
       Text("Driver's License renewal", style: headline2(black),)],),
             SizedBox(height: 10,),
-            Divider(color: grey, thickness: 1,),
+            Divider(color: grey1, thickness: 1,),
             SizedBox(height: 10,),
             ListTile(
               title: Text('MyRoute balance', style: body3(black, TextDecoration.none),),

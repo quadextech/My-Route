@@ -113,172 +113,189 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25))
                   : AppButton(
-                label: "Finish",
-                onPressed: () async{
-                if (connectivityState.status ==
-                    ConnectivityStatus.disconnected) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'No internet connection',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  });
-                } else{
-                  setState(() {
-                    isLoading = true;
-                  });
-                  if(adrressController.text.isEmpty){
-                    setState(() {
-                      isLoading = false;
-                      addressError = true;
-                    });
-                  }
-                  if(accountNameController.text.isEmpty){
-                    setState(() {
-                      isLoading = false;
-                      accountNameError = true;
-                    });
-                  }
-                  if(accountNumberController.text.isEmpty){
-                    setState(() {
-                      isLoading = false;
-                      accountNumberError = true;
-                    });
-                  } if(bankNameController.text.isEmpty){
-                    setState(() {
-                      isLoading = false;
-                      bankNameError = true;
-                    });
-
-                  }
-                  if (isLoading == true) {
-                    String message = await bankServiceRef.verifyBankDetails(accountNameController.text, accountNumberController.text, bankNameController.text, adrressController.text);
-
-                    if (message == 'Bank details added Successfully') {
-
-    setState(() {
-    ismessage = true;
-    });
-
-    }
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => CustomPopUpContainer(
-                          height: 350,
-                          child: ismessage ?  Expanded(
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Image.asset(success),
-                                  Text('Success!', style:  body2(Colors.red, TextDecoration.none),),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text('Your car has been registered successfully',
-                                    style: body3(black, TextDecoration.none),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  AppButton(
-                                      buttonColor: black,
-                                      onPressed: (){
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => const DoYouHaveACar(),
-                                            ));
-                                      }, label: "Go to Fleet"),
-
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  AppButton(
-                                    textColor: black,
-                                      buttonColor: white,
-                                      onPressed: (){
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //       builder: (context) => BottomNav(),
-                                        //     ));
-                                      }, label: "Exit registration"),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                ],
+                      label: "Finish",
+                      onPressed: () async {
+                        if (connectivityState.status ==
+                            ConnectivityStatus.disconnected) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'No internet connection',
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                          ): Column(
-                            children: [
-                              SizedBox(
-                                height: 20,
-                              ),
-                              SvgPicture.asset(svgerror),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text('Error!', style:  body2(Colors.red, TextDecoration.none),),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text('Sorry, Complete your Car registration before you proceed.',
-                                style: body3(grey, TextDecoration.none),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              AppButton(
-                                  buttonColor: black,
-                                  onPressed: (){
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const DoYouHaveACar(),
-                                        ));
-                                  }, label: "Return to Registration"),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              AppButton(
-                                  buttonColor: white,
-                                  onPressed: (){
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PassengerHome(),
-                                        ));
-                                  }, label: "Exit registration"),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
+                            );
+                          });
+                        } else {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (adrressController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              addressError = true;
+                            });
+                          }
+                          if (accountNameController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              accountNameError = true;
+                            });
+                          }
+                          if (accountNumberController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              accountNumberError = true;
+                            });
+                          }
+                          if (bankNameController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              bankNameError = true;
+                            });
+                          }
+                          if (isLoading == true) {
+                            String message =
+                                await bankServiceRef.verifyBankDetails(
+                                    accountNameController.text,
+                                    accountNumberController.text,
+                                    bankNameController.text,
+                                    adrressController.text);
 
-                        isDismissible: false, isScrollControlled: true,
+                            if (message == 'Bank details added Successfully') {
+                              setState(() {
+                                ismessage = true;
+                              });
+                            }
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) => CustomPopUpContainer(
+                                height: 350,
+                                child: ismessage
+                                    ? Expanded(
+                                        child: Container(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Image.asset(success),
+                                              Text(
+                                                'Success!',
+                                                style: body2(Colors.red, TextDecoration.none),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Your car has been registered successfully',
+                                                style: body3(black, TextDecoration.none),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              AppButton(
+                                                  buttonColor: black,
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const DoYouHaveACar(),
+                                                        ));
+                                                  },
+                                                  label: "Go to Fleet"),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              AppButton(
+                                                  textColor: black,
+                                                  buttonColor: white,
+                                                  onPressed: () {
+                                                    // Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //       builder: (context) => BottomNav(),
+                                                    //     ));
+                                                  },
+                                                  label: "Exit registration"),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    : Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          SvgPicture.asset(svgerror),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            'Error!',
+                                            style: body2(Colors.red, TextDecoration.none),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            'Sorry, Complete your Car registration before you proceed.',
+                                            style: body3(grey1, TextDecoration.none),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          AppButton(
+                                              buttonColor: black,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const DoYouHaveACar(),
+                                                    ));
+                                              },
+                                              label: "Return to Registration"),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          AppButton(
+                                              buttonColor: white,
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PassengerHome(),
+                                                    ));
+                                              },
+                                              label: "Exit registration"),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                              isDismissible: false,
+                              isScrollControlled: true,
+                            );
+                            setState(() {
+                              isLoading = false;
+                            });
 
-                      );
-                      setState(() {
-                        isLoading = false;
-                      });
-
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => BottomNav(),
-                      //     ));
-                    }
-                  }
-                }
-              )
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => BottomNav(),
+                            //     ));
+                          }
+                        }
+                      })
             ],
           ),
         ),

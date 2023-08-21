@@ -57,7 +57,7 @@ class _MyCarFleetState extends State<MyCarFleet> {
                       border: Border.all(
                         color: isDue ? Colors.red : black
                       ),
-                      color: grey,
+                      color: grey1,
                       borderRadius: BorderRadius.circular(10)
                     ),
                     height: 100,

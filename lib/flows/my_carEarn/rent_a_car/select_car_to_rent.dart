@@ -247,7 +247,7 @@ class _SelectCarToRentState extends State<SelectCarToRent> {
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(),
-                                color: grey,
+                                color: grey1,
                                 borderRadius: BorderRadius.circular(10)),
                             // height: size.height*0.2,
                             // width: size.height*0.5,

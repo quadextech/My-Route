@@ -135,7 +135,7 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: grey,
+                    color: grey1,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -188,7 +188,7 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: grey,
+                    color: grey1,
                   ),
                   child: InkWell(
                     onTap: () {

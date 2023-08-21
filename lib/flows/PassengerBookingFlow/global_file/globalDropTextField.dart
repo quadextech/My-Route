@@ -14,6 +14,18 @@ final void Function(Object?)? onChanged;
       {this.selected, this.listTextFied, this.prificIcon, this.hint='', this.onChanged, Key? key, })
       : super(key: key);
 
+  // final Widget prificIcon;
+  //
+  // String? selected;
+  // final List? listTextFied;
+  //
+  // GlobalDroptextField({
+  //   this.selected,
+  //   this.listTextFied,
+  //   required this.prificIcon,
+  //   Key? key,
+  // }) : super(key: key);
+
   @override
   State<GlobalDroptextField> createState() => _DroptextFieldState();
 }
@@ -24,7 +36,7 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-          color: grey, borderRadius: BorderRadius.circular(12), border: null),
+          color: grey1, borderRadius: BorderRadius.circular(12), border: null),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Center(
@@ -47,9 +59,9 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
                 prefixIcon: widget.prificIcon,
                 border: InputBorder.none,
                ),
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
