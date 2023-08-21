@@ -32,7 +32,6 @@ class DoYouHaveACar extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-//<<<<<<< HEAD:lib/features/registration/Do_you_have_car/views/do_you_have_a_car.dart
               const Text(
                 "Do you own a Car?",
                 style: TextStyle(

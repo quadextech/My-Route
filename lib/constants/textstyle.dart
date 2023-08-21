@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 headline1(color) {
   return TextStyle( fontFamily: "Avenir", fontSize:20, fontWeight:FontWeight.bold, color:color);
 }
@@ -9,6 +10,12 @@ headline2(color) {
 headline3(color) {
   return TextStyle( fontFamily: "Avenir", fontSize:15, fontWeight:FontWeight.bold, color:color);
 }
+
+headline4(color) {
+  return TextStyle( fontFamily: "Avenir", fontSize:25, fontWeight:FontWeight.w900, color:color);
+}
+
+
 body1(color, decoration) {
   return TextStyle( fontFamily: "Avenir", fontSize:20,  color:color, decoration: decoration);
 }

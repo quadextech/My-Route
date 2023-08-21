@@ -72,14 +72,19 @@ class _TripHistoryState extends State<TripHistory> {
              child: Row(
                  mainAxisAlignment: MainAxisAlignment.center,
                  children: List.generate(TripsPages.length, (index) {
-                   return Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                     child: MyRidesContainer(
-                       textName: _currentIndex == index ? textName[index] : textName[index],
-                         color: _currentIndex == index
-                             ? color[index]
-                             : null,
-                       textColor: _currentIndex == index ? white : hintColor,
+                   return GestureDetector(
+                     onTap: (){
+                       _currentIndex = index;
+                     },
+                     child: Padding(
+                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                       child: MyRidesContainer(
+                         textName: textName[index],
+                           color: _currentIndex == index
+                               ? color[index]
+                               : null,
+                         textColor: _currentIndex == index ? white : hintColor,
+                       ),
                      ),
                    );
                  })),

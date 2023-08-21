@@ -18,10 +18,13 @@ class AppBackButton extends StatelessWidget {
           },
           child: Container(
             margin: const EdgeInsets.only(left: 10),
-            height: 40,
-            width: 40,
+            height: 35,
+            width: 35,
             decoration: BoxDecoration(
-              border: Border.all(),
+              border: Border.all(
+                width: 1.0,
+                color: grey,
+              ),
               shape: BoxShape.circle,
             ),
             child: Icon(

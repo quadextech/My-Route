@@ -4,13 +4,14 @@ import 'package:myroute/constants/textstyle.dart';
 import '../../../constants/app_color.dart';
 
 class GlobalDroptextField extends StatefulWidget {
-  final Widget prificIcon;
- 
-   String? selected;
+  final Widget? prificIcon;
+  String? selected;
  final List? listTextFied;
+final String hint;
+final void Function(Object?)? onChanged;
 
    GlobalDroptextField(
-      {this.selected, this.listTextFied, required this.prificIcon, Key? key, })
+      {this.selected, this.listTextFied, this.prificIcon, this.hint='', this.onChanged, Key? key, })
       : super(key: key);
 
   @override
@@ -28,15 +29,12 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Center(
           child: DropdownButtonFormField(
+            hint: Text(widget.hint),
             iconDisabledColor: primaryColor,
             iconEnabledColor: primaryColor,
             focusColor: primaryColor,
             value: widget.selected,
-            onChanged: (value) {
-              setState(() {
-                widget.selected = value as String;
-              });
-            },
+            onChanged: widget.onChanged,
             items: widget.listTextFied
                 ?.map((e) => DropdownMenuItem(
                       child: Text(e.toString()),
@@ -45,7 +43,7 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
                 .toList(),
             // ignore: prefer_const_constructors
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(20),
+                contentPadding: EdgeInsets.all(10),
                 prefixIcon: widget.prificIcon,
                 border: InputBorder.none,
                ),

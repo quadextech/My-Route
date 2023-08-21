@@ -7,6 +7,7 @@ class MyRidesContainer extends StatelessWidget {
   final color;
   final textName;
   final textColor;
+
   const MyRidesContainer({this.textName, this.color, this.textColor});
 //wrap container with textbutton
   @override
