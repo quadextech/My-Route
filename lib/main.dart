@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/features/PassengerBookingFlow/view/BottomNavigatorBar.dart';
-import 'package:myroute/features/Splash/views/Slash.dart';
-import 'package:myroute/features/registration/Forotten_password/views/forgotten_password.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myroute/flows/my%20wallet/views/mywallet.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "Avenir",
       ),
-      home: ForgetPassword(),
+     
+
+      home: MyWalletScreen(),
     );
   }
 }
