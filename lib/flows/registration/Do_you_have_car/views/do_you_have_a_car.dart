@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/car_details_reg.dart';
 import 'package:myroute/flows/registration/Do_you_have_car/widget/list_Text.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
@@ -14,7 +13,7 @@ class DoYouHaveACar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: AppBackButton(),
+        leading: const AppBackButton(),
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -99,7 +98,6 @@ class DoYouHaveACar extends StatelessWidget {
               ),
 
 
-//=======
 
             const SizedBox(
               height: 10,
@@ -160,7 +158,6 @@ class DoYouHaveACar extends StatelessWidget {
               textColor: black,
             ),
           ],
-//>>>>>>> 9fc6c228187d12ddffd1dff45922e25478b1e51b:lib/flows/registration/Do_you_have_car/views/do_you_have_a_car.dart
       )
       ),
       )

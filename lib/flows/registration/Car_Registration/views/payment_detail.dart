@@ -10,20 +10,48 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/banks_services.dart';
 import '../../../../services/connectivity_provider.dart';
+import '../../../../services/drivers_services.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
 import '../../../PassengerBookingFlow/view/SearchingAvailableRide/SearchavailableRide_method.dart';
 import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 import '../widget/text_header.dart';
 
 class PaymentDetail extends ConsumerStatefulWidget {
-  PaymentDetail({super.key});
+  final String userId;
+  final String referralCode;
+  final String vehicleColor;
+  final String vehicleManufacturer;
+  final String vehicleModel;
+  final String vehicleyear;
+  final String platenumberlicense;
+  final String driverlicensenumber;
+  final String driverlicense;
+  final String driverlicenseexpiryDate;
+  final String outSideCarPhoto;
+  final String inSideCarPhoto;
+
+  PaymentDetail({
+    super.key,
+    required this.userId,
+    required this.vehicleColor,
+    required this.referralCode,
+    required this.vehicleManufacturer,
+    required this.vehicleModel,
+    required this.vehicleyear,
+    required this.platenumberlicense,
+    required this.driverlicensenumber,
+    required this.driverlicense,
+    required this.driverlicenseexpiryDate,
+    required this.outSideCarPhoto,
+    required this.inSideCarPhoto,
+  });
 
   @override
   ConsumerState<PaymentDetail> createState() => _PaymentDetailState();
 }
 
 class _PaymentDetailState extends ConsumerState<PaymentDetail> {
-  TextEditingController adrressController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController accountNameController = TextEditingController();
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController bankNameController = TextEditingController();
@@ -33,11 +61,19 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
   bool bankNameError = false;
   bool isLoading = false;
   bool ismessage = false;
+  @override
+  void dispose() {
+    addressController.dispose();
+    accountNameController.dispose();
+    accountNumberController.dispose();
+    bankNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final connectivityState = ref.watch(connectivityProvider);
-    final bankServiceRef = ref.watch(BankServiceProvider);
+    final driverServiceRef = ref.watch(driverServiceProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -74,7 +110,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
               mytextField(
                 error: "Address cannot be null",
                 errorCondition: addressError,
-                controller: adrressController,
+                controller: addressController,
                 label: "Address*",
               ),
               const SizedBox(
@@ -131,7 +167,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                           setState(() {
                             isLoading = true;
                           });
-                          if (adrressController.text.isEmpty) {
+                          if (addressController.text.isEmpty) {
                             setState(() {
                               isLoading = false;
                               addressError = true;
@@ -156,13 +192,23 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                             });
                           }
                           if (isLoading == true) {
-                            String message =
-                                await bankServiceRef.verifyBankDetails(
-                                    accountNameController.text,
-                                    accountNumberController.text,
-                                    bankNameController.text,
-                                    adrressController.text);
-
+                            String message = await driverServiceRef.uploadFiles(
+                                widget.userId,
+                                widget.referralCode,
+                                widget.vehicleManufacturer,
+                                widget.vehicleModel,
+                                widget.vehicleyear,
+                                widget.platenumberlicense,
+                                widget.driverlicensenumber,
+                                widget.driverlicense,
+                                widget.driverlicenseexpiryDate,
+                                widget.outSideCarPhoto,
+                                widget.inSideCarPhoto,
+                                addressController.text,
+                                accountNameController.text,
+                                accountNumberController.text,
+                                bankNameController.text,
+                                widget.vehicleColor);
                             if (message == 'Bank details added Successfully') {
                               setState(() {
                                 ismessage = true;
@@ -177,22 +223,24 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                         child: Container(
                                           child: Column(
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
-                                              Image.asset(success),
+                                              Image.asset(success, color: successColor,),
                                               Text(
                                                 'Success!',
-                                                style: body2(Colors.red, TextDecoration.none),
+                                                style: body2(successColor,
+                                                    TextDecoration.none),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Text(
                                                 'Your car has been registered successfully',
-                                                style: body3(black, TextDecoration.none),
+                                                style: body3(
+                                                    black, TextDecoration.none),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               AppButton(
@@ -206,7 +254,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                         ));
                                                   },
                                                   label: "Go to Fleet"),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                               AppButton(
@@ -220,7 +268,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                     //     ));
                                                   },
                                                   label: "Exit registration"),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                             ],
@@ -229,25 +277,27 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                       )
                                     : Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           SvgPicture.asset(svgerror),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           Text(
                                             'Error!',
-                                            style: body2(Colors.red, TextDecoration.none),
+                                            style: body2(errorColor,
+                                                TextDecoration.none),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           Text(
                                             'Sorry, Complete your Car registration before you proceed.',
-                                            style: body3(grey1, TextDecoration.none),
+                                            style: body3(
+                                                grey1, TextDecoration.none),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           AppButton(
@@ -261,7 +311,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                     ));
                                               },
                                               label: "Return to Registration"),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           AppButton(
@@ -271,11 +321,11 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          PassengerHome(),
+                                                          const PassengerHome(),
                                                     ));
                                               },
                                               label: "Exit registration"),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                         ],

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 
 import '../../../constants/app_color.dart';
 
 class AppBackButton extends StatelessWidget {
-  bool isAppBar;
-  AppBackButton({Key? key, this.isAppBar = true}) : super(key: key);
+ final bool isAppBar;
+ const AppBackButton({Key? key, this.isAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

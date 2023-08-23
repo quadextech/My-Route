@@ -215,11 +215,7 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              isLoading
-                  ? Center(
-                      child: LoadingAnimationWidget.inkDrop(
-                          color: primaryColor, size: 25))
-                  : AppButton(
+              AppButton(
                       label: "Next",
                       onPressed: () async {
                         if (connectivityState.status ==
@@ -275,53 +271,33 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
                           }
 
                           if (isLoading == true) {
-                            String message =
-                                await carDetailsRef.verifyCarDetails(
-                                    referralCodeController.text,
-                                    vehicleManufac,
-                                    vehicleModelController.text,
-                                    vehicleYear,
-                                    plateNumbercontroller.text,
-                                    vehicleColor,
-                                    userId);
-                            if (message == "Registration Successful") {
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  backgroundColor: black,
-                                  content: const Text('Sign Up Successful',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 16)),
-                                ));
-                              });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LicensePage(),
-                                  ));
-                              setState(() {
-                                isLoading = false;
-                              });
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                          message,
-                                          textAlign: TextAlign.center,
-                                          style:
-                                              const TextStyle(fontSize: 16))));
-
-                              setState(() {
-                                isLoading = false;
-                              });
-                            }
+                            // String message =
+                            //     await carDetailsRef.verifyCarDetails(
+                            //         referralCodeController.text,
+                            //         vehicleManufac,
+                            //         vehicleModelController.text,
+                            //         vehicleYear,
+                            //         plateNumbercontroller.text,
+                            //         vehicleColor,
+                            //         userId);
+                            // if (message == "Registration Successful") {
+                            //   WidgetsBinding.instance.addPostFrameCallback((_) {
+                            //     ScaffoldMessenger.of(context)
+                            //         .showSnackBar(SnackBar(
+                            //       backgroundColor: black,
+                            //       content: const Text('Sign Up Successful',
+                            //           textAlign: TextAlign.center,
+                            //           style: TextStyle(fontSize: 16)),
+                            //     ));
+                            //   });
+                              
                           }
                         }
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LicensingReg(),
+                              builder: (context) => LicensingReg(refCode: referralCodeController.text,
+                                  vehicleManuf: vehicleManufac!, vehicleModel:vehicleModelController.text, year: vehicleYear!, plateNumber: plateNumbercontroller.text, color: vehicleColor!, userId: userId,),
                             ));
                       },
                     ),

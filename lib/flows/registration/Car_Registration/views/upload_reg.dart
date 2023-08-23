@@ -1,18 +1,39 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mime/mime.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
-import '../../../../services/drivers_services.dart';
 import '../widget/text_header.dart';
 import '../widget/upload_Button.dart';
-import 'package:path/path.dart' as path;
 
 class UploadFlieReg extends ConsumerStatefulWidget {
-  const UploadFlieReg({super.key});
+  final String licenseNumber;
+  final String userId;
+  final String refCode;
+  final String vehicleManuf;
+  final String vehicleModel;
+  final String year;
+  final String plateNumber;
+  final String color;
+  const UploadFlieReg({
+    super.key,
+    required this.userId,
+    required this.licenseNumber,
+    required this.refCode,
+    required this.vehicleManuf,
+    required this.vehicleModel,
+    required this.year,
+    required this.plateNumber,
+    required this.color,
+  });
 
   @override
   ConsumerState<UploadFlieReg> createState() => _UploadFlieRegState();
@@ -20,13 +41,14 @@ class UploadFlieReg extends ConsumerStatefulWidget {
 
 class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   final TextEditingController expiryDateController = TextEditingController();
-  late var driversLicensePath;
-  late var exteriorPhotoPath;
-  late var interiorPhotoPath;
+  late String driversLicensePath;
+  late String exteriorPhotoPath;
+  late String interiorPhotoPath;
   var driversLicense = '';
   var exteriorPhoto = '';
   var interiorPhoto = '';
   var isLoading = false;
+ 
   late List<String> filePaths = [
     driversLicensePath,
     exteriorPhotoPath,
@@ -35,7 +57,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
 
   @override
   Widget build(BuildContext context) {
-    final uploadFilesRef = ref.watch(driverServiceProvider);
+  
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -70,7 +92,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 20,
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -99,10 +121,8 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
-                    driversLicensePath = await pickFile();
-                    setState(() {
-                      driversLicense = path.basename(driversLicensePath);
-                    });
+                    driversLicensePath = await pickFile(driversLicense);
+                    
                   }),
                   const SizedBox(width: 5),
                   Text(driversLicense),
@@ -120,7 +140,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 15,
               ),
-            Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -152,10 +172,8 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
-                    exteriorPhotoPath = await pickFile();
-                    setState(() {
-                      exteriorPhoto = path.basename(exteriorPhotoPath);
-                    });
+                    exteriorPhotoPath = await pickFile(exteriorPhoto);
+                    
                   }),
                   const SizedBox(width: 5),
                   Text(exteriorPhoto),
@@ -196,11 +214,8 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
-                    interiorPhotoPath = await pickFile();
+                    interiorPhotoPath = await pickFile(interiorPhoto);
 
-                    setState(() {
-                      interiorPhoto = path.basename(interiorPhotoPath);
-                    });
                   }),
                   const SizedBox(width: 5),
                   Text(interiorPhoto),
@@ -216,60 +231,33 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                     )
                   : AppButton(
                       onPressed: () async {
-                       
                         if (driversLicensePath != '' &&
                             interiorPhotoPath != '' &&
                             exteriorPhotoPath != '' &&
                             expiryDateController.text.isNotEmpty) {
-                               setState(() {
-                          isLoading = true;
-                        });
-                          var message = await uploadFilesRef.uploadFiles(
-                              filePaths, expiryDateController.text);
-
-                          if (message == 'File uploaded') {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'File Uploaded',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentDetail(),
-                              )); } else {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    message,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            });
-                          }
-
                          
-                        }else{
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(backgroundColor: Colors.red,
-                                  content: Text(
-                                    'Fill up all fields',
-                                    textAlign: TextAlign.center,
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentDetail(vehicleColor: widget.color,
+                                    userId: widget.userId,
+                                    referralCode: widget.refCode,
+                                    vehicleManufacturer: widget.vehicleManuf,
+                                    vehicleModel: widget.vehicleModel,
+                                    vehicleyear: widget.year,
+                                    platenumberlicense: widget.plateNumber,
+                                    driverlicensenumber: widget.licenseNumber,
+                                    driverlicense: driversLicense,
+                                    driverlicenseexpiryDate:
+                                        expiryDateController.text,
+                                    outSideCarPhoto: exteriorPhotoPath,
+                                    inSideCarPhoto: interiorPhotoPath,
                                   ),
-                                ),
-                              );
-                            });
+                                ));
+                         
+                           
+                         
                         }
                       },
                       label: "Next"),
@@ -283,12 +271,33 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
     );
   }
 
-  Future<String> pickFile() async {
+  Future pickFile(docName) async {
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      PlatformFile file = result.files.first;
-      return file.path!;
+      PlatformFile platformFile = result.files.first;
+
+      File file = File(platformFile.path!);
+
+      List<int> fileBytes = await file.readAsBytes();
+      String docBase64 = base64Encode(fileBytes);
+      docBase64 = docBase64.replaceAll('/', '');
+      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+
+      final String dataUri = "data:$mimeType;base64,$docBase64";
+
+      setState(() {
+        docName = platformFile.name;
+      });
+
+      return dataUri;
     } else {
       String message = 'File picking canceled';
       return message;

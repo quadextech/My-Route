@@ -76,7 +76,7 @@ class _mytextFieldState extends State<mytextField> {
                       fontSize: 18,
                     ),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(20)),
+                    contentPadding: const EdgeInsets.all(20)),
               ),
             ),
           ),

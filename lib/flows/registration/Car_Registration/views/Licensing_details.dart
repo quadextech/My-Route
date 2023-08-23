@@ -8,7 +8,22 @@ import '../../../../constants/app_image.dart';
 import '../widget/text_header.dart';
 
 class LicensingReg extends StatefulWidget {
-  LicensingReg({super.key});
+  final String refCode;
+  final String vehicleManuf;
+  final String vehicleModel;
+  final String year;
+  final String plateNumber;
+  final String color;
+  final userId;
+  const LicensingReg(
+      {super.key,
+      required this.refCode,
+      required this.vehicleManuf,
+      required this.vehicleModel,
+      required this.year,
+      required this.plateNumber,
+      required this.color,
+      required this.userId});
 
   @override
   State<LicensingReg> createState() => _LicensingRegState();
@@ -16,8 +31,8 @@ class LicensingReg extends StatefulWidget {
 
 class _LicensingRegState extends State<LicensingReg> {
   TextEditingController driverLicenseController = TextEditingController();
-@override
- 
+  bool licenseError = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +68,9 @@ class _LicensingRegState extends State<LicensingReg> {
             const SizedBox(
               height: 20,
             ),
-            mytextField(error: '',errorCondition: false,
+            mytextField(
+                error: 'Enter a valid number',
+                errorCondition: licenseError,
                 controller: driverLicenseController,
                 label: "Driver license or JTB Form Number*"),
             const SizedBox(
@@ -65,11 +82,24 @@ class _LicensingRegState extends State<LicensingReg> {
             ),
             AppButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UploadFlieReg(),
-                      ));
+                  if (driverLicenseController.text.isEmpty) {
+                    setState(() {
+                      licenseError = true;
+                    });
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UploadFlieReg(userId: widget.userId,
+                              licenseNumber: driverLicenseController.text,
+                              refCode: widget.refCode,
+                              vehicleManuf: widget.vehicleManuf,
+                              vehicleModel: widget.vehicleModel,
+                              year: widget.year,
+                              plateNumber: widget.plateNumber,
+                              color: widget.color),
+                        ));
+                  }
                 },
                 label: "Next"),
           ],

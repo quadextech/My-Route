@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myroute/flows/trips_history/models/tripsHistory_pack.dart';
-import 'package:path/path.dart';
-
 import '../../constants/app_color.dart';
 import '../../constants/textstyle.dart';
 import '../PassengerBookingFlow/view/select_car_preferences/models/BorderButton.dart';
-import '../conversations/conversations_screen.dart';
 import 'models/navigationitems.dart';
 
 class TripHistory extends StatefulWidget {

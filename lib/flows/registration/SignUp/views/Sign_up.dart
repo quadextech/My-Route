@@ -18,7 +18,6 @@ import '../../../../constants/app_image.dart';
 import '../../../../constants/textstyle.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../Car_Registration/widget/upload_Button.dart';
-import 'package:path/path.dart' as path;
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -348,7 +347,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Divider(),
@@ -397,7 +396,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             builder: (context) => LoginScreen(),
                           ));
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Already have an account?"),

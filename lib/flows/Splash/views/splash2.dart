@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/onboarding/onboarding.dart';
 
 import '../../../constants/app_image.dart';

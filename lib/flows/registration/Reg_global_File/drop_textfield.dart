@@ -40,8 +40,8 @@ class DroptextField extends StatelessWidget {
                 onChanged: onChanged,
                 items: listTextFied
                     .map((e) => DropdownMenuItem(
-                          child: Text(e.toString()),
                           value: e,
+                          child: Text(e.toString()),
                         ))
                     .toList(),
                 // ignore: prefer_const_constructors

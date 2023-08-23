@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
-
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../constants/textstyle.dart';
@@ -34,7 +32,7 @@ class _VerificationScreenConsumerState
   }
 
   void startCountdown() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdown > 0) {
         setState(() {
           countdown--;
@@ -339,7 +337,7 @@ class _VerificationScreenConsumerState
                        await verificationref.resendVerificationCode(widget.email);
                         startCountdown();
                       },
-                      child: Center(child: Text("Resend SMS code")))
+                      child: const Center(child: Text("Resend SMS code")))
                   : Center(child: Text("Resend SMS code ($countdown secs)"))
             ]),
       ),
