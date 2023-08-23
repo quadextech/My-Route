@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myroute/constants/textstyle.dart';
 
 class TextHeader extends StatelessWidget {
   String title;
@@ -22,11 +23,7 @@ class TextHeader extends StatelessWidget {
         ),
         Text(
           subTitle,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey.shade600,
-            fontWeight: FontWeight.bold,
-          ),
+          style: body2(Colors.grey.shade600, TextDecoration.none)
         )
       ],
     );

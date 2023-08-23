@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/upload_reg.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../constants/app_image.dart';
 import '../widget/text_header.dart';
@@ -15,7 +16,8 @@ class LicensingReg extends StatefulWidget {
 
 class _LicensingRegState extends State<LicensingReg> {
   TextEditingController driverLicenseController = TextEditingController();
-
+@override
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +53,7 @@ class _LicensingRegState extends State<LicensingReg> {
             const SizedBox(
               height: 20,
             ),
-            mytextField(error: '',
+            mytextField(error: '',errorCondition: false,
                 controller: driverLicenseController,
                 label: "Driver license or JTB Form Number*"),
             const SizedBox(

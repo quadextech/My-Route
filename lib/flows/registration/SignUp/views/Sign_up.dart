@@ -1,15 +1,24 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mime/mime.dart';
 import 'package:myroute/flows/registration/Verification/views/verification_screen.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
 import 'package:myroute/services/user_authentication.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../constants/textstyle.dart';
 import '../../../../services/connectivity_provider.dart';
+import '../../Car_Registration/widget/upload_Button.dart';
+import 'package:path/path.dart' as path;
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -33,10 +42,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool phoneError = false;
   bool emailError = false;
   bool nameError = false;
+  bool ninError = false;
   bool passwordMismatch = false;
   bool isLoading = false;
   bool isPicked = false;
-
+  late var ninDocPath;
+  var ninDoc = '';
   final storage = new FlutterSecureStorage();
   bool isValidEmail(String email) {
     final RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
@@ -158,7 +169,42 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     focusNode: passwordFocusNode,
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("NIN Document",
+                          style: body3(black, TextDecoration.none)),
+                      Text("Required*",
+                          style: body4(errorColor, TextDecoration.none)),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                      "Please provide a clear NIN document showing the NIN, your name and date of birth.",
+                      style: body4(black, TextDecoration.none)),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      UpLoadButton(onPressed: () async {
+                        ninDocPath = await pickFile();
+                      }),
+                      const SizedBox(width: 5),
+                      Text(ninError? 'Upload your NIN':
+                        ninDoc,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontFamily: "Avenir", fontSize: 9, color :ninError?errorColor: black),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -224,7 +270,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                               }
 
                               if (passwordCcontroller.text !=
-                                  passwordCcontroller2.text || passwordCcontroller.text.isEmpty||passwordCcontroller2.text.isEmpty) {
+                                      passwordCcontroller2.text ||
+                                  passwordCcontroller.text.isEmpty ||
+                                  passwordCcontroller2.text.isEmpty) {
                                 setState(() {
                                   passwordMismatch = true;
                                   isLoading = false;
@@ -244,6 +292,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                   isLoading = false;
                                 });
                               }
+                              if (ninDoc == '') {
+                                setState(() {
+                                  ninError = true;
+                                  isLoading = false;
+                                });
+                              }
                               if (isLoading == true) {
                                 String message = await signUpref.userSignUp(
                                     emailController.text,
@@ -251,7 +305,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                     firstNameController.text,
                                     lastNameController.text,
                                     phoneNumberController.text,
-                                    sex);
+                                    sex,
+                                    ninDocPath);
 
                                 if (message == 'Sign Up Successful') {
                                   WidgetsBinding.instance
@@ -268,7 +323,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const VerificationScreen(),
+                                             VerificationScreen(email: emailController.text),
                                       ));
                                   setState(() {
                                     isLoading = false;
@@ -293,7 +348,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                   Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Divider(),
@@ -342,7 +397,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                             builder: (context) => LoginScreen(),
                           ));
                     },
-                    child:Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text("Already have an account?"),
@@ -369,7 +424,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   SizedBox selectGender() {
     return SizedBox(
-      height: 100,
+      height: 80,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,5 +500,38 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         ],
       ),
     );
+  }
+
+  Future pickFile() async {
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile platformFile = result.files.first;
+
+      File file = File(platformFile.path!);
+
+      List<int> fileBytes = await file.readAsBytes();
+      String ninDocBase64 = base64Encode(fileBytes);
+      ninDocBase64 = ninDocBase64.replaceAll('/', '');
+      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+
+      final String dataUri = "data:$mimeType;base64,$ninDocBase64";
+
+      setState(() {
+        ninDoc = platformFile.name;
+      });
+      
+      return dataUri;
+    } else {
+      String message = 'File picking canceled';
+      return message;
+    }
   }
 }

@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 final carServiceProvider = Provider<CarService>((ref)=> CarService());
 class CarService {
-   verifyCarDetails(vehicleColor, vehicleYear, vehicleModel, vehicleManfac, plateNumber, referralCode) async {
+   verifyCarDetails( referralCode,vehicleManfac, vehicleModel, vehicleYear,carLicenseNo, vehicleColor,   userId) async {
         String message = 'Something went wrong';
-    final url = Uri.parse('https://myroute-aqn5.onrender.com/api/v1/cars');
+    final url = Uri.parse('https://myroute-aqn5.onrender.com/api/v1/cars/id');
     final response = await http.post(
       url,
       body: {
@@ -13,8 +13,9 @@ class CarService {
         'vehicleYear': vehicleYear,
         'vehicleModel': vehicleModel,
         'vehicleManfac':vehicleManfac,
-        'plateNumber': plateNumber,
+        'carLicenseNo': carLicenseNo,
         'referralCode': referralCode,
+        'userId': userId
       },
     );
     

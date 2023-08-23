@@ -1,26 +1,61 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../constants/textstyle.dart';
+import '../../../../services/user_authentication.dart';
 
-class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+class VerificationScreen extends ConsumerStatefulWidget {
+  final String email;
+  const VerificationScreen({super.key, required this.email});
 
   @override
-  State<VerificationScreen> createState() => _VerificationScreenState();
+  ConsumerState<VerificationScreen> createState() =>
+      _VerificationScreenConsumerState();
 }
 
-class _VerificationScreenState extends State<VerificationScreen> {
-  String? code;
+class _VerificationScreenConsumerState
+    extends ConsumerState<VerificationScreen> {
+  int countdown = 59;
+  late Timer timer;
+  bool coountDownOver = false;
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
 
+  void startCountdown() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (countdown > 0) {
+        setState(() {
+          countdown--;
+        });
+      } else {
+        setState(() {
+          coountDownOver = true;
+        });
+        timer.cancel();
+      }
+    });
+  }
+
+  String? code;
+  String wrongCode = '';
+  bool isLoading = false;
   String accessCode = "1255";
 
   @override
   Widget build(BuildContext context) {
+    final verificationref = ref.watch(userAuthProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -48,7 +83,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Text("Enter the 6-digit code sent to you at 09065745693"),
+              Text("Enter the 6-digit code sent to you at $widget.email"),
               const SizedBox(
                 height: 20,
               ),
@@ -58,7 +93,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey1,
+                      color: grey5,
                     ),
                     width: 50,
                     child: Center(
@@ -87,41 +122,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey1,
-                    ),
-                    width: 50,
-                    child: Center(
-                        child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          String nevalue = ("$code$value");
-
-                          code = nevalue;
-                        });
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        } else {
-                          if (value.isEmpty) {
-                            FocusScope.of(context).previousFocus();
-                          }
-                        }
-                      },
-                      onSaved: (newValue3) {},
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    )),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: grey1,
+                      color: grey5,
                     ),
                     width: 50,
                     child: Center(
@@ -155,7 +156,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey1,
+                      color: grey5,
                     ),
                     width: 50,
                     child: Center(
@@ -189,7 +190,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey1,
+                      color: grey5,
                     ),
                     width: 50,
                     child: Center(
@@ -223,7 +224,41 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: grey1,
+                      color: grey5,
+                    ),
+                    width: 50,
+                    child: Center(
+                        child: TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          String nevalue = ("$code$value");
+
+                          code = nevalue;
+                        });
+                        if (value.length == 1) {
+                          FocusScope.of(context).nextFocus();
+                        } else {
+                          if (value.isEmpty) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                        }
+                      },
+                      onSaved: (newValue3) {},
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(1),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                    )),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: grey5,
                     ),
                     width: 50,
                     child: Center(
@@ -257,22 +292,55 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ],
               ),
               const SizedBox(
-                height: 30,
+                height: 8,
               ),
-              AppButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddProfilePic(),
-                      ));
-                },
-                label: "Confirm",
+              Text(
+                wrongCode,
+                style: body4(errorColor, TextDecoration.none),
               ),
               const SizedBox(
                 height: 30,
               ),
-              const Center(child: Text("Resend SMS code (59 secs)"))
+              isLoading
+                  ? Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                          color: primaryColor, size: 25))
+                  : AppButton(
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        String message = await verificationref.verifyUser(
+                            widget.email, code);
+                        if (message == 'verified') {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>  AddProfilePic(email: widget.email),
+                              ));
+                        } else {
+                          setState(() {
+                            isLoading = false;
+                            wrongCode = 'Wrong code';
+                          });
+                        }
+                      },
+                      label: "Confirm",
+                    ),
+              const SizedBox(
+                height: 30,
+              ),
+              coountDownOver
+                  ? GestureDetector(
+                      onTap: () async {
+                       await verificationref.resendVerificationCode(widget.email);
+                        startCountdown();
+                      },
+                      child: Center(child: Text("Resend SMS code")))
+                  : Center(child: Text("Resend SMS code ($countdown secs)"))
             ]),
       ),
     );
