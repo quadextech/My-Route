@@ -10,8 +10,8 @@ import 'my_car_fleet.dart';
 
 
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class AutoDocHome extends StatelessWidget {
+  const AutoDocHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

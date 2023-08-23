@@ -2,7 +2,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:myroute/flows/my_auto_doc/homescreen.dart';
+import 'package:myroute/flows/my_auto_doc/autodoc_home.dart';
 import '../../../constants/app_color.dart';
 import '../../../constants/app_image.dart';
 import '../../../constants/textstyle.dart';

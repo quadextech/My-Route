@@ -31,7 +31,7 @@ class _MyCarFleetState extends State<MyCarFleet> {
         backgroundColor: white,
         leading: AppBackButton(),
         centerTitle: true,
-        title: Text('My AutoDoc', style: body1(black, TextDecoration.none),),
+        title: Text('My AutoDoc', style: body3(black, TextDecoration.none),),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -40,7 +40,7 @@ class _MyCarFleetState extends State<MyCarFleet> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 9, bottom: 15),
-              child: Text('My Car Fleet',style: headline2(black,),),
+              child: Text('My Car Fleet',style: body3(black,TextDecoration.none),),
             ),
 
             isEmpty ?
@@ -55,9 +55,9 @@ class _MyCarFleetState extends State<MyCarFleet> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: isDue ? Colors.red : black
+                        color: isDue ? Colors.red : Colors.transparent 
                       ),
-                      color: grey1,
+                      color: grey5,
                       borderRadius: BorderRadius.circular(10)
                     ),
                     height: 100,

@@ -17,7 +17,7 @@ class PointHistory extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: grey1,
+        color: grey5,
 
         borderRadius: BorderRadius.all(Radius.circular(5)),
           // border: Border(

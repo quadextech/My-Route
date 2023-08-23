@@ -21,7 +21,7 @@ class CustomPopUpContainer extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 10,),
-          Container(height: 6, width: 70,  decoration: BoxDecoration(color: grey1,borderRadius: BorderRadius.circular(20)),),
+          Container(height: 6, width: 70,  decoration: BoxDecoration(color: grey5,borderRadius: BorderRadius.circular(20)),),
           SizedBox(height: sizedheight,),
           Container(
             child: child,

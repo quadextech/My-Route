@@ -6,7 +6,7 @@ class AppButton extends StatelessWidget {
   VoidCallback onPressed;
   String label;
   Color buttonColor;
-  Color textColor;
+  Color? textColor;
   Color borderColor;
   AppButton({
     required this.onPressed,

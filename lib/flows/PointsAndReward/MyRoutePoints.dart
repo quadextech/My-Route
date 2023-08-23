@@ -75,7 +75,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context) =>  RedeemPoints())
               ),
 
               SizedBox(height: 20,),
-              Text('MyRoute point history', style: headline1(black),),
+              Text('MyRoute point history', style: body2(black, TextDecoration.none),),
               SizedBox(height: 15,),
               PointHistory(
                 maintext: 'You completed a ride with Michael',

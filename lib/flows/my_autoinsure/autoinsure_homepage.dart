@@ -43,7 +43,7 @@ class _AutoInsureHomeState extends State<AutoInsureHome> {
                     ),
                     const SizedBox(width: 20,),
                     SizedBox(
-                      width: size.width * 0.9,
+                      width: size.width * 0.8,
                       child: Text('AutoInsure provides you with variations of Car Insurance policies and their prices for you to choose from',
                         style: body4(black, TextDecoration.none),
                         softWrap: true,
@@ -56,9 +56,9 @@ class _AutoInsureHomeState extends State<AutoInsureHome> {
                     ),
                     const SizedBox(width: 20,),
                     SizedBox(
-                      width: size.width * 0.9,
-                      child: Text('Select your choice, pay for it and we process it for you',
-                        style: body4(black, TextDecoration.none),
+                      width: size.width * 0.8,
+                      child: Text('Select your choice, pay for it and we process it for you', 
+                        style: body4(black, TextDecoration.none, ),
                         softWrap: true,
                         maxLines: 1000, overflow: TextOverflow.visible,),),]),
               const SizedBox(height: 30,),

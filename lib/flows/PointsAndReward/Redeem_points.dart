@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
@@ -34,9 +35,9 @@ class _RedeemPointsState extends State<RedeemPoints> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(child: SvgPicture.asset( success, color: primaryColor,)),
+            Center(child: SvgPicture.asset( success, color: successColor,)),
             SizedBox(height: 15,),
-            Center(child: Text('Success!', style: headline1(primaryColor),)),
+            Center(child: Text('Success!', style: headline1(successColor),)),
             SizedBox(height: 20,),
 
 
@@ -55,6 +56,22 @@ class _RedeemPointsState extends State<RedeemPoints> {
     });
   }
 
+final controller = ConfettiController();
+  
+bool isPlaying = true;
+
+@override
+void initState(){
+  super.initState();
+ 
+  
+}
+
+@override
+void dispose(){
+  controller.dispose();
+  super.dispose();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -76,25 +93,39 @@ class _RedeemPointsState extends State<RedeemPoints> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: size.width,
-                height: size.height*0.25,
-                color: black,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CircleAvatar(backgroundColor: white, radius: 45.0,
-                        child: Image.asset(reward,)),
-                    Text('500', style: headline4(white),),
-                    Text('Available MyRoute points', style: body2(white, TextDecoration.none)),
-                  ],
-                ),
+              Stack(
+                children: [
+                  Container(
+                    width: size.width,
+                    height: size.height*0.25,
+                    color: black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ConfettiWidget(
+      confettiController: controller,
+      shouldLoop:false,blastDirection: 180,
+      blastDirectionality: BlastDirectionality.explosive,
+      minBlastForce: 1,maxBlastForce:20,
+      gravity:0.5,
+      emissionFrequency: 0.50,
+      numberOfParticles: 10,
+      
+    ),
+                        CircleAvatar(backgroundColor: white, radius: 45.0,
+                            child: Image.asset(reward,)),
+                        Text('500', style: body1(white, TextDecoration.none),),
+                        Text('Available MyRoute points', style: body4(white, TextDecoration.none)),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 30,),
-              Center(child: Text('Convert your MyRoute points to airtime', style: body2(black, TextDecoration.none),)),
-              SizedBox(height: 15,),
-              Center(child: Text('500 Points = NGN100 airtime', style: headline2(black))),
-              SizedBox(height: 25,),
+              Center(child: Text('Convert your MyRoute points to airtime', style: body4(black, TextDecoration.none),)),
+              SizedBox(height: 10,),
+              Center(child: Text('500 Points = NGN100 airtime',style: body3(black,TextDecoration.none))),
+              SizedBox(height: 45,),
 
               Text('Enter Points', style: body3(black, TextDecoration.none),),
 
@@ -107,15 +138,21 @@ class _RedeemPointsState extends State<RedeemPoints> {
               ),
 
 
-              SizedBox(height: 15,),
+              SizedBox(height: 10,),
 
-              Text('minimum of 500 points to redeem', style: body3(Colors.red, TextDecoration.none),),
+              Text('minimum of 500 points to redeem', style: body4(errorColor, TextDecoration.none),),
 
               SizedBox(height: 40,),
 
               AppButton(onPressed: (){
+                controller.play();
                 RedeemPointSuccess();
-              }, label: 'Redeem now')
+                 Future.delayed(Duration(seconds: 5), () {
+      controller.stop();
+    });
+              }, label: 'Redeem now'),
+             
+    
 
           ]
           ),

@@ -31,14 +31,14 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
     ), context: context, builder: (context){
       Size size = MediaQuery.of(context).size;
       return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: MediaQuery.of(context).size.height * 0.45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(child: SvgPicture.asset( success, color: primaryColor,)),
+            Center(child: SvgPicture.asset( success, color: successColor,)),
             SizedBox(height: 15,),
-            Center(child: Text('Success!', style: headline1(primaryColor),)),
+            Center(child: Text('Success!', style: headline1(successColor),)),
             SizedBox(height: 20,),
 
 
@@ -70,7 +70,7 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
         backgroundColor: white,
         leading: AppBackButton(),
         centerTitle: true,
-        title: Text('Rent out MyCar', style: body1(black, TextDecoration.none),),
+        title: Text('Rent out MyCar', style: body3(black, TextDecoration.none),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -84,12 +84,12 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('2010 Range Rover Sport', style: headline2(black,),),
+                      Text('2010 Range Rover Sport', style: body3(black,TextDecoration.none),),
                       SizedBox(height: 15,),
                       Row(
                         children: [
                           SvgPicture.asset(coloredlicense),
-                          Text('Reg no: AE451KEH'),
+                          Text('Reg no: AE451KEH',style: body4(black, TextDecoration.none),),
                         ],
                       ),
 
@@ -100,9 +100,9 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
               ),
               SizedBox(height:50,),
 
-              Text('How long do you want to rent your car out for?', style: body1(black, TextDecoration.none)),
+              Text('How long do you want to rent your car out for?', style: body3(black, TextDecoration.none)),
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                padding: const EdgeInsets.only(top: 15, bottom: 20),
                 child: GlobalDroptextField(
                     onChanged: (value) {
                       setState(() {
@@ -116,12 +116,12 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
                     ]),
               ),
 
-             SizedBox(height: 40,),
+       
 
-              Text('Total earnings percentage', style: body1(black, TextDecoration.none)),
+              Text('Total earnings percentage', style: body3(black, TextDecoration.none)),
 
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 50),
+                padding: const EdgeInsets.only(top: 15, bottom: 20),
                 child: GlobalDroptextField(
                     onChanged: (value) {
                       setState(() {
@@ -135,10 +135,10 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
                     ]),
               ),
 
-              Text('Earnings per day if Car is idle', style: body1(black, TextDecoration.none)),
+              Text('Earnings per day if Car is idle', style: body3(black, TextDecoration.none)),
 
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 30),
+                padding: const EdgeInsets.only(top: 15, bottom:20),
                 child: GlobalDroptextField(
                     onChanged: (value) {
                       setState(() {
@@ -152,10 +152,10 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
                     ]),
               ),
 
-              Text('Receive notification on Car activities', style: body1(black, TextDecoration.none)),
+              Text('Receive notification on Car activities', style: body3(black, TextDecoration.none)),
 
               Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 30),
+                padding: const EdgeInsets.only(top: 15, ),
                 child: GlobalDroptextField(
                     onChanged: (value) {
                       setState(() {
