@@ -28,45 +28,47 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         context: context,
         builder: (context) {
-          return CustomPopUpContainer(
-            height: MediaQuery.of(context).size.height * 0.45,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                    child: SvgPicture.asset(
-                  success,
-                  color: successColor,
-                )),
-                SizedBox(
-                  height: 15,
-                ),
-                Center(
-                    child: Text(
-                  'Success!',
-                  style: body2(successColor, TextDecoration.none),
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                    child: Text(
-                  'Your AutoInsure settings have been saved',
-                  style: body3(black, TextDecoration.none),
-                )),
-                SizedBox(
-                  height: 30,
-                ),
-                AppButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    label: 'Exit'),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+          return SingleChildScrollView(
+            child: CustomPopUpContainer(
+              
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                      child: SvgPicture.asset(
+                    success,
+                    color: successColor,
+                  )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                      child: Text(
+                    'Success!',
+                    style: body2(successColor, TextDecoration.none),
+                  )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                      child: Text(
+                    'Your AutoInsure settings have been saved',
+                    style: body3(black, TextDecoration.none),
+                  )),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  AppButton(textColor: white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      label: 'Exit'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           );
         });
@@ -151,8 +153,8 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                     'No',
                   ]),
             ),
-            SizedBox(height: size.height * 0.18),
-            AppButton(
+            SizedBox(height: 20),
+            AppButton(textColor: white,
                 onPressed: () {
                   InsureSettinsSuccess();
                 },

@@ -47,7 +47,7 @@ class _SearchingRideState extends State<SearchingRide> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PassengerHomeScreen(),
+                    builder: (context) => const PassengerHomeScreen(name: ''),
                   ));
             },
             child: Padding(
@@ -101,7 +101,7 @@ class _SearchingRideState extends State<SearchingRide> {
                   child: Icon(
                     Icons.horizontal_rule,
                     size: 30,
-                    color: grey1,
+                    color: grey5,
                   ),
                 ),
               ),

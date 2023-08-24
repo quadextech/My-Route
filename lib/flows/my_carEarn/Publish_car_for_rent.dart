@@ -30,33 +30,34 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
 
     ), context: context, builder: (context){
       Size size = MediaQuery.of(context).size;
-      return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.45,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: SvgPicture.asset( success, color: successColor,)),
-            SizedBox(height: 15,),
-            Center(child: Text('Success!', style: headline1(successColor),)),
-            SizedBox(height: 20,),
-
-
-            SizedBox(
-              width: size.width * 0.95,
-              child: Center(
-                child: Text('Your Car has been published for rent. You will be notified when you have a suitor',
-                  style: body4(black, TextDecoration.none),
-                  softWrap: true, maxLines: 1000, overflow: TextOverflow.visible,),
-              ),),
-            SizedBox(height: 30,),
-            AppButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                //   Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
-                 }, label: 'Exit'),
-            SizedBox(height: 20,),
-          ],
+      return SingleChildScrollView(
+        child: CustomPopUpContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(child: SvgPicture.asset( success, color: successColor,)),
+              SizedBox(height: 15,),
+              Center(child: Text('Success!', style: headline1(successColor),)),
+              SizedBox(height: 20,),
+      
+      
+              SizedBox(
+                width: size.width * 0.95,
+                child: Center(
+                  child: Text('Your Car has been published for rent. You will be notified when you have a suitor',
+                    style: body4(black, TextDecoration.none),
+                    softWrap: true, maxLines: 1000, overflow: TextOverflow.visible,),
+                ),),
+              SizedBox(height: 30,),
+              AppButton(textColor: white,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
+                   }, label: 'Exit'),
+              SizedBox(height: 20,),
+            ],
+          ),
         ),
       );
     });
@@ -170,7 +171,7 @@ class _PublishCarForRentState extends State<PublishCarForRent> {
               ),
 
               SizedBox(height: 70,),
-              AppButton(onPressed: (){
+              AppButton(textColor: white,onPressed: (){
                 PublishCarForRentSuccess();
               }, label: "Publish Car for Rent")
             ],

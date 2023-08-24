@@ -44,7 +44,7 @@ class _RedeemPointsState extends State<RedeemPoints> {
       Center(child: Text("You have redeemed 500 points to NGN100 airtime", style: body3(black, TextDecoration.none),)),
 
             SizedBox(height: 30,),
-            AppButton(
+            AppButton(textColor: white,
                 onPressed: (){
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> PointAndRewardHome()));
@@ -144,7 +144,7 @@ void dispose(){
 
               SizedBox(height: 40,),
 
-              AppButton(onPressed: (){
+              AppButton(textColor: white,onPressed: (){
                 controller.play();
                 RedeemPointSuccess();
                  Future.delayed(Duration(seconds: 5), () {

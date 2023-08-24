@@ -178,7 +178,7 @@ class _SelectedCarState extends State<SelectedCar> {
                 height: 55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(7),
-                  color: grey1,
+                  color: grey5,
                 ),
                 child: InkWell(
                   onTap: () {
@@ -244,7 +244,7 @@ class _SelectedCarState extends State<SelectedCar> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(7),
-                  color: grey1,
+                  color: grey5,
                 ),
                 child: InkWell(
                   onTap: () {
@@ -313,14 +313,14 @@ class _SelectedCarState extends State<SelectedCar> {
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: grey1,
+                    color: grey5,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Row(
                       children: [
                         BorderButton(
-                            backgroundColor: grey1,
+                            backgroundColor: grey5,
                             color: Colors.black45,
                             onTap: () {
                               setState(() {
@@ -348,7 +348,7 @@ class _SelectedCarState extends State<SelectedCar> {
                           width: 14,
                         ),
                         BorderButton(
-                            backgroundColor: grey1,
+                            backgroundColor: grey5,
                             color: Colors.black45,
                             onTap: () {
                               setState(() {
@@ -365,13 +365,14 @@ class _SelectedCarState extends State<SelectedCar> {
               height: 30,
             ),
             AppButton(
+              textColor: white,
               buttonColor: black,
               label: "Search for ride",
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PassengerHomeScreen(),
+                      builder: (context) =>  PassengerHomeScreen(name:''),
                     ));
               },
             ),

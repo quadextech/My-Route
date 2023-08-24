@@ -121,6 +121,9 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
+                    setState()async {
+                    driversLicensePath = await pickFile(driversLicense);   
+                    }
                     driversLicensePath = await pickFile(driversLicense);
                     
                   }),
@@ -172,6 +175,10 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
+                    setState(() async{
+                        exteriorPhotoPath = await pickFile(exteriorPhoto);
+                     
+                    });
                     exteriorPhotoPath = await pickFile(exteriorPhoto);
                     
                   }),
@@ -214,7 +221,11 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               Row(
                 children: [
                   UpLoadButton(onPressed: () async {
-                    interiorPhotoPath = await pickFile(interiorPhoto);
+                    setState(() async{
+                      
+ interiorPhotoPath = await pickFile(interiorPhoto);
+                    });
+                   
 
                   }),
                   const SizedBox(width: 5),
@@ -229,7 +240,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25),
                     )
-                  : AppButton(
+                  : AppButton(textColor: white,
                       onPressed: () async {
                         if (driversLicensePath != '' &&
                             interiorPhotoPath != '' &&

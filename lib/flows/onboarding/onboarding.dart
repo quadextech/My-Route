@@ -72,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
                     child: SliderContainer(
-                        color: _currentIndex == index ? primaryColor : grey1),
+                        color: _currentIndex == index ? primaryColor : grey5),
                   );
                 })),
             const SizedBox(height: 10),
@@ -124,6 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               height: 20,
             ),
             AppButton(
+              textColor: white,
               label: "Sign Up",
               onPressed: () {
                 Navigator.push(

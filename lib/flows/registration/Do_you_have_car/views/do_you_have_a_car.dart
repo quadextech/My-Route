@@ -78,7 +78,7 @@ class DoYouHaveACar extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              AppButton(
+              AppButton(textColor: white,
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -139,7 +139,7 @@ class DoYouHaveACar extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            AppButton(
+            AppButton(textColor: white,
                 onPressed: () {
                   Navigator.push(
                       context,

@@ -1,13 +1,24 @@
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_file.dart';
+import 'package:myroute/flows/PointsAndReward/PointAndRewardHome.dart';
+import 'package:myroute/flows/my_auto_doc/autodoc_home.dart';
+import 'package:myroute/flows/my_autoinsure/autoinsure_homepage.dart';
+import 'package:myroute/flows/my_carEarn/my_carEarnHome.dart';
+import 'package:myroute/flows/registration/Car_Registration/views/car_details_reg.dart';
 import '../../../../../constants/app_color.dart';
 import '../../../../../constants/app_image.dart';
 import '../../../../../constants/textstyle.dart';
+import '../../../../../services/user_authentication.dart';
+import '../../../../my wallet/views/mywallet.dart';
+import '../../../../my_auto_save/auto_save_home_screen.dart';
+import '../../../../registration/login/views/login_sreen.dart';
 import '../../SearchingAvailableRide/SearchavailableRide_method.dart';
 
 class PassengerHome extends StatefulWidget {
-  const PassengerHome({super.key});
+  final String name;
+  const PassengerHome({super.key, required this.name});
 
   @override
   State<PassengerHome> createState() => _PassengerHomeState();
@@ -28,7 +39,7 @@ class _PassengerHomeState extends State<PassengerHome> {
     // TODO: implement initState
     super.didChangeDependencies();
     Future.delayed(
-      Duration(seconds: 6),
+      const Duration(seconds: 6),
       () {
         showModalBottomSheet(
           context: context,
@@ -37,15 +48,6 @@ class _PassengerHomeState extends State<PassengerHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Center(
-                    child: Icon(
-                  Icons.horizontal_rule,
-                  size: 70,
-                  color: grey1,
-                )),
-                SizedBox(
-                  height: 7,
-                ),
                 Column(
                   children: [
                     GlobaltextField(
@@ -92,7 +94,7 @@ class _PassengerHomeState extends State<PassengerHome> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     )
                   ],
@@ -132,116 +134,7 @@ class _PassengerHomeState extends State<PassengerHome> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: black,
-                ),
-                child: Row(
-                  children: [
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: grey1,
-                          radius: 30,
-                          backgroundImage: Image.asset(userIcon).image,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 10,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: primaryColor,
-                                  ),
-                                  shape: BoxShape.circle,
-                                  color: white,
-                                ),
-                                child: const Icon(
-                                  Icons.edit,
-                                  size: 15,
-                                )),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Jennifer Boluwatife', style: headline1(white)),
-                        Text(
-                          'Point score: 500',
-                          style: body3(primaryColor, TextDecoration.none),
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text('Edit profile',
-                                style: TextStyle(
-                                    fontFamily: "Avenir",
-                                    fontSize: 15,
-                                    color: white,
-                                    decoration: TextDecoration.underline)))
-                      ],
-                    )
-                  ],
-                )),
-            ListTile(
-              leading: SvgPicture.asset(svgwallet),
-              title: Text('MyWallet'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(mdicarsports),
-              title: Text('My CarRegistration'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svgmyAutoDoc),
-              title: Text('My AutoDoc'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svgAutosave),
-              title: Text('My AutoSave'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svgautoinsure),
-              title: Text('My AutoInsure'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svgnaira),
-              title: Text('My CarEarn'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svgPointsandreward),
-              title: Text('Points and Reward'),
-              onTap: () {},
-            ),
-            Container(
-              color: grey1,
-              height: 5,
-            ),
-            ListTile(
-              leading: SvgPicture.asset(svglogout),
-              title: Text('Log out'),
-              onTap: () {},
-            ),
-          ],
-        ),
-      ),
+      drawer:  AppDrawer(name: widget.name),
       body: Stack(children: [
         Container(
           height: size.height,
@@ -255,6 +148,163 @@ class _PassengerHomeState extends State<PassengerHome> {
           )),
         ),
       ]),
+    );
+  }
+}
+
+class AppDrawer extends ConsumerWidget {
+  final String name;
+  const AppDrawer( {required this.name,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final logoutRef = ref.watch(userAuthProvider);
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+              decoration: BoxDecoration(
+                color: black,
+              ),
+              child: Row(
+                children: [
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: grey5,
+                        radius: 30,
+                        backgroundImage: Image.asset(userIcon).image,
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 10,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: primaryColor,
+                                ),
+                                shape: BoxShape.circle,
+                                color: white,
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                size: 15,
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 45.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Boluwatife Jennifer', style: headline4(white)),
+                        const SizedBox(height: 7),
+                        Text(
+                          'Point score: 500',
+                          style: body4(successColor, TextDecoration.none),
+                        ),
+                        const SizedBox(height: 7),
+                        GestureDetector(
+                            onTap: () {},
+                            child: Text('Edit profile',
+                                style: body4(white, TextDecoration.underline)))
+                      ],
+                    ),
+                  )
+                ],
+              )),
+          ListTile(
+            leading: SvgPicture.asset(svgwallet),
+            title: const Text('MyWallet'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyWalletScreen()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(mdicarsports, color: black),
+            title: const Text('My CarRegistration'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CarDetailsReg()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svgmyAutoDoc),
+            title: const Text('My AutoDoc'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AutoDocHome()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svgAutosave),
+            title: const Text('My AutoSave'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AutoSaveHome()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svgautoinsure),
+            title: const Text('My AutoInsure'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AutoInsureHome()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svgnaira),
+            title: const Text('My CarEarn'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MyCarEarnHome()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svgPointsandreward, color: black),
+            title: const Text('Points and Reward'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PointAndRewardHome()));
+            },
+          ),
+          Container(
+            color: grey5,
+            height: 5,
+          ),
+          ListTile(
+            leading: SvgPicture.asset(svglogout),
+            title: const Text('Log out'),
+            onTap: () async {
+              await logoutRef.logout();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

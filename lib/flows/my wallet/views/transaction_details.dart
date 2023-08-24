@@ -64,7 +64,7 @@ class TransactionDetails extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,  children: [Text('New Balance', style: body3(black, TextDecoration.none),), Text('5,000.00', style: headline4(black),), ],),
  const SizedBox(height: 60,),
 
-AppButton(onPressed: (){}, label: 'Download Summary')        ],),
+AppButton(onPressed: (){}, label: 'Download Summary',textColor: white,)        ],),
       )   );
   }
 }

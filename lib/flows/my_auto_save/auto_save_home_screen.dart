@@ -56,7 +56,7 @@ class AutoSaveHome extends StatelessWidget {
                     style: body4(black, TextDecoration.none),
                     softWrap: true, maxLines: 1000, overflow: TextOverflow.visible,),),]),
           SizedBox(height: 25,),
-          AppButton(
+          AppButton(textColor: white,
               onPressed: (){
                Navigator.push(context, MaterialPageRoute(builder: (context) => const AutoSaveParemeters()));
               },

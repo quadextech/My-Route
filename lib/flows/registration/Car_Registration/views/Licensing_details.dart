@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/upload_reg.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
-import 'package:permission_handler/permission_handler.dart';
-
+import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../widget/text_header.dart';
 
@@ -37,7 +35,7 @@ class _LicensingRegState extends State<LicensingReg> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: AppBackButton(),
+        leading: const AppBackButton(),
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -80,7 +78,7 @@ class _LicensingRegState extends State<LicensingReg> {
             const SizedBox(
               height: 15,
             ),
-            AppButton(
+            AppButton(textColor: white,
                 onPressed: () {
                   if (driverLicenseController.text.isEmpty) {
                     setState(() {

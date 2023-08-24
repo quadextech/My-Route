@@ -60,7 +60,7 @@ class _MyTransactionsScreenState extends State<MyTransactionsScreen>
                   Tab(
                     child: Text('Top Ups'),
                   ),
-                  Tab(child: Text('Withdrawals')),
+                  Tab(child: Text('Withdrawals',style:TextStyle(fontSize:11))),
                 ],
                 onTap: (index) {
                   setState(() {});
@@ -102,9 +102,11 @@ class AllTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TransactionWidget(
-      status: 'Processed',
-      type: 'withdrawal',
+    return SizedBox( width: MediaQuery.of(context).size.width*0.8,
+      child: const TransactionWidget(
+        status: 'Processed',
+        type: 'withdrawal',
+      ),
     );
   }
 }

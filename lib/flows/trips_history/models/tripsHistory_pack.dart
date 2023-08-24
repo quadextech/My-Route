@@ -73,14 +73,14 @@ class Package extends StatelessWidget {
                       SizedBox(
                         width: 20,
                       ),
-                      Text('Passebgers: Jennifer, jacob'),
+                      Text('Passengers: Jennifer, jacob'),
                     ],
                   ),
                 ],
               ),
               Container(
                 color: null,
-                width: 65,
+                width: 60,
               ),
               Center(
                 child: Row(
@@ -93,7 +93,7 @@ class Package extends StatelessWidget {
             ],
           ),
           decoration: BoxDecoration(
-            color: grey1,
+            color: grey5,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
           height: size.height * 0.23,

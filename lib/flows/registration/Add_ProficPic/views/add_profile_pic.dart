@@ -28,7 +28,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   XFile? _imageFile;
   final storage = new FlutterSecureStorage();
   bool isLoading = false;
-   String dataUri = '';
+  String dataUri = '';
   //bool isLLoading = false;
 
   bool isImageGood() {
@@ -106,7 +106,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
               child: Stack(
                 children: [
                   CircleAvatar(
-                    backgroundColor: grey1,
+                    backgroundColor: grey5,
                     radius: 80,
                     backgroundImage: _imageFile == null
                         ? Image.asset(userIcon).image
@@ -163,6 +163,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                     //isImageGood()
                     // ?
                     AppButton(
+                        textColor: white,
                         onPressed: () async {
                           if (connectivityState.status ==
                               ConnectivityStatus.disconnected) {
@@ -183,34 +184,31 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
 
                             // );
 
-                           
-                              if (_imageFile != null) {
-                                var imageResponse =
-                                    await Imageref.addProfilePic(
-                                        widget.email, dataUri);
-                                if (imageResponse == 'updated') {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const AppPayment(),
-                                    ),
-                                  );
-                                }
-                              } else {
+                            if (_imageFile != null) {
+                              var imageResponse = await Imageref.addProfilePic(
+                                  widget.email, dataUri);
+                              if (imageResponse == 'updated') {
                                 setState(() {
                                   isLoading = false;
                                 });
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const AppPayment(),
-                                //   ),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AppPayment(),
+                                  ),
+                                );
                               }
-                           
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const AppPayment(),
+                              //   ),
+                              // );
+                            }
                           }
                         },
                         label: "Submit",

@@ -64,7 +64,7 @@ class _MyCarEarnHomeState extends State<MyCarEarnHome> {
                         maxLines: 1000, overflow: TextOverflow.visible,),),]),
               const SizedBox(height: 40,),
 
-              AppButton(onPressed: (){
+              AppButton(textColor: white,onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => RentOutMyCar()),);
               }, label: "Rent out Car from your fleet"),
               const SizedBox(height: 30,),

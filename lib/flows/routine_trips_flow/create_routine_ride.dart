@@ -91,7 +91,7 @@ class _CreateRoutineRideScreenState extends State<CreateRoutineRideScreen> {
               style: body3(black,TextDecoration.none),
             ),
             const SizedBox(height: 70),
-            AppButton(onPressed: () {}, label: 'Create Routine Ride')
+            AppButton(textColor: white,onPressed: () {}, label: 'Create Routine Ride')
           ],
         ),
       ),

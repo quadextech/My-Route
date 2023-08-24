@@ -14,7 +14,6 @@ import '../my_car_fleet.dart';
 import '../pay_renewal_fee.dart';
 import 'doctype.dart';
 
-
 class AutoDocSettings extends StatefulWidget {
   const AutoDocSettings({Key? key}) : super(key: key);
 
@@ -23,7 +22,6 @@ class AutoDocSettings extends StatefulWidget {
 }
 
 class _AutoDocSettingsState extends State<AutoDocSettings> {
-
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _yesNoController = TextEditingController();
   final TextEditingController _carDocumentType = TextEditingController();
@@ -32,44 +30,62 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
   String? name;
   bool isPressed = true;
 
-  void successs(){
-    showModalBottomSheet(context: context, builder: (context){
-      return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: Column(
-          children: [
-            SvgPicture.asset(success),
-            SizedBox(height: 15,),
-            Text('Success!', style: body1(primaryColor, TextDecoration.none),),
-            SizedBox(height: 15,),
-            Text('Your AutoDoc settings has been saved', style: body2(black, TextDecoration.none),),
-            SizedBox(height: 30,),
-            AppButton(
-                onPressed: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyCarFleet(),
-                      ));
-            }, label: 'Go back to My Car Fleet'),
-            SizedBox(height: 20,),
-            AppButton(
-              textColor: black,
-              buttonColor: white,
-                onPressed: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PayRenewalFee(),
-                      ));
-                }, label: 'Exit')
-          ],
-        ),
-      );
-    });
+  void successs() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: CustomPopUpContainer(
+              child: Column(
+                children: [
+                  SvgPicture.asset(success),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Success!',
+                    style: body1(primaryColor, TextDecoration.none),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Your AutoDoc settings has been saved',
+                    style: body2(black, TextDecoration.none),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  AppButton(
+                      textColor: white,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyCarFleet(),
+                            ));
+                      },
+                      label: 'Go back to My Car Fleet'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AppButton(
+                      textColor: black,
+                      buttonColor: white,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PayRenewalFee(),
+                            ));
+                      },
+                      label: 'Exit')
+                ],
+              ),
+            ),
+          );
+        });
   }
-
-
 
   String? _setTime, _setDate;
 
@@ -80,7 +96,6 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
   DateTime selectedDate = DateTime.now();
 
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -111,7 +126,10 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
         backgroundColor: white,
         leading: AppBackButton(),
         centerTitle: true,
-        title: Text('My AutoDoc', style: body1(black, TextDecoration.none),),
+        title: Text(
+          'My AutoDoc',
+          style: body1(black, TextDecoration.none),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -119,7 +137,13 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('2010 Range Rover Sport', style: headline2(black,),),
+              Text(
+                '2010 Range Rover Sport',
+                style: body2
+                (
+                  black,TextDecoration.none
+                ),
+              ),
               SizedBox(height: 10),
               Row(
                 children: [
@@ -128,67 +152,71 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
                 ],
               ),
               SizedBox(height: 20),
-              Text('Select Car Document type', style: body1(black, TextDecoration.none)),
+              Text('Select Car Document type',
+                  style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: Container(
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: grey1,
+                    color: grey5,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        isPressed ? Container(
-                          child: Row(
-                            children: [
-                              CarDoc(
-                                onPressed: (){
-                                  setState(() {
-                                    isPressed = false;
-                                    name = 'Driver\'s License';
-                                  });
-                                },
-                                name: 'Driver\'s License',
-                              ),
-                              SizedBox(width: 2,
-                              ),
-                              CarDoc(
-                                onPressed: (){
-                                  setState(() {
-                                    isPressed = false;
-                                    name = 'Road worthiness';
-                                  });
-                                },
-                                name: 'Road worthiness',
+                        isPressed
+                            ? Container(
+                                child: Row(
+                                  children: [
+                                    CarDoc(
+                                      onPressed: () {
+                                        setState(() {
+                                          isPressed = false;
+                                          name = 'Driver\'s License';
+                                        });
+                                      },
+                                      name: 'Driver\'s License',
+                                    ),
+                                    SizedBox(
+                                      width: 2,
+                                    ),
+                                    CarDoc(
+                                      onPressed: () {
+                                        setState(() {
+                                          isPressed = false;
+                                          name = 'Road worthiness';
+                                        });
+                                      },
+                                      name: 'Road worthiness',
+                                    )
+                                  ],
+                                ),
                               )
-                            ],
-                          ),
-                        ) : Padding(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Text('$name'),
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text('$name'),
+                              ),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: primaryColor,
                         ),
-                        const Icon(Icons.arrow_drop_down,
-                          color: primaryColor,),
                       ],
                     ),
                   ),
                 ),
               ),
-
-
-              Text('When is your license expiring?', style: body1(black, TextDecoration.none)),
-
+              Text('When is your license expiring?',
+                  style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: Container(
                   height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: grey1,
+                    color: grey5,
                   ),
                   child: InkWell(
                     onTap: () {
@@ -201,7 +229,8 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Icon(Icons.calendar_month,
+                          Icon(
+                            Icons.calendar_month,
                             color: black,
                           ),
                           Expanded(
@@ -231,59 +260,60 @@ class _AutoDocSettingsState extends State<AutoDocSettings> {
                           const SizedBox(
                             width: 180,
                           ),
-                          const Icon(Icons.arrow_drop_down,
-                            color: primaryColor,),
+                          const Icon(
+                            Icons.arrow_drop_down,
+                            color: primaryColor,
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
               ),
-
-              Text('NOTE Renewal Cost: N50,000.00', style: body1(Colors.red, TextDecoration.none)),
-              SizedBox(height: 25,),
-
-              Text('Do you want us to Auto renew for you?', style: body1(black, TextDecoration.none)),
-
+              Text('NOTE Renewal Cost: N50,000.00',
+                  style: body3(Colors.red, TextDecoration.none)),
+              SizedBox(
+                height: 25,
+              ),
+              Text('Do you want us to Auto renew for you?',
+                  style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: GlobalDroptextField(
                     hint: 'Yes',
                     onChanged: (value) {
-              setState(() {
-            selected3 = value as String;
-              });
-              },
+                      setState(() {
+                        selected3 = value as String;
+                      });
+                    },
                     selected: '$selected3',
                     listTextFied: const [
                       'Yes',
                       'No',
                     ]),
               ),
-
-              Text('Account to Debit for Auto renewal', style: body1(black, TextDecoration.none)),
+              Text('Account to Debit for Auto renewal',
+                  style: body1(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: GlobalDroptextField(
                     hint: 'My AutoSave wallet',
                     selected: '',
-                    listTextFied: const [
-
-                    ]),
+                    listTextFied: const []),
               ),
-
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               AppButton(
+                  textColor: white,
                   onPressed: () {
                     successs();
                   },
                   label: "Save AutoDoc settings"),
-
             ],
           ),
         ),
       ),
     );
   }
-
 }

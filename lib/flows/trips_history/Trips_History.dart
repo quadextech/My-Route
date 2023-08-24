@@ -15,14 +15,15 @@ class TripHistory extends StatefulWidget {
 class _TripHistoryState extends State<TripHistory> {
   List TripsPages = [
     Package(),
-    Text('dan'),
-    Text('girl'),
+    Package(),
+    Package(),
+    
   ];
 
   List<dynamic> color = [
-    Colors.green,
-    Colors.yellow,
-    Colors.black,
+    greenColor,
+    warningColor,
+    black,
   ];
 
   List<String> textName = [
@@ -44,9 +45,7 @@ class _TripHistoryState extends State<TripHistory> {
             padding: EdgeInsets.symmetric(horizontal: 75),
             child: Text(
               'My Rides',
-              style: body1(
-                black,TextDecoration.none
-              ),
+              style: body1(black, TextDecoration.none),
             )),
         leading: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -63,63 +62,64 @@ class _TripHistoryState extends State<TripHistory> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-         Material(
-           elevation: 1,
-           child: Container(
-             height: 60,
-             child: Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: List.generate(TripsPages.length, (index) {
-                   return GestureDetector(
-                     onTap: (){
-                       _currentIndex = index;
-                     },
-                     child: Padding(
-                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                       child: MyRidesContainer(
-                         textName: textName[index],
-                           color: _currentIndex == index
-                               ? color[index]
-                               : null,
-                         textColor: _currentIndex == index ? white : hintColor,
-                       ),
-                     ),
-                   );
-                 })),
-           ),
-         ),
-         SizedBox(
-           height: 25,
-         ),
-         Padding(
-             padding: EdgeInsets.symmetric(horizontal: 10),
-             child: Text('This month', style: body3(black, TextDecoration.none),)),
-
-         SizedBox(
-           height: 10,
-         ),
-
-         Padding(
-           padding: EdgeInsets.symmetric(horizontal: 10),
-           child: ConstrainedBox(
-             constraints: BoxConstraints(maxHeight: size.height * 0.6),
-             child: Stack(children: [
-               PageView.builder(
-                   itemCount: TripsPages.length,
-                   onPageChanged: (index) {
-                     setState(() {
-                       _currentIndex = index;
-                     });
-                   },
-                   itemBuilder: (context, index) {
-                     return TripsPages[index];
-
-                   }),
-             ]),
-           ),
-         ),
-       ],
+        children: [
+          Material(
+            elevation: 1,
+            child: Container(
+              height: 60,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(TripsPages.length, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                         _currentIndex = index; 
+                        });
+                        
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: MyRidesContainer(
+                          textName: textName[index],
+                          color: _currentIndex == index ? color[index] : null,
+                          textColor: _currentIndex == index ? white : hintColor,
+                        ),
+                      ),
+                    );
+                  })),
+            ),
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'This month',
+                style: body3(black, TextDecoration.none),
+              )),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: size.height * 0.6),
+              child: Stack(children: [
+                PageView.builder(
+                    itemCount: TripsPages.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return TripsPages[index];
+                    }),
+              ]),
+            ),
+          ),
+        ],
       ),
     );
   }

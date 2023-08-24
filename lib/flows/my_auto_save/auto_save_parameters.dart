@@ -25,25 +25,26 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
       borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
 
     ), context: context, builder: (context){
-      return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.4,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: SvgPicture.asset( success, color: primaryColor,)),
-            SizedBox(height: 15,),
-            Center(child: Text('Success!', style: headline1(primaryColor),)),
-            SizedBox(height: 20,),
-            Center(child: Text('Your AutoSave settings have been saved', style: body3(black, TextDecoration.none),)),
-            SizedBox(height: 30,),
-            AppButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
-                }, label: 'Exit'),
-            SizedBox(height: 20,),
-          ],
+      return SingleChildScrollView(
+        child: CustomPopUpContainer(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(child: SvgPicture.asset( success, color: successColor,)),
+              SizedBox(height: 15,),
+              Center(child: Text('Success!', style: headline1(successColor),)),
+              SizedBox(height: 20,),
+              Center(child: Text('Your AutoSave settings have been saved', style: body3(black, TextDecoration.none),)),
+              SizedBox(height: 30,),
+              AppButton(textColor: white,
+                  onPressed: (){
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
+                  }, label: 'Exit'),
+              SizedBox(height: 20,),
+            ],
+          ),
         ),
       );
     });
@@ -62,7 +63,7 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
         backgroundColor: white,
         leading: AppBackButton(),
         centerTitle: true,
-        title: Text('My AutoSave', style: body1(black, TextDecoration.none),),
+        title: Text('My AutoSave', style: body3(black, TextDecoration.none),),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -70,10 +71,10 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Set your AutoSave Parameters', style: headline2(black,),),
+              Text('Set your AutoSave Parameters', style: body2(black, TextDecoration.none),),
 
               SizedBox(height: 20),
-              Text('What is your savings target?', style: body1(black, TextDecoration.none)),
+              Text('What is your savings target?', style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: GlobalDroptextField(
@@ -89,7 +90,7 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
                     ]),
               ),
 
-              Text('How much do you want to save?', style: body1(black, TextDecoration.none)),
+              Text('How much do you want to save?', style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: GlobalDroptextField(
@@ -105,10 +106,10 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
                     ]),
               ),
 
-              Text('NOTE Renewal Cost: N50,000.00', style: body1(Colors.red, TextDecoration.none)),
+              Text('NOTE Renewal Cost: N50,000.00', style: body3(Colors.red, TextDecoration.none)),
               SizedBox(height: 25,),
 
-              Text('How often do you want to save', style: body1(black, TextDecoration.none)),
+              Text('How often do you want to save', style: body3(black, TextDecoration.none)),
 
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
@@ -128,7 +129,7 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
 
               SizedBox(height: 25,),
 
-              Text('How long do you want to save for?', style: body1(black, TextDecoration.none)),
+              Text('How long do you want to save for?', style: body3(black, TextDecoration.none)),
 
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
@@ -148,7 +149,7 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
 
               SizedBox(height: 25,),
 
-              Text('Account to Debit for your AutoSave target', style: body1(black, TextDecoration.none)),
+              Text('Account to Debit for your AutoSave target', style: body3(black, TextDecoration.none)),
               Padding(
                 padding: const EdgeInsets.only(top: 15, bottom: 30),
                 child: GlobalDroptextField(
@@ -166,7 +167,7 @@ class _AutoSaveParemetersState extends State<AutoSaveParemeters> {
               ),
 
               SizedBox(height: 20,),
-              AppButton(
+              AppButton(textColor: white,
                   onPressed: () {
                     AutoSaveSuccess();
                   },

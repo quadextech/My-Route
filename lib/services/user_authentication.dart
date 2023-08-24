@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,7 @@ class UserAuth {
     if (response.statusCode == 201) {
       message = 'Sign Up Successful';
       final responseData = json.decode(response.body);
-      
+
       final token = responseData['token'];
       final id = responseData['data']['user']['_id'];
       if (token != null && id != null) {
@@ -41,9 +42,14 @@ class UserAuth {
         prefs.setString('id', id);
       }
       return message;
+    }
+    if (response.statusCode == 403) {
+      message = 'This Email has been registered';
+      return message;
     } else {
       message = response.body;
       print(message);
+      print(response.statusCode);
       return message;
     }
   }
@@ -62,12 +68,25 @@ class UserAuth {
         'password': password,
       }),
     );
-    if (response.statusCode == 201) {
-      message = 'Login Successful';
-      return message;
-    } else {
-      message = response.body;
-      return message;
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      final token = responseData['token'];
+      final id = responseData['data']['user']['_id'];
+      final firstName = responseData['data']['user']['firstName'];
+      final lastName = responseData['data']['user']['lastName'];
+      if (token != null && id != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token', token);
+        prefs.setString('id', id);
+        prefs.setString('firstName', firstName);
+        prefs.setString('lastName', lastName);
+        message = 'LoggedIn';
+        return message;
+      } else {
+        message = response.body;
+
+        return message;
+      }
     }
   }
 
@@ -85,7 +104,7 @@ class UserAuth {
         'verificationCode': verificationCode,
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       message = 'verified';
       return message;
     } else {

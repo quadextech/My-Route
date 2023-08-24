@@ -70,6 +70,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     final signUpref = ref.watch(userAuthProvider);
     return Scaffold(
       body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -191,14 +192,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   Row(
                     children: [
                       UpLoadButton(onPressed: () async {
-                        ninDocPath = await pickFile();
+                        setState(() async {
+                          ninDocPath = await pickFile();
+                        });
+                        
                       }),
                       const SizedBox(width: 5),
-                      Text(ninError? 'Upload your NIN':
-                        ninDoc,
+                      Text(
+                        ninError ? 'Upload your NIN' : ninDoc,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontFamily: "Avenir", fontSize: 9, color :ninError?errorColor: black),
+                            fontFamily: "Avenir",
+                            fontSize: 9,
+                            color: ninError ? errorColor : black),
                       ),
                     ],
                   ),
@@ -243,6 +249,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           child: LoadingAnimationWidget.inkDrop(
                               color: primaryColor, size: 25))
                       : AppButton(
+                          textColor: white,
                           label: "Sign Up",
                           onPressed: () async {
                             if (connectivityState.status ==
@@ -322,7 +329,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                             VerificationScreen(email: emailController.text),
+                                            VerificationScreen(
+                                                email: emailController.text),
                                       ));
                                   setState(() {
                                     isLoading = false;
@@ -436,63 +444,54 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           ),
           Row(
             children: [
-              SizedBox(
-                width: 100,
-                child: Row(
-                  children: [
-                    const Text("Male"),
-                    Radio(
-                        focusColor: primaryColor,
-                        activeColor: primaryColor,
-                        value: "Male",
-                        groupValue: sex,
-                        onChanged: (String? v) {
-                          if (v != null) {
-                            setState(() {
-                              sex = v;
-                            });
-                          }
-                        }),
-                  ],
-                ),
+              Row(
+                children: [
+                  const Text("Male"),
+                  Radio(
+                      focusColor: primaryColor,
+                      activeColor: primaryColor,
+                      value: "Male",
+                      groupValue: sex,
+                      onChanged: (String? v) {
+                        if (v != null) {
+                          setState(() {
+                            sex = v;
+                          });
+                        }
+                      }),
+                ],
               ),
-              SizedBox(
-                width: 100,
-                child: Row(
-                  children: [
-                    const Text("Female"),
-                    Radio(
-                        activeColor: primaryColor,
-                        value: "Female",
-                        groupValue: sex,
-                        onChanged: (String? v) {
-                          if (v != null) {
-                            setState(() {
-                              sex = v;
-                            });
-                          }
-                        }),
-                  ],
-                ),
+              Row(
+                children: [
+                  const Text("Female"),
+                  Radio(
+                      activeColor: primaryColor,
+                      value: "Female",
+                      groupValue: sex,
+                      onChanged: (String? v) {
+                        if (v != null) {
+                          setState(() {
+                            sex = v;
+                          });
+                        }
+                      }),
+                ],
               ),
-              SizedBox(
-                width: 120,
-                child: Row(
-                  children: [
-                    const Text("Non-binary"),
-                    Radio(
-                        activeColor: primaryColor,
-                        value: "Non-binary",
-                        groupValue: sex,
-                        onChanged: (String? v) {
-                          if (v != null) {
-                            setState(() {
-                              sex = v;
-                            });
-                          }
-                        }),
-                  ],
-                ),
+              Row(
+                children: [
+                  const Text("Non-binary"),
+                  Radio(
+                      activeColor: primaryColor,
+                      value: "Non-binary",
+                      groupValue: sex,
+                      onChanged: (String? v) {
+                        if (v != null) {
+                          setState(() {
+                            sex = v;
+                          });
+                        }
+                      }),
+                ],
               ),
             ],
           )
@@ -518,15 +517,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
       List<int> fileBytes = await file.readAsBytes();
       String ninDocBase64 = base64Encode(fileBytes);
-      ninDocBase64 = ninDocBase64.replaceAll('/', '');
+      String ninDocBase = ninDocBase64.replaceAll('/', '');
       final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
 
-      final String dataUri = "data:$mimeType;base64,$ninDocBase64";
+      final String dataUri = "data:$mimeType;base64,$ninDocBase";
 
       setState(() {
         ninDoc = platformFile.name;
       });
-      
+      print(dataUri);
       return dataUri;
     } else {
       String message = 'File picking canceled';

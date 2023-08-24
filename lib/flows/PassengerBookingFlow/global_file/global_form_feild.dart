@@ -24,7 +24,7 @@ class GlobaltextField extends StatelessWidget {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-        color: grey1,
+        color: grey5,
         borderRadius: BorderRadius.circular(7),
       ),
       child: Padding(

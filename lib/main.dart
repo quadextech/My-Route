@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myroute/constants/app_color.dart';
+
 import 'flows/Splash/views/splash.dart';
 
 
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'MyRoute',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: myCustomColor,
             fontFamily: "Avenir",
           ),
          

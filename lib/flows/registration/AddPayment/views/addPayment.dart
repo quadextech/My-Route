@@ -122,7 +122,7 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25),
                     )
-                  : AppButton(
+                  : AppButton(textColor: white,
                       onPressed: () async {
                         if (connectivityState.status ==
                             ConnectivityStatus.disconnected) {

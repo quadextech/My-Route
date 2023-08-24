@@ -17,52 +17,79 @@ class SelectCarToRent extends StatefulWidget {
 }
 
 class _SelectCarToRentState extends State<SelectCarToRent> {
-
-  void RentalSuccess(){
-    showModalBottomSheet(shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-
-    ), context: context, builder: (context){
-      Size size = MediaQuery.of(context).size;
-      return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.45,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: SvgPicture.asset( success, color: primaryColor,)),
-            SizedBox(height: 15,),
-            Center(child: Text('Success!', style: headline1(primaryColor),)),
-            SizedBox(height: 20,),
-
-
-            SizedBox(
-              width: size.width * 0.95,
-              child: Center(
-                child: Text("Your Car rental application has been sent to Mr Dangote.",
-                  style: body3(black, TextDecoration.none),
-                  softWrap: true, maxLines: 1000, overflow: TextOverflow.visible,),
-              ),),
-            SizedBox(height: 10,),
-            SizedBox(
-              width: size.width * 0.95,
-              child: Center(
-                child: Text("You will be notified if it's successful.",
-                  style: body3(black, TextDecoration.none),
-                  softWrap: true, maxLines: 1000, overflow: TextOverflow.visible,),
-              ),),
-            SizedBox(height: 30,),
-            AppButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                }, label: 'Exit'),
-
-          ],
-        ),
-      );
-    });
+  void RentalSuccess() {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        context: context,
+        builder: (context) {
+          Size size = MediaQuery.of(context).size;
+          return SingleChildScrollView(
+            child: CustomPopUpContainer(
+              
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                      child: SvgPicture.asset(
+                    success,
+                    color: primaryColor,
+                  )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Center(
+                      child: Text(
+                    'Success!',
+                    style: headline1(primaryColor),
+                  )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.95,
+                    child: Center(
+                      child: Text(
+                        "Your Car rental application has been sent to Mr Dangote.",
+                        style: body3(black, TextDecoration.none),
+                        softWrap: true,
+                        maxLines: 1000,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.95,
+                    child: Center(
+                      child: Text(
+                        "You will be notified if it's successful.",
+                        style: body3(black, TextDecoration.none),
+                        softWrap: true,
+                        maxLines: 1000,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  AppButton(
+                      textColor: white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      label: 'Exit'),
+                ],
+              ),
+            ),
+          );
+        });
   }
-
 
   void ApplyToRent() {
     showModalBottomSheet(
@@ -72,128 +99,148 @@ class _SelectCarToRentState extends State<SelectCarToRent> {
         context: context,
         builder: (context) {
           Size size = MediaQuery.of(context).size;
-          return CustomPopUpContainer(
-            height: MediaQuery.of(context).size.height * 0.9,
-            sizedheight: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(child: SvgPicture.asset(mdicarsports)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Center(child: Text('2010 Range Rover rental conditions', style: TextStyle(fontSize: 18))),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                    child: CircleAvatar(
-                  radius: 30,
-                  child: Icon(Icons.supervised_user_circle),
-                )),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Mr Dangote',
-                      style: headline1(black),
-                    ),
-                    Text(
-                      '.',
-                    ),
-                    SvgPicture.asset(star),
-                    SvgPicture.asset(star),
-                    SvgPicture.asset(star),
-                    SvgPicture.asset(star),
-                    SvgPicture.asset(star),
-                  ],
-                ),
-                SizedBox(height: 15,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Car owner' ),
-                    Text(' . '),
-                    Text('09077886545'),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(accesstime),
-                    Text('3 months. Due on 19th Feb, 2027'),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(search),
-                    Text('Car monitoring enabled'),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(money),
-                    SizedBox(width: 10,),
-                    Text('60% on every passenger  .  N500.00 per day if idle'),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                              width: 1.3,
-                              color: primaryColor,
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SvgPicture.asset(svgcall),
-                        )),
-                    SizedBox(width: 20,),
-                    Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                              width: 1.3,
-                              color: primaryColor,
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SvgPicture.asset(message),
-                        )),
-                  ],
-                ),
-                SizedBox(height: 20,),
-                AppButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      RentalSuccess();
-                      //   Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
-                    },
-                    label: 'Apply to rent'),
-
-              ],
+          return SingleChildScrollView(
+            child: CustomPopUpContainer(
+             
+              sizedheight: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(child: SvgPicture.asset(mdicarsports)),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Center(
+                          child: Text('2010 Range Rover rental conditions',
+                              style: TextStyle(fontSize: 18))),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                      child: CircleAvatar(
+                    radius: 30,
+                    child: Icon(Icons.supervised_user_circle),
+                  )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Mr Dangote',
+                        style: headline1(black),
+                      ),
+                      Text(
+                        '.',
+                      ),
+                      SvgPicture.asset(star),
+                      SvgPicture.asset(star),
+                      SvgPicture.asset(star),
+                      SvgPicture.asset(star),
+                      SvgPicture.asset(star),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Car owner'),
+                      Text(' . '),
+                      Text('09077886545'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(accesstime),
+                      Text('3 months. Due on 19th Feb, 2027'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(search),
+                      Text('Car monitoring enabled'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(money),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('60% on every passenger  .  N500.00 per day if idle'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(
+                                width: 1.3,
+                                color: primaryColor,
+                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SvgPicture.asset(svgcall),
+                          )),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(
+                                width: 1.3,
+                                color: primaryColor,
+                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SvgPicture.asset(message),
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AppButton(
+                      textColor: white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                        RentalSuccess();
+                        //   Navigator.push(context, MaterialPageRoute(builder: (context)=> AutoSaveDetails()));
+                      },
+                      label: 'Apply to rent'),
+                ],
+              ),
             ),
           );
         });
@@ -247,7 +294,7 @@ class _SelectCarToRentState extends State<SelectCarToRent> {
                           child: Container(
                             decoration: BoxDecoration(
                                 border: Border.all(),
-                                color: grey1,
+                                color: grey5,
                                 borderRadius: BorderRadius.circular(10)),
                             // height: size.height*0.2,
                             // width: size.height*0.5,

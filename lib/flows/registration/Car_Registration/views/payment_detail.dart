@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
-
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
-import '../../../../services/banks_services.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/drivers_services.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
@@ -30,7 +27,7 @@ class PaymentDetail extends ConsumerStatefulWidget {
   final String outSideCarPhoto;
   final String inSideCarPhoto;
 
-  PaymentDetail({
+  const PaymentDetail({
     super.key,
     required this.userId,
     required this.vehicleColor,
@@ -149,6 +146,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25))
                   : AppButton(
+                      textColor: white,
                       label: "Finish",
                       onPressed: () async {
                         if (connectivityState.status ==
@@ -226,7 +224,10 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                               const SizedBox(
                                                 height: 20,
                                               ),
-                                              Image.asset(success, color: successColor,),
+                                              Image.asset(
+                                                success,
+                                                color: successColor,
+                                              ),
                                               Text(
                                                 'Success!',
                                                 style: body2(successColor,
@@ -244,6 +245,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                 height: 10,
                                               ),
                                               AppButton(
+                                                  textColor: white,
                                                   buttonColor: black,
                                                   onPressed: () {
                                                     Navigator.push(
@@ -295,12 +297,13 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                           Text(
                                             'Sorry, Complete your Car registration before you proceed.',
                                             style: body3(
-                                                grey1, TextDecoration.none),
+                                                grey5, TextDecoration.none),
                                           ),
                                           const SizedBox(
                                             height: 20,
                                           ),
                                           AppButton(
+                                              textColor: white,
                                               buttonColor: black,
                                               onPressed: () {
                                                 Navigator.push(
@@ -315,13 +318,14 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                             height: 20,
                                           ),
                                           AppButton(
+                                              textColor: white,
                                               buttonColor: white,
                                               onPressed: () {
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const PassengerHome(),
+                                                           PassengerHome(name:''),
                                                     ));
                                               },
                                               label: "Exit registration"),

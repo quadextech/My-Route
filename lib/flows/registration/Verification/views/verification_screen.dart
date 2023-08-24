@@ -46,7 +46,7 @@ class _VerificationScreenConsumerState
     });
   }
 
-  String? code;
+  String code ='';
   String wrongCode = '';
   bool isLoading = false;
   String accessCode = "1255";
@@ -81,7 +81,7 @@ class _VerificationScreenConsumerState
               const SizedBox(
                 height: 10,
               ),
-              Text("Enter the 6-digit code sent to you at $widget.email"),
+              Text("Enter the 6-digit code sent to you at ${widget.email}"),
               const SizedBox(
                 height: 20,
               ),
@@ -264,7 +264,6 @@ class _VerificationScreenConsumerState
                       onChanged: (value) {
                         setState(() {
                           String nevalue = ("$code$value");
-
                           code = nevalue;
                         });
                         if (value.length == 1) {
@@ -289,6 +288,7 @@ class _VerificationScreenConsumerState
                   ),
                 ],
               ),
+             
               const SizedBox(
                 height: 8,
               ),
@@ -304,12 +304,16 @@ class _VerificationScreenConsumerState
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25))
                   : AppButton(
+                      textColor: white,
                       onPressed: () async {
+                          code = code.replaceAll('null', '');
+                        print('VerificationCode = $code');
                         setState(() {
                           isLoading = true;
                         });
+                        int coded = int.parse(code); 
                         String message = await verificationref.verifyUser(
-                            widget.email, code);
+                            widget.email, coded);
                         if (message == 'verified') {
                           setState(() {
                             isLoading = false;
@@ -317,7 +321,8 @@ class _VerificationScreenConsumerState
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  AddProfilePic(email: widget.email),
+                                builder: (context) =>
+                                    AddProfilePic(email: widget.email),
                               ));
                         } else {
                           setState(() {
@@ -334,7 +339,8 @@ class _VerificationScreenConsumerState
               coountDownOver
                   ? GestureDetector(
                       onTap: () async {
-                       await verificationref.resendVerificationCode(widget.email);
+                        await verificationref
+                            .resendVerificationCode(widget.email);
                         startCountdown();
                       },
                       child: const Center(child: Text("Resend SMS code")))

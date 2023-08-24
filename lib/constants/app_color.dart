@@ -17,3 +17,15 @@ Color successColor = const Color(0xff27ae60);
 Color deepGreenColor = const Color(0xFF006438);
 Color greenColor = const Color(0XFF008249);
 Color lightGreen = const Color(0xFF00D879);
+MaterialColor myCustomColor = MaterialColor(0Xff00ed85, {
+  50: Color(0Xff00ed85), // You can customize different shades here
+  100: Color(0Xff00ed85),
+  200: Color(0Xff00ed85),
+  300: Color(0Xff00ed85),
+  400: Color(0Xff00ed85),
+  500: Color(0Xff00ed85), // The primary color
+  600: Color(0Xff00ed85),
+  700: Color(0Xff00ed85),
+  800: Color(0Xff00ed85),
+  900: Color(0Xff00ed85),
+});

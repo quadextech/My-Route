@@ -12,12 +12,13 @@ class CarDoc extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: Container(
+        padding: EdgeInsets.all(5),
         child: Center(child: Text('$name', style: TextStyle(color: Colors.black),)),
-        width: 100,
+       
         height: 30,
         decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          color: grey4,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
       ),
     );

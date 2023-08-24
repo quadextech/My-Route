@@ -63,7 +63,7 @@ class _AutoInsureHomeState extends State<AutoInsureHome> {
                         maxLines: 1000, overflow: TextOverflow.visible,),),]),
               const SizedBox(height: 30,),
 
-              AppButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => AutoInsureSettings(),),);}, label: "Proceed")
+              AppButton(textColor: white,onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => AutoInsureSettings(),),);}, label: "Proceed")
             ],
           ),
         ),

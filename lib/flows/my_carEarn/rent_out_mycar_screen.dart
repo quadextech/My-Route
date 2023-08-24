@@ -66,7 +66,7 @@ class _RentOutMyCarState extends State<RentOutMyCar> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: isPotrait ? 2 : 3,
                             mainAxisSpacing: 10,
-                            crossAxisSpacing: 5,
+                            crossAxisSpacing: 3,
                             childAspectRatio: 0.8,
                             mainAxisExtent: size.height * 0.35),
                         itemCount: 4,

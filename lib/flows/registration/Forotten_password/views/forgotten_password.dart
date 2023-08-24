@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myroute/constants/app_image.dart';
+import '../../../../constants/app_color.dart';
 import '../../SignUp/views/Sign_up.dart';
 import 'package:myroute/flows/registration/Reg_global_File/custom_text_field.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
@@ -76,7 +77,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             const SizedBox(
               height: 30,
             ),
-            AppButton(
+            AppButton(textColor: white,
               onPressed: () {},
               label: "Reset",
             ),
