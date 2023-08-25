@@ -18,7 +18,7 @@ class UserAuth {
     gender,
   ) async {
     String message = 'Something went wrong';
-    String? token = await storage.read(key: "token");
+    //String? token = await storage.read(key: "token");
     final url =
         Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/signup');
 
@@ -26,7 +26,7 @@ class UserAuth {
       url,
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": "Bearer $token"
+        //"Authorization": "Bearer $token"
       },
       body: jsonEncode({
         'email': email,
@@ -40,8 +40,8 @@ class UserAuth {
     if (response.statusCode == 201) {
       message = 'Sign Up Successful';
       Map<String, dynamic> output = jsonDecode(response.body);
-      print(output["token"]);
-      await storage.write(key: "token", value: output["token"]);
+      //print(output["token"]);
+      //await storage.write(key: "token", value: output["token"]);
       return message;
     } else {
       message = response.body;
@@ -72,21 +72,7 @@ class UserAuth {
     }
   }
 
-  Future<http.StreamedResponse>userAvatar(String filepath) async {
-    String message = 'Something went wrong';
-    String? token = await storage.read(key: "token");
-    final url =
-    Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/signup');
-    final request = await http.MultipartRequest(
-      'PATCH',
-      url);
-    request.files.add(await http.MultipartFile.fromPath("img", filepath));
-    request.headers.addAll({
-      "Content-type": "multipart/form-data",
-      "Authorization": "Bearer $token",
-    });
-    var response = request.send();
-    return response;
 
-  }
+
+
 }

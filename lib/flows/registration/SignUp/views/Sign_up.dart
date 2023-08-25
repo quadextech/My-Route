@@ -37,7 +37,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool isLoading = false;
   bool isPicked = false;
 
-  final storage = new FlutterSecureStorage();
+  //final storage = new FlutterSecureStorage();
   bool isValidEmail(String email) {
     final RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
     return emailRegex.hasMatch(email);

@@ -166,6 +166,7 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                  style: TextStyle(fontSize: 16)),
            ));
          });
+
          Navigator.push(
              context,
              MaterialPageRoute(
@@ -199,7 +200,7 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                  
                 
                 label: "Skip",
-                buttonColor: white,
+                buttonColor:white,
                 textColor: black,
               )
             ],

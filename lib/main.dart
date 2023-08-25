@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myroute/flows/my%20wallet/views/mywallet.dart';
+import 'flows/PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import 'flows/registration/AddPayment/views/addPayment.dart';
+import 'flows/registration/Forotten_password/views/forgotten_password.dart';
 
 
 void main() {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Avenir",
       ),
 
-      home: MyWalletScreen(),
+      home: PassengerHomeScreen(),
     );
   }
 }

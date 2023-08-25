@@ -20,6 +20,7 @@ class AddPayment {
       message = "Card added successfully";
       final responseBody = json.encode(response.body);
       print(responseBody);
+      print(response.body);
       return message;
     } else {
       message = response.body;
