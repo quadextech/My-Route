@@ -35,7 +35,7 @@ class _MyCarEarnHomeState extends State<MyCarEarnHome> {
             children: [
               Image.asset(earnandman),
               const SizedBox(height: 20,),
-              Text('Introducing My CarEarn', style: headline2(black),),
+              Text('Introducing My CarEarn', style: body1(black, TextDecoration.none),),
               const SizedBox(height: 20,),
               Row(
                   children: [
@@ -44,7 +44,7 @@ class _MyCarEarnHomeState extends State<MyCarEarnHome> {
                     ),
                     const SizedBox(width: 20,),
                     SizedBox(
-                      width: size.width * 0.9,
+                      width: size.width * 0.8,
                       child: Text('Rent out your car on your terms and conditions and earn money',
                         style: body4(black, TextDecoration.none),
                         softWrap: true,
@@ -57,18 +57,18 @@ class _MyCarEarnHomeState extends State<MyCarEarnHome> {
                     ),
                     const SizedBox(width: 20,),
                     SizedBox(
-                      width: size.width * 0.9,
+                      width: size.width * 0.8,
                       child: Text('Rent a car and earn money strictly on the terms of the car owner',
                         style: body4(black, TextDecoration.none),
                         softWrap: true,
                         maxLines: 1000, overflow: TextOverflow.visible,),),]),
               const SizedBox(height: 40,),
 
-              AppButton(onPressed: (){
+              AppButton(textColor: white,onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => RentOutMyCar()),);
               }, label: "Rent out Car from your fleet"),
               const SizedBox(height: 30,),
-              AppButton(textColor: black, buttonColor: white, onPressed: (){
+              AppButton(textColor: greenColor, buttonColor: white, onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SelectCarToRent()),);
               }, label: "Rent a car from a Car owner")
             ],

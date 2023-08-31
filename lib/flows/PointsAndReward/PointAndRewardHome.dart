@@ -6,15 +6,16 @@ import '../../constants/app_image.dart';
 import '../../constants/textstyle.dart';
 import '../registration/Reg_global_File/back_button.dart';
 import 'MyRoutePoints.dart';
-
 class PointAndRewardHome extends StatefulWidget {
-  const PointAndRewardHome({Key? key}) : super(key: key);
+  const PointAndRewardHome({super.key});
 
   @override
   State<PointAndRewardHome> createState() => _PointAndRewardHomeState();
 }
 
 class _PointAndRewardHomeState extends State<PointAndRewardHome> {
+ 
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -63,7 +64,7 @@ class _PointAndRewardHomeState extends State<PointAndRewardHome> {
                       maxLines: 1000, overflow: TextOverflow.visible,),),]),
             SizedBox(height: 30,),
 
-            AppButton(
+            AppButton(textColor: white,
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> MyRoutePoints()),);
                 },

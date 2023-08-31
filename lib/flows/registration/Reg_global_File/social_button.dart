@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SocialButton extends StatelessWidget {
-  Widget image;
-  VoidCallback onPressed;
-  SocialButton({
+  final Widget image;
+ final VoidCallback onPressed;
+ const SocialButton({
     required this.image,
     required this.onPressed,
     Key? key,

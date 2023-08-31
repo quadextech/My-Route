@@ -1,18 +1,40 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mime/mime.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
-import '../../../../services/drivers_services.dart';
+import '../../../../services/connectivity_provider.dart';
 import '../widget/text_header.dart';
 import '../widget/upload_Button.dart';
-import 'package:path/path.dart' as path;
 
 class UploadFlieReg extends ConsumerStatefulWidget {
-  const UploadFlieReg({super.key});
+  final String licenseNumber;
+  final String userId;
+  final String refCode;
+  final String vehicleManuf;
+  final String vehicleModel;
+  final String year;
+  final String plateNumber;
+  final String color;
+  const UploadFlieReg({
+    super.key,
+    required this.userId,
+    required this.licenseNumber,
+    required this.refCode,
+    required this.vehicleManuf,
+    required this.vehicleModel,
+    required this.year,
+    required this.plateNumber,
+    required this.color,
+  });
 
   @override
   ConsumerState<UploadFlieReg> createState() => _UploadFlieRegState();
@@ -27,6 +49,19 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   var exteriorPhoto = '';
   var interiorPhoto = '';
   var isLoading = false;
+
+
+  var licenseDocName ='';
+  var ExtDocName ='';
+  var IntDocName ='';
+
+
+
+  bool ExternalPicError = false;
+  bool InternalPicError = false;
+  bool DriverLicensePicError = false;
+  bool ExpiryDateError = false;
+ 
   late List<String> filePaths = [
     driversLicensePath,
     exteriorPhotoPath,
@@ -35,7 +70,8 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
 
   @override
   Widget build(BuildContext context) {
-    final uploadFilesRef = ref.watch(driverServiceProvider);
+    final connectivityState = ref.watch(connectivityProvider);
+  
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -70,7 +106,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 20,
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -98,14 +134,19 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               ),
               Row(
                 children: [
-                  UpLoadButton(onPressed: () async {
-                    driversLicensePath = await pickFile();
-                    setState(() {
-                      driversLicense = path.basename(driversLicensePath);
-                    });
-                  }),
+
+                  UpLoadButton(
+                      onPressed: () async{
+                        var pickedDriverLicensePath = await pickLicenseFile();
+                        setState(() {
+                          driversLicensePath = pickedDriverLicensePath;
+                          print('--------------$driversLicense');
+                          print(driversLicensePath);
+                          print(licenseDocName);
+                        });
+                      }),
                   const SizedBox(width: 5),
-                  Text(driversLicense),
+                  Text(licenseDocName),
                 ],
               ),
               const SizedBox(
@@ -120,7 +161,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 15,
               ),
-            Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -151,14 +192,30 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               ),
               Row(
                 children: [
+
+
+
                   UpLoadButton(onPressed: () async {
-                    exteriorPhotoPath = await pickFile();
+                    var pickedExteriorPhotoPath = await pickExtFile();
                     setState(() {
-                      exteriorPhoto = path.basename(exteriorPhotoPath);
+                        exteriorPhotoPath = pickedExteriorPhotoPath;
+
                     });
+                    //exteriorPhotoPath = await pickFile(exteriorPhoto);
+                    
                   }),
                   const SizedBox(width: 5),
-                  Text(exteriorPhoto),
+                 Text(exteriorPhoto),
+                  //
+                  Text(
+                    ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontFamily: "Avenir",
+                        fontSize: 10,
+                        color: ExternalPicError ? errorColor : black),
+                  ),
+
                 ],
               ),
               const SizedBox(
@@ -195,15 +252,26 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               ),
               Row(
                 children: [
-                  UpLoadButton(onPressed: () async {
-                    interiorPhotoPath = await pickFile();
 
+                  UpLoadButton(onPressed: () async {
+                    var pickedInteriorPhotoPath = await pickIntFile();
                     setState(() {
-                      interiorPhoto = path.basename(interiorPhotoPath);
+                      
+ interiorPhotoPath = pickedInteriorPhotoPath;
                     });
+                   
+
                   }),
                   const SizedBox(width: 5),
-                  Text(interiorPhoto),
+                  Text(interiorPhoto,),
+                  Text(
+                    InternalPicError ? 'Upload your Car External Picture' : IntDocName,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontFamily: "Avenir",
+                        fontSize: 10,
+                        color: InternalPicError ? errorColor : black),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -214,62 +282,86 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                       child: LoadingAnimationWidget.inkDrop(
                           color: primaryColor, size: 25),
                     )
-                  : AppButton(
+                  : AppButton(textColor: white,
                       onPressed: () async {
-                       
+                    print(driversLicensePath);
+                    print(interiorPhotoPath);
+                    print(exteriorPhotoPath);
+                    print(expiryDateController.text);
+
+
+
+                        if (connectivityState.status ==
+                            ConnectivityStatus.disconnected) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'No internet connection',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          });
+                        } else{
+                          setState(() {
+                              isLoading = true;
+                          });
+                          if (driversLicense == ''){
+                            setState(() {
+                              DriverLicensePicError = true;
+                              isLoading = false;
+                            });
+                          }
+                          if (exteriorPhoto == ''){
+                            setState(() {
+                              ExternalPicError = true;
+                              isLoading = false;
+                            });
+                          }
+
+                          if (interiorPhoto == ''){
+                            setState(() {
+                              InternalPicError = true;
+                              isLoading = false;
+                            });
+                          }
+
+                          if (expiryDateController.text.isEmpty){
+                            setState(() {
+                              ExpiryDateError = true;
+                              isLoading = false;
+                            });
+                          }
+                        }
+
                         if (driversLicensePath != '' &&
                             interiorPhotoPath != '' &&
                             exteriorPhotoPath != '' &&
                             expiryDateController.text.isNotEmpty) {
-                               setState(() {
-                          isLoading = true;
-                        });
-                          var message = await uploadFilesRef.uploadFiles(
-                              filePaths, expiryDateController.text);
-
-                          if (message == 'File uploaded') {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'File Uploaded',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentDetail(),
-                              )); } else {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    message,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            });
-                          }
-
                          
-                        }else{
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(backgroundColor: Colors.red,
-                                  content: Text(
-                                    'Fill up all fields',
-                                    textAlign: TextAlign.center,
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentDetail(vehicleColor: widget.color,
+                                    userId: widget.userId,
+                                    referralCode: widget.refCode,
+                                    vehicleManufacturer: widget.vehicleManuf,
+                                    vehicleModel: widget.vehicleModel,
+                                    vehicleyear: widget.year,
+                                    platenumberlicense: widget.plateNumber,
+                                    driverlicensenumber: widget.licenseNumber,
+                                    driverlicense: driversLicensePath,
+                                    driverlicenseexpiryDate:
+                                        expiryDateController.text,
+                                    outSideCarPhoto: exteriorPhotoPath,
+                                    inSideCarPhoto: interiorPhotoPath,
                                   ),
-                                ),
-                              );
-                            });
+                                ));
+                         
+                           
+                         
                         }
                       },
                       label: "Next"),
@@ -283,12 +375,104 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
     );
   }
 
-  Future<String> pickFile() async {
+
+  Future pickExtFile() async {
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      PlatformFile file = result.files.first;
-      return file.path!;
+      PlatformFile platformFile = result.files.first;
+
+      File file = File(platformFile.path!);
+
+      List<int> fileBytes = await file.readAsBytes();
+      String docBase64 = base64Encode(fileBytes);
+      docBase64 = docBase64.replaceAll('/', '');
+      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+
+      final String dataUri = "data:$mimeType;base64,$docBase64";
+
+      setState(() {
+        ExtDocName = platformFile.name;
+       // print(docName);
+      });
+
+      return dataUri;
+    } else {
+      String message = 'File picking canceled';
+      return message;
+    }
+  }
+
+  Future pickIntFile() async {
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile platformFile = result.files.first;
+
+      File file = File(platformFile.path!);
+
+      List<int> fileBytes = await file.readAsBytes();
+      String docBase64 = base64Encode(fileBytes);
+      docBase64 = docBase64.replaceAll('/', '');
+      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+
+      final String dataUri = "data:$mimeType;base64,$docBase64";
+
+      setState(() {
+        IntDocName = platformFile.name;
+        // print(docName);
+      });
+
+      return dataUri;
+    } else {
+      String message = 'File picking canceled';
+      return message;
+    }
+  }
+
+
+  Future pickLicenseFile() async {
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isRestricted || status.isPermanentlyDenied) {
+      status = await Permission.storage.request();
+    }
+    if (status.isDenied) {
+      await Permission.storage.request();
+    }
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile platformFile = result.files.first;
+
+      File file = File(platformFile.path!);
+
+      List<int> fileBytes = await file.readAsBytes();
+      String docBase64 = base64Encode(fileBytes);
+      docBase64 = docBase64.replaceAll('/', '');
+      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+
+      final String dataUri = "data:$mimeType;base64,$docBase64";
+
+      setState(() {
+        licenseDocName = platformFile.name;
+        // print(docName);
+      });
+
+      return dataUri;
     } else {
       String message = 'File picking canceled';
       return message;

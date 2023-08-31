@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 import 'package:myroute/flows/onboarding/onboarding.dart';
 
 import '../../../constants/app_image.dart';
@@ -28,7 +27,7 @@ class _Splash2State extends State<Splash2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
+        
         body: Center(
           child: Container(
               width: 130,

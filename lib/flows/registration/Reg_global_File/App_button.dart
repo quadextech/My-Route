@@ -12,7 +12,7 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     required this.label,
     this.buttonColor = Colors.black,
-    this.textColor = Colors.white,
+    required this.textColor,
     this.borderColor = Colors.black,
     Key? key,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class AppButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: body3(white, TextDecoration.none)
+            style: body3(textColor, TextDecoration.none)
           ),
         ),
       ),

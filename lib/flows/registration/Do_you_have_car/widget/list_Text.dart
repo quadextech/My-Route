@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:myroute/constants/constant.dart';
 
 import '../../../../constants/app_color.dart';
 
 class ListText extends StatelessWidget {
-  int number;
-  String label;
-  ListText({
+  final int number;
+ final  String label;
+ const ListText({
     required this.number,
     required this.label,
     Key? key,
@@ -25,7 +24,7 @@ class ListText extends StatelessWidget {
           ),
           child: Center(
               child: Text(
-            "${number}",
+            "$number",
             style: TextStyle(
                 fontSize: 16,
                 color: white,

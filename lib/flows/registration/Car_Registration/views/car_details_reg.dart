@@ -4,6 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Reg_global_File/drop_textfield.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 import 'package:myroute/services/verify_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/cars_service.dart';
@@ -23,7 +24,7 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
 
   TextEditingController plateNumbercontroller = TextEditingController();
   String? vehicleManufac;
-  String? vehicleModel;
+  final vehicleModelController = TextEditingController();
   String? vehicleYear;
   String? vehicleColor;
   bool plateNumberError = false;
@@ -33,11 +34,50 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
   bool carModelError = false;
   bool carYearError = false;
   bool carColorError = false;
+  late String? userId;
+  @override
+  void initState() {
+    getId();
+    super.initState();
+  }
+
+  getId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('id');
+  }
 
   List<dynamic> manufacturers = [
-    'Toyota',
-    'Honda',
+    'Audi',
+    'Bentley',
+    'BMW',
+    'Chrysler',
+    'Dodge',
+    'Ferrari',
+    'Fiat',
     'Ford',
+    'Genesis',
+    'GMC',
+    'Honda',
+    'Hyundai',
+    'Infiniti',
+    'Jaguar',
+    'Jeep',
+    'Kia',
+    'Lamborghini',
+    'Land Rover',
+    'Lexus',
+    'Lotus',
+    'Maserati',
+    'Mazda',
+    'Mercedes-Benz',
+    'Mini',
+    'Mitsubishi',
+    'Nissan',
+    'Subaru',
+    'Tesla',
+    'Toyota',
+    'Volkswagen',
+    'Volvo',
   ];
 
   List<dynamic> model = [
@@ -46,22 +86,39 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
     'WE',
   ];
 
-  List<dynamic> year =[
+  List<dynamic> year = [
+    '2013',
+    '2014',
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
     '2020',
     '2021',
     '2022',
+    '2023'
   ];
 
   List<dynamic> color = [
-    'Red',
+    'White',
     'Black',
+    'Silver',
+    'Gray',
+    'Red',
+    'Blue',
+    'Green',
+    'Yellow',
+    'Orange',
+    'Beige',
+    'Brown',
+    'Gold'
   ];
-
 
   @override
   Widget build(BuildContext context) {
-     final carDetailsRef = ref.watch(carServiceProvider);
-     final connectivityState = ref.watch(connectivityProvider);
+    final carDetailsRef = ref.watch(carServiceProvider);
+    final connectivityState = ref.watch(connectivityProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -95,7 +152,8 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: '',
+              mytextField(
+                error: '',
                 controller: referralCodeController,
                 label: "Referral code",
                 errorCondition: referralCode,
@@ -108,7 +166,7 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
                 errorCondition: carManuError,
                 hintText: "Vehicle manufacturer*",
                 selected: vehicleManufac,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
                     vehicleManufac = value;
                   });
@@ -118,15 +176,11 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              DroptextField(
-                error: "Select vehicle model",
-                errorCondition: carModelError,
-                hintText: "Vehicle model*",
-                selected: vehicleModel,
-                onChanged: (value){
-                  vehicleModel= value;
-                },
-                listTextFied: model,
+              mytextField(
+                error: 'Enter a valid vehicle model',
+                controller: vehicleModelController,
+                label: "Vehicle model* (e.g. Toyota camry)",
+                errorCondition: plateNumberError,
               ),
               const SizedBox(
                 height: 20,
@@ -136,7 +190,7 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
                 errorCondition: carYearError,
                 hintText: "Vehicle year*",
                 selected: vehicleYear,
-                onChanged: (value){
+                onChanged: (value) {
                   vehicleYear = value;
                 },
                 listTextFied: year,
@@ -144,82 +198,93 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
               const SizedBox(
                 height: 20,
               ),
-              mytextField(error: 'Enter a valid plate number',
-                  controller: plateNumbercontroller,
-                  label: "License plate number*",
+              mytextField(
+                error: 'Enter a valid plate number',
+                controller: plateNumbercontroller,
+                label: "License plate number*",
                 errorCondition: plateNumberError,
               ),
               const SizedBox(
                 height: 20,
               ),
               DroptextField(
-                error: "Select vehicle color",
-                errorCondition: carColorError,
-                hintText: "Vehicle color*",
+                  error: "Select vehicle color",
+                  errorCondition: carColorError,
+                  hintText: "Vehicle color*",
                   selected: vehicleColor,
-                  onChanged: (value){
-                  vehicleColor = value;
+                  onChanged: (value) {
+                    vehicleColor = value;
                   },
                   listTextFied: color),
               const SizedBox(
                 height: 20,
               ),
-
-              isLoading ? Center(child: LoadingAnimationWidget.inkDrop(color: primaryColor, size: 25)) :
               AppButton(
-               
+                textColor: white,
                 label: "Next",
-                onPressed: () async{
-                  if (connectivityState.status == ConnectivityStatus.disconnected){
+                onPressed: () async {
+                  if (connectivityState.status ==
+                      ConnectivityStatus.disconnected) {
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content:  Text(
-                              'No internet connection',
-                              textAlign: TextAlign.center,
-                            ),)
-                      );
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                          'No internet connection',
+                          textAlign: TextAlign.center,
+                        ),
+                      ));
                     });
                   } else {
                     setState(() {
                       isLoading = true;
                     });
-                    if (vehicleManufac == null){
+                    if (referralCodeController.text.isEmpty) {
+                      setState(() {
+                        referralCodeController.text = '';
+                      });
+                    }
+                    if (vehicleManufac == null) {
                       setState(() {
                         isLoading = false;
                         carManuError = true;
                       });
                     }
-                    if (vehicleColor == null){
+                    if (vehicleColor == null) {
                       setState(() {
                         isLoading = false;
                         carColorError = true;
                       });
                     }
-                    if (vehicleModel == null){
+                    if (vehicleModelController.text.isEmpty) {
                       setState(() {
                         isLoading = false;
                         carModelError = true;
                       });
                     }
-                    if (vehicleYear == null){
+                    if (vehicleYear == null) {
                       setState(() {
                         isLoading = false;
                         carYearError = true;
                       });
                     }
-                    if (plateNumbercontroller.text.isEmpty){
+                    if (plateNumbercontroller.text.isEmpty) {
                       setState(() {
                         isLoading = false;
                         plateNumberError = true;
                       });
                     }
 
-                    if(isLoading == true){
-                    String message = await carDetailsRef.verifyCarDetails(vehicleManufac, vehicleModel, vehicleYear, vehicleColor, plateNumbercontroller.text, referralCodeController.text);
-                      if (message == "Registration Successful"){
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((_) {
+                    if (isLoading == true) {
+                      String message =
+                      await carDetailsRef.verifyCarDetails(
+                          referralCodeController.text,
+                          vehicleManufac,
+                          vehicleModelController.text,
+                          vehicleYear,
+                          plateNumbercontroller.text,
+                          vehicleColor,
+                          userId);
+                      if (message == "Registration Successful") {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(
                             backgroundColor: black,
@@ -228,39 +293,24 @@ class _CarDetailsRegState extends ConsumerState<CarDetailsReg> {
                                 style: TextStyle(fontSize: 16)),
                           ));
                         });
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                              const LicensePage(),
-                            ));
-                        setState(() {
-                          isLoading = false;
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text(message,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 16))));
-
-                        setState(() {
-                          isLoading = false;
-                        });
                       }
                     }
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LicensingReg(
+                                refCode: referralCodeController.text,
+                                vehicleManuf: vehicleManufac!,
+                                vehicleModel: vehicleModelController.text,
+                                year: vehicleYear!,
+                                plateNumber: plateNumbercontroller.text,
+                                color: vehicleColor!,
+                                userId: userId,
+                              ),
+                        ));
                   }
-                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LicensingReg(),
-                      ));
-                },
-
-              ),
+                }),
               const SizedBox(
                 height: 20,
               ),

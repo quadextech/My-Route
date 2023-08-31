@@ -32,7 +32,9 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-           WalletContainer(balance: 5000, ),
+          WalletContainer(
+            balance: 5000,
+          ),
           const SizedBox(
             height: 30,
           ),
@@ -54,20 +56,22 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     SvgPicture.asset(svgwallet,color:greenColor),
-                    Text('   MyRoute balance', style: body4(Colors.grey[600], TextDecoration.none))
+                    SvgPicture.asset(svgwallet, color: greenColor),
+                    Text('   MyRoute balance',
+                        style: body4(Colors.grey[600], TextDecoration.none))
                   ],
                 ),
                 if (isBalance == true)
-                   Icon(Icons.check_box_outlined, color: greenColor),
+                  Icon(Icons.check_box_outlined, color: greenColor),
               ],
             ),
-          ),const SizedBox(
+          ),
+          const SizedBox(
             height: 20,
           ),
           Divider(
             thickness: 0.0,
-            color: grey1,
+            color: grey5,
           ),
           const SizedBox(height: 20),
           InkWell(
@@ -84,21 +88,25 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  Image.asset(svgcard, color: greenColor,),
+                    Image.asset(
+                      svgcard,
+                      color: greenColor,
+                    ),
                     Text('   Mastercard 19**********098',
                         style: body4(Colors.grey[600], TextDecoration.none))
                   ],
                 ),
                 if (isMasterCard == true)
-                   Icon(Icons.check_box_outlined, color: greenColor),
+                  Icon(Icons.check_box_outlined, color: greenColor),
               ],
             ),
-          ),const SizedBox(
+          ),
+          const SizedBox(
             height: 20,
           ),
           Divider(
             thickness: 0.0,
-            color: grey1,
+            color: grey5,
           ),
           const SizedBox(height: 20),
           InkWell(
@@ -115,21 +123,20 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                   Image.asset(svgcard, color: greenColor),
-                    Text('   Add debit card', style: body4(Colors.grey[600], TextDecoration.none))
+                    Image.asset(svgcard, color: greenColor),
+                    Text('   Add debit card',
+                        style: body4(Colors.grey[600], TextDecoration.none))
                   ],
                 ),
                 if (isDebitCard == true)
-                   Icon(Icons.check_box_outlined, color: greenColor),
+                  Icon(Icons.check_box_outlined, color: greenColor),
               ],
             ),
           ),
-         // if (isTopUp)
-         // showTopUp(context)
+          // if (isTopUp)
+          // showTopUp(context)
         ]),
       ),
     );
   }
-
-   
 }

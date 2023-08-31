@@ -84,7 +84,7 @@ class _SwicherState extends State<Swicher> {
         ),
         SvgPicture.asset(
           svgmytitleCar,
-          color: isCostomer ? grey1 : primaryColor,
+          color: isCostomer ? grey5 : primaryColor,
         ),
       ]),
     );

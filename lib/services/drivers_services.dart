@@ -1,44 +1,66 @@
-import 'dart:io';
+import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as path;
-
 
 final driverServiceProvider = Provider<DriverService>((ref) => DriverService());
 
 class DriverService {
- uploadFiles(List<String> filePaths, String expiryDate) async {
-  String message = 'Something went wrong';
-  final url = Uri.parse('https://myroute-aqn5.onrender.com/api/v1/upload');
-var headers = {
-  'Cookie': 'SESSIONID=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YWU0M2Y5NzgyMTBjMmRjN2U1ZDMyOSIsImlhdCI6MTY4OTE0MjI2NSwiZXhwIjoxNjg5MzE1MDY1fQ.8nQHVzz79pWQNPZS3o09dAyI9ZXon7-IdJeB-7-Zbrs'
-};
-
-  var request = http.MultipartRequest('POST', url);
-headers.forEach((key, value) {
-    request.headers[key] = value;
-  });
-  for (String filePath in filePaths) {
-    List<int> fileBytes = await File(filePath).readAsBytes();
-    request.files.add(
-      http.MultipartFile.fromBytes(
-        'files',
-        fileBytes,
-        filename: path.basename(filePath),
-      ),
+  uploadFiles(
+      String userId,
+      String referralCode,
+      String vehicleManufacturer,
+      String vehicleModel,
+      String vehicleyear,
+      String platenumberlicense,
+      String driverlicensenumber,
+      String driverlicense,
+      String driverlicenseexpiryDate,
+      String outSideCarPhoto,
+      String inSideCarPhoto,
+      String address,
+      String bankaccountholdername,
+      String bankaccountnumber,
+      String bankname,
+      String vehicleColor) async {
+    
+    String message = 'Something went wrong';
+    final url = Uri.parse('https://myroute-aqn5.onrender.com/api/v1/drivers');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(
+        {
+          "userId": userId,
+          "referralCode": referralCode,
+          "vehicleManufacturer": vehicleManufacturer,
+          "vehicleModel": vehicleModel,
+          "vehicleYear": vehicleyear,
+          "plateNumberLicense": platenumberlicense,
+          "driverLicenseNumber": driverlicensenumber,
+          "driverLicense": driverlicense,
+          "driverLicenseExpiryDate": driverlicenseexpiryDate,
+          "outSideCarPhoto": outSideCarPhoto,
+          "inSideCarPhoto": inSideCarPhoto,
+          "address": address,
+          "bankAccountHolderName": bankaccountholdername,
+          "bankAccountNumber": bankaccountnumber,
+          "bankName": bankname,
+          "vehicleColor": vehicleColor
+        },
+      )
     );
+    if (response.statusCode == 201) {
+      message = "successful";
+      final responseBody = json.encode(response.body);
+      print(responseBody);
+    } else {
+      message = response.body;
+      print('Request failed with status code: ${response.statusCode}');
+      print(response.body);
+      return message;
+
+    } 
   }
-request.fields['licenseExpiryDate'] = expiryDate;
-
-  var response = await request.send();
-
-  if (response.statusCode == 200) {
-    message = 'Files uploaded';
-    return message;
-  } else {
-    message = 'Files upload failed: ${response.reasonPhrase}';
-    return message;
-  }
-}
-
 }

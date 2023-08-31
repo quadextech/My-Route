@@ -36,7 +36,7 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
     return Container(
       height: 55,
       decoration: BoxDecoration(
-          color: grey1, borderRadius: BorderRadius.circular(12), border: null),
+          color: Color(0xFFEAEAEA), borderRadius: BorderRadius.circular(12), border: null),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Center(

@@ -4,11 +4,14 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
-import '../../Car_Registration/views/car_details_reg.dart';
+import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import '../../Add_ProficPic/views/add_profile_pic.dart';
+import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
@@ -23,6 +26,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool isLoading = false;
   bool emailError = false;
   bool passwordError = false;
+  String firstName = '';
+  String lastName = '';
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordCcontroller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final connectivityState = ref.watch(connectivityProvider);
@@ -69,16 +82,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  mytextField(errorCondition: emailError,
+                  mytextField(
+                      errorCondition: emailError,
                       error: 'Enter a valid email',
                       controller: emailController,
                       label: "Email"),
                   const SizedBox(
                     height: 20,
                   ),
-                  mytextField(errorCondition: passwordError,
+                  mytextField(
+                    errorCondition: passwordError,
                     error: 'Incorrect password',
                     label: "Password",
+                    isobsure: true,
                     controller: passwordCcontroller,
                     ispassword: true,
                   ),
@@ -111,6 +127,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: LoadingAnimationWidget.inkDrop(
                               color: primaryColor, size: 25))
                       : AppButton(
+                          textColor: white,
                           label: "Login",
                           onPressed: () async {
                             if (connectivityState.status ==
@@ -132,12 +149,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     emailController.text,
                                     passwordCcontroller.text);
 
-                                if (message == 'Login Successful') {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CarDetailsReg(),
-                                      ));
+                                if (message == 'LoggedIn') {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  setState(() {
+                                    firstName = prefs.getString('firstName')!;
+                                    lastName = prefs.getString('lastName')!;
+                                  });
+                                  final String name = '$firstName $lastName';
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  DoYouHaveACar()));
+
+
+                                  //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AddProfilePic(email: emailController.text,)));
+                                  // Navigator.pushReplacement(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //            PassengerHomeScreen(name:name),
+                                  //     ));
                                 } else {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {
@@ -176,7 +208,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Divider(),

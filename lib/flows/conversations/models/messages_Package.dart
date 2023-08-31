@@ -17,7 +17,7 @@ class MessagesBox extends StatelessWidget {
               color: white,
             ),
             height: size.height * 0.13,
-            width: size.width,
+          
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +41,7 @@ class MessagesBox extends StatelessWidget {
                           style: body2(black, TextDecoration.none),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Text(
                           'Hello, where are you right now?',

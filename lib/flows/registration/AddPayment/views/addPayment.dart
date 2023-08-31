@@ -1,13 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Do_you_have_car/views/do_you_have_a_car.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 import 'package:myroute/services/verify_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
+
+
 
 class AppPayment extends ConsumerStatefulWidget {
   const AppPayment({super.key});
@@ -23,7 +27,18 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
   bool cvvError = false;
   bool expiryDateError = false;
   bool secureCodeError = false;
+  late String? userId;
+  @override
 
+  void initState() {
+    super.initState();
+    _getUserId();
+  }
+
+  void _getUserId() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userId = prefs.getString('id');
+  }
 
   bool isLoading = false;
 
@@ -111,49 +126,53 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
                 height: 30,
               ),
               isLoading
-                      ? Center(
-                          child: LoadingAnimationWidget.inkDrop(
-                              color: primaryColor, size: 25),)
-                      : AppButton(onPressed: () async {
-   if (connectivityState.status ==
-       ConnectivityStatus.disconnected) {
-     WidgetsBinding.instance.addPostFrameCallback((_) {
-       ScaffoldMessenger.of(context).showSnackBar(
-         const SnackBar(
-           content: Text(
-             'No internet connection',
-             textAlign: TextAlign.center,
-           ),
-         ),
-       );
-     });
-   }
-
-   else{
-     setState(() {
-       isLoading = true;
-     });
-     if (cardNumberController.text.isEmpty){
-       setState(() {
-         isLoading = false;
-         cvvError = true;
-       });
-     }
-     if (expiryDateController.text.isEmpty){
-       setState(() {
-         isLoading = false;
-         expiryDateError = true;
-       });
-     }
-     if (secureCodeController.text.isEmpty){
-       setState(() {
-         isLoading = false;
-         secureCodeError = true;
-       });
-     }
-     if(isLoading== true) {
-       String message = await verifyCardRef.verifyCardDetails(
-           cardNumberController.text, expiryDateController.text, secureCodeController.text);
+                  ? Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                          color: primaryColor, size: 25),
+                    )
+                  : AppButton(textColor: white,
+                      onPressed: () async {
+                        if (connectivityState.status ==
+                            ConnectivityStatus.disconnected) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'No internet connection',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          });
+                        } else {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          if (cardNumberController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              cvvError = true;
+                            });
+                          }
+                          if (expiryDateController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              expiryDateError = true;
+                            });
+                          }
+                          if (secureCodeController.text.isEmpty) {
+                            setState(() {
+                              isLoading = false;
+                              secureCodeError = true;
+                            });
+                          }
+                          if (isLoading == true) {
+                            String message =
+                                await verifyCardRef.verifyCardDetails(
+                                    cardNumberController.text,
+                                    expiryDateController.text,
+                                    secureCodeController.text,
+                                    userId);
 
        if (message == 'Card added successfully'){
          WidgetsBinding.instance
@@ -190,17 +209,17 @@ class _AppPaymentState extends ConsumerState<AppPayment> {
          });
        }
      }
-   }}, label: "Add card"),
+   }},label: "Add card"),
 
               const SizedBox(
                 height: 20,
               ),
               AppButton(
                 onPressed: (){},
-                 
-                
+
+
                 label: "Skip",
-                buttonColor:white,
+                buttonColor: white,
                 textColor: black,
               )
             ],

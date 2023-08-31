@@ -17,18 +17,18 @@ class RoutineTextField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(20),
         hintText: hint,
-        hintStyle: body3(hintColor,TextDecoration.none),
+        hintStyle: body3(hintColor, TextDecoration.none),
         filled: true,
-        fillColor: grey1,
+        fillColor: grey5,
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
           width: 2,
-          color: grey1,
+          color: grey5,
         )),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
           width: 2,
-          color: grey1,
+          color: grey5,
         )),
       ),
     );

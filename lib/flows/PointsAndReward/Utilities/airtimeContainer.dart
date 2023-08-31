@@ -16,7 +16,7 @@ class AirtimeContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-      color: grey1,
+      color:Color(0xFFEAEAEA),
           borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       height: size.height*0.1,
@@ -34,8 +34,8 @@ class AirtimeContainer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(maintext, style: body3(black, TextDecoration.none)),
-                        Text(points,  style: headline4(black),),
+                        Text(maintext, style: body4(black, TextDecoration.none)),
+                        Text(points,  style: body1(black, TextDecoration.none),),
                       ],
                     ),
 
@@ -50,11 +50,11 @@ class AirtimeContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("You'll get", style: body3(black, TextDecoration.none)),
+                  Text("You'll get", style: body4(black, TextDecoration.none)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(airtime,  style: headline4(black),),
+                      Text(airtime,  style: body1(black, TextDecoration.none),),
 
                       Padding(
                         padding: const EdgeInsets.only(right: 10),

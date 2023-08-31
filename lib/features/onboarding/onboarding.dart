@@ -16,6 +16,7 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -60,7 +61,7 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
           const SizedBox(
             height: 10,
           ),
-          AppButton(
+          AppButton(textColor: white,
             label: "Sign In",
             onPressed: () {
               Navigator.push(
@@ -76,7 +77,7 @@ class _OnBoarddinngScreeenState extends State<OnBoarddinngScreeen> {
           AppButton(
             label: "Login",
             buttonColor: Colors.white,
-            textColor: Colors.black,
+            textColor: black,
             onPressed: () {
               Navigator.push(
                   context,

@@ -1,18 +1,26 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mime/mime.dart';
 import 'package:myroute/flows/registration/AddPayment/views/addPayment.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myroute/services/connectivity_provider.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
+import '../../../../services/update_dp.dart';
 import '../../../../services/user_authentication.dart';
 import '../utilities.dart';
 
 class AddProfilePic extends ConsumerStatefulWidget {
-  const AddProfilePic({super.key});
+  final String email;
+  const AddProfilePic({
+    super.key,
+    required this.email,
+  });
 
   ConsumerState<AddProfilePic> createState() => _AddProfilePicState();
 }
@@ -22,6 +30,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   final storage = new FlutterSecureStorage();
   bool isLoading = false;
 
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -30,7 +39,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   TextEditingController passwordCcontroller2 = TextEditingController();
   var sex = "Male";
 
-
+  String dataUri = '';
   //bool isLLoading = false;
 
   bool isImageGood() {
@@ -41,8 +50,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   Widget build(BuildContext context) {
     final connectivityState = ref.watch(connectivityProvider);
     final ImageUploadref = ref.watch(userImageProvider);
-    final signUpref = ref.watch(userAuthProvider);
-    final Imageref = ref.watch(userAuthProvider);
+    final Imageref = ref.watch(profilePicProvider);
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -107,32 +115,38 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
             ),
             Center(
                 child: Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor: grey1,
-                  radius: 80,
-                  backgroundImage: _imageFile == null
-                      ? Image.asset(userIcon).image
-                      : FileImage(File(_imageFile!.path)),
-                ),
-                Positioned(
-                  bottom: 9,
-                  right: 15,
-                  child: GestureDetector(
-                    onTap: () {
-                      ImageUploadref.uploadImage(context, (pickedImg) {
-                        setState(() {
-                          _imageFile = pickedImg;
-                          isLoading = true;
-                        });
+                children: [
+                  CircleAvatar(
+                    backgroundColor: grey5,
+                    radius: 80,
+                    backgroundImage: _imageFile == null
+                        ? Image.asset(userIcon).image
+                        : FileImage(File(_imageFile!.path)),
+                  ),
+                  Positioned(
+                    bottom: 9,
+                    right: 15,
+                    child: GestureDetector(
+                      onTap: () async {
+                        ImageUploadref.uploadImage(context, (pickedImg) async {
+                          setState(() {
+                            _imageFile = pickedImg;
+                            isLoading = true;
+                          });
+                          List<int> imageBytes = await pickedImg.readAsBytes();
+                          String imageBase64 = base64Encode(imageBytes);
+                          imageBase64 = imageBase64.replaceAll('/', '');
+                          final String? mimeType =
+                              lookupMimeType('', headerBytes: imageBytes);
 
-                        Future.delayed(Duration(seconds: 5), () {
                           setState(() {
                             isLoading = false;
+                            dataUri = "data:$mimeType;base64,$imageBase64";
+
                           });
                         });
-                      });
-                    },
+                        print(dataUri);
+                      },
                     child: Container(
                         width: 40,
                         height: 40,
@@ -151,19 +165,58 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
             const SizedBox(
               height: 20,
             ),
-            isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ))
-                :
-                //isImageGood()
-                // ?
-                AppButton(
-                    onPressed: () async {
-                    },
-                    label: "Submit",
-                  )
+
+            Container(
+                child: isLoading
+                    ? Center(
+                    child: LoadingAnimationWidget.inkDrop(
+                        color: primaryColor, size: 25))
+                    :
+                    AppButton(
+                        textColor: white,
+                        onPressed: () async {
+                          if (connectivityState.status ==
+                              ConnectivityStatus.disconnected) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'No internet connection',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            });
+                          } else {
+                            setState(() {
+                              isLoading = true;
+                            });
+
+                            if (_imageFile != null) {
+                              var imageResponse = await Imageref.addProfilePic(
+                                  widget.email, dataUri);
+                              print(imageResponse);
+                              print(dataUri);
+                              if (imageResponse == 'updated') {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AppPayment(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+                          }
+                        },
+                        label: "Submit",
+                      ))
           ],
         ),
       ),

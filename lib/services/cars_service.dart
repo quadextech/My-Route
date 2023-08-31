@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 final carServiceProvider = Provider<CarService>((ref)=> CarService());
 class CarService {
-   verifyCarDetails(vehicleColor, vehicleYear, vehicleModel, vehicleManfac, plateNumber, referralCode) async {
+   verifyCarDetails( referralCode,vehicleManfac, vehicleModel, vehicleYear,carLicenseNo, vehicleColor,   userId) async {
         String message = 'Something went wrong';
     final url = Uri.parse('https://myroute-aqn5.onrender.com/api/v1/cars');
     final response = await http.post(
@@ -13,8 +13,9 @@ class CarService {
         'vehicleYear': vehicleYear,
         'vehicleModel': vehicleModel,
         'vehicleManfac':vehicleManfac,
-        'plateNumber': plateNumber,
+        'carLicenseNo': carLicenseNo,
         'referralCode': referralCode,
+        'userId': userId
       },
     );
     
@@ -22,7 +23,9 @@ class CarService {
     if (response.statusCode == 201) {
       message = "Registration Successful";
       final responseBody = json.encode(response.body);
-      print(responseBody);
+      print(response.body);
+      return message;
+
     } else {
       message = response.body;
       print('Request failed with status code: ${response.statusCode}');

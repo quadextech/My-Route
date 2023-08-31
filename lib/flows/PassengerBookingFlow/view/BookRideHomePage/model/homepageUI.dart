@@ -9,27 +9,23 @@ import '../../../../conversations/conversations_screen.dart';
 import '../../../../trips_history/Trips_History.dart';
 import '../../select_car_preferences/models/select_car_prefence_template.dart';
 
-
-
 class PassengerHomeScreen extends StatefulWidget {
-  const PassengerHomeScreen({Key? key}) : super(key: key);
+  final String name;
+  const PassengerHomeScreen({Key? key, required this.name}) : super(key: key);
 
   @override
   State<PassengerHomeScreen> createState() => _PassengerHomeScreenState();
 }
 
 class _PassengerHomeScreenState extends State<PassengerHomeScreen> {
-
-
   int _index = 0;
-  List pages = [
-  const PassengerHome(),
+  late List pages = [
+     PassengerHome(name:widget.name),
     const SelectedCar(),
-    const Center(child: Text("Routine")),
+    const Center(child: Text("Routine Trips")),
     const TripHistory(),
     const Conversations(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +39,10 @@ class _PassengerHomeScreenState extends State<PassengerHomeScreen> {
         items: [
           BottomNavigationBarItem(
               icon: Icon(
-                  Icons.location_on,
+                Icons.location_on,
                 color: _index == 0 ? primaryColor : null,
               ),
               label: "Map"),
-
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 svgsmallcar,

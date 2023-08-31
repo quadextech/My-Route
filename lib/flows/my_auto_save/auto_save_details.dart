@@ -16,38 +16,51 @@ class AutoSaveDetails extends StatefulWidget {
 }
 
 class _AutoSaveDetailsState extends State<AutoSaveDetails> {
-
-  void deleteAutoSave(){
-    showModalBottomSheet(shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-
-    ),context: context, builder: (context){
-      return CustomPopUpContainer(
-        height: MediaQuery.of(context).size.height * 0.5,
-        child: Column(
-          children: [
-            SvgPicture.asset(delete),
-            SizedBox(height: 15,),
-            Text('Deleted!', style: body1(Colors.red, TextDecoration.none),),
-            SizedBox(height: 15,),
-            Text('Your AutoDoc settings have been deleted', style: body2(black, TextDecoration.none),),
-            SizedBox(height: 30,),
-            AppButton(
-                onPressed: (){
-                }, label: 'Exit'),
-            SizedBox(height: 20,),
-            AppButton(
-                textColor: black,
-                buttonColor: white,
-                onPressed: (){
-                }, label: 'Undo Delete')
-          ],
-        ),
-      );
-    });
+  void deleteAutoSave() {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        context: context,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: CustomPopUpContainer(
+              child: Column(
+                children: [
+                  SvgPicture.asset(delete),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Deleted!',
+                    style: body1(Colors.red, TextDecoration.none),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    'Your AutoDoc settings have been deleted',
+                    style: body2(black, TextDecoration.none),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  AppButton(textColor: white, onPressed: () {}, label: 'Exit'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AppButton(
+                      textColor: black,
+                      buttonColor: white,
+                      onPressed: () {},
+                      label: 'Undo Delete'),
+                      SizedBox(height: 10,)
+                ],
+              ),
+            ),
+          );
+        });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +71,10 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
         backgroundColor: white,
         leading: AppBackButton(),
         centerTitle: true,
-        title: Text('My AutoSave details', style: body1(black, TextDecoration.none),),
+        title: Text(
+          'My AutoSave details',
+          style: body1(black, TextDecoration.none),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -66,93 +82,142 @@ class _AutoSaveDetailsState extends State<AutoSaveDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             Text("Driver's License renewal fee", style: headline3(primaryColor),),
-              SizedBox(height: 10,),
-              Text('N 2,000.00', style: headline1(black),),
+              Text(
+                "Driver's License renewal fee",
+                style: body3(successColor, TextDecoration.none),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Row(
-                children:[
+                children: [
+                  SvgPicture.asset(svgnaira),
+                  Padding(
+                    padding: const EdgeInsets.only(top:3.0),
+                    child: Text(
+                      '2,000.00',
+                      style: body1(black, TextDecoration.none),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
                   Text('3 months schedule'),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('.', style: headline1(black),),
+                    child: Text(
+                      '.',
+                      style: headline1(black),
+                    ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text('Monthly savings deduction'),
                 ],
               ),
-              SizedBox(height: 25,),
-
-
+              SizedBox(
+                height: 25,
+              ),
               ListTile(
                 title: Text('Savings Debit from'),
-                trailing: Text('Debit Card', style: headline3(black),),
+                trailing: Text(
+                  'Debit Card',
+                  style: body3(black, TextDecoration.none),
+                ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                color: grey1,
+                color: grey5,
                 height: 2,
                 width: size.width,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ListTile(
                 title: Text('Recipient'),
-                trailing: Text('My AutoSave', style: headline3(black)),
+                trailing: Text('My AutoSave', style: body3(black, TextDecoration.none, )),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                color: grey1,
+                color: grey5,
                 height: 2,
                 width: size.width,
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               ListTile(
                 title: Text('Transaction Timeline'),
-                trailing: Text('Monthly debit', style: headline3(black)),
+                trailing: Text('Monthly debit', style: body3(black, TextDecoration.none)),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                color: grey1,
+                color: grey5,
                 height: 2,
                 width: size.width,
               ),
-              SizedBox(height: 20,),
-             ListTile(
-                title: Text('Amount'),
-                trailing: Text('N2,000.00', style: headline3(black)),
+              SizedBox(
+                height: 20,
               ),
-              SizedBox(height: 10,),
-              Container(
-                color: grey1,
-                height: 2,
-                width: size.width,
-              ),
-              SizedBox(height: 20,),
-             ListTile(
-                title: Text('Reference'),
-                trailing: Text('YN66BUIK',  style: headline3(black)),
-              ),
-              SizedBox(height: 10,),
-              Container(
-                color: grey1,
-                height: 2,
-                width: size.width,
-              ),
-              SizedBox(height: 20,),
               ListTile(
-                title: Text('My AutoSave balance', ),
-                trailing: Text('N 2,000.00', style: headline3(black)),
+                title: Text('Amount'),
+                trailing: Text('N2,000.00', style: body3(black, TextDecoration.none)),
               ),
-              SizedBox(height: 50,),
-
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: grey5,
+                height: 2,
+                width: size.width,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                title: Text('Reference'),
+                trailing: Text('YN66BUIK', style: body3(black, TextDecoration.none)),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: grey5,
+                height: 2,
+                width: size.width,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ListTile(
+                title: Text(
+                  'My AutoSave balance',
+                ),
+                trailing: Text('N 2,000.00', style: body3(black, TextDecoration.none)),
+              ),
+              SizedBox(
+                height: 50,
+              ),
               AppButton(
                   borderColor: Colors.red,
                   textColor: Colors.red,
                   buttonColor: white,
-                  onPressed: (){
+                  onPressed: () {
                     deleteAutoSave();
-                  }, label: 'Delete AutoSave'),
-
+                  },
+                  label: 'Delete AutoSave'),
             ],
           ),
         ),
