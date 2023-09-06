@@ -200,6 +200,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         var pickedNinDocPath = await pickFile();
                         setState(() {
                           ninDocPath = pickedNinDocPath;
+                          ninError = false;
                         });
                       }),
                      //   UpLoadButton(onPressed: () async {
@@ -327,7 +328,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
 
                                 if (message == 'Sign Up Successful') {
-
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {
                                     ScaffoldMessenger.of(context)
@@ -338,14 +338,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                           style: TextStyle(fontSize: 16)),
                                     ));
                                   });
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddProfilePic(email: emailController.text,)));
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           VerificationScreen(
-                                  //               email: emailController.text),
-                                  //     ));
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            VerificationScreen(
+                                                email: emailController.text),
+                                      ));
                                   setState(() {
                                     isLoading = false;
                                   });
@@ -526,6 +526,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
     if (result != null) {
       PlatformFile platformFile = result.files.first;
+
 
       File file = File(platformFile.path!);
 

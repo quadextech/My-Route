@@ -11,7 +11,8 @@ import '../../select_car_preferences/models/select_car_prefence_template.dart';
 
 class PassengerHomeScreen extends StatefulWidget {
   final String name;
-  const PassengerHomeScreen({Key? key, required this.name}) : super(key: key);
+  final String profilePic;
+  const PassengerHomeScreen({Key? key, required this.name, required this.profilePic}) : super(key: key);
 
   @override
   State<PassengerHomeScreen> createState() => _PassengerHomeScreenState();
@@ -20,7 +21,7 @@ class PassengerHomeScreen extends StatefulWidget {
 class _PassengerHomeScreenState extends State<PassengerHomeScreen> {
   int _index = 0;
   late List pages = [
-     PassengerHome(name:widget.name),
+     PassengerHome(name:widget.name, profilePic: widget.profilePic),
     const SelectedCar(),
     const Center(child: Text("Routine Trips")),
     const TripHistory(),

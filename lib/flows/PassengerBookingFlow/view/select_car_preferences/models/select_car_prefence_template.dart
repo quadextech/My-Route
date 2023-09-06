@@ -369,11 +369,11 @@ class _SelectedCarState extends State<SelectedCar> {
               buttonColor: black,
               label: "Search for ride",
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  PassengerHomeScreen(name:''),
-                    ));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) =>  PassengerHomeScreen(name:name, profilePic: profilePic,),
+                //     ));
               },
             ),
             const SizedBox(

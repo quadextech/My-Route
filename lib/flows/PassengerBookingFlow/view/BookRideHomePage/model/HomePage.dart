@@ -18,7 +18,8 @@ import '../../SearchingAvailableRide/SearchavailableRide_method.dart';
 
 class PassengerHome extends StatefulWidget {
   final String name;
-  const PassengerHome({super.key, required this.name});
+  final String profilePic;
+  const PassengerHome({super.key, required this.name, required this.profilePic});
 
   @override
   State<PassengerHome> createState() => _PassengerHomeState();
@@ -134,7 +135,7 @@ class _PassengerHomeState extends State<PassengerHome> {
           ),
         ],
       ),
-      drawer:  AppDrawer(name: widget.name),
+      drawer:  AppDrawer(name: widget.name, profilePic: widget.profilePic,),
       body: Stack(children: [
         Container(
           height: size.height,
@@ -154,7 +155,8 @@ class _PassengerHomeState extends State<PassengerHome> {
 
 class AppDrawer extends ConsumerWidget {
   final String name;
-  const AppDrawer( {required this.name,
+  final String profilePic;
+  const AppDrawer( {required this.name, required this.profilePic,
     super.key,
   });
 
@@ -172,10 +174,12 @@ class AppDrawer extends ConsumerWidget {
                 children: [
                   Stack(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: grey5,
-                        radius: 30,
-                        backgroundImage: Image.asset(userIcon).image,
+                      Container(
+                        child: Image.network(profilePic),
+                        decoration: BoxDecoration(
+                          color: grey5,
+                          borderRadius: BorderRadius.circular(30),
+                        )
                       ),
                       Positioned(
                         bottom: 0,

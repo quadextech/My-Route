@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: myCustomColor,
             fontFamily: "Avenir",
           ),
-          home:  LoginScreen(),
+          home:  SignUpScreen(),
         );
       }
     );

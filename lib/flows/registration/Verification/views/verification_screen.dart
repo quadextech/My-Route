@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../constants/textstyle.dart';
@@ -20,6 +21,7 @@ class VerificationScreen extends ConsumerStatefulWidget {
       _VerificationScreenConsumerState();
 }
 
+
 class _VerificationScreenConsumerState
     extends ConsumerState<VerificationScreen> {
   int countdown = 59;
@@ -30,6 +32,7 @@ class _VerificationScreenConsumerState
     super.initState();
     startCountdown();
   }
+
 
   void startCountdown() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -99,7 +102,6 @@ class _VerificationScreenConsumerState
                       onChanged: (value) {
                         setState(() {
                           String nevalue = ("$code$value");
-
                           code = nevalue;
                         });
                         if (value.length == 1) {
@@ -339,9 +341,13 @@ class _VerificationScreenConsumerState
               coountDownOver
                   ? GestureDetector(
                       onTap: () async {
+                        setState(() {
+                          isLoading = false;
+                        });
                         await verificationref
                             .resendVerificationCode(widget.email);
                         startCountdown();
+
                       },
                       child: const Center(child: Text("Resend SMS code")))
                   : Center(child: Text("Resend SMS code ($countdown secs)"))

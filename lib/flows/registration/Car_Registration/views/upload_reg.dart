@@ -205,16 +205,16 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                     
                   }),
                   const SizedBox(width: 5),
-                 Text(exteriorPhoto),
+                 Text(ExtDocName),
                   //
-                  Text(
-                    ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontFamily: "Avenir",
-                        fontSize: 10,
-                        color: ExternalPicError ? errorColor : black),
-                  ),
+                  // Text(
+                  //   ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //       fontFamily: "Avenir",
+                  //       fontSize: 10,
+                  //       color: ExternalPicError ? errorColor : black),
+                  // ),
 
                 ],
               ),
@@ -263,15 +263,15 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
 
                   }),
                   const SizedBox(width: 5),
-                  Text(interiorPhoto,),
-                  Text(
-                    InternalPicError ? 'Upload your Car External Picture' : IntDocName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontFamily: "Avenir",
-                        fontSize: 10,
-                        color: InternalPicError ? errorColor : black),
-                  ),
+                  Text(IntDocName),
+                  // Text(
+                  //   InternalPicError ? 'Upload your Car External Picture' : IntDocName,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //       fontFamily: "Avenir",
+                  //       fontSize: 10,
+                  //       color: InternalPicError ? errorColor : black),
+                  // ),
                 ],
               ),
               const SizedBox(

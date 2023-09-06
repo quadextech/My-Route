@@ -44,11 +44,11 @@ class _SearchingRideState extends State<SearchingRide> {
           backgroundColor: Colors.transparent,
           leading: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PassengerHomeScreen(name: ''),
-                  ));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => const PassengerHomeScreen(name: ''),
+              //     ));
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),
