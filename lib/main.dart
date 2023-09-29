@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myroute/constants/app_color.dart';
+import 'package:myroute/services/verify_card.dart';
 
+import 'flows/PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
 import 'flows/Splash/views/splash.dart';
 import 'flows/onboarding/onboarding.dart';
+import 'flows/registration/AddPayment/views/addPayment.dart';
 import 'flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'flows/registration/Car_Registration/views/car_details_reg.dart';
+import 'flows/registration/Car_Registration/views/payment_detail.dart';
 import 'flows/registration/SignUp/views/Sign_up.dart';
-import 'flows/registration/login/views/login_sreen.dart';
+import 'flows/registration/Verification/views/verification_screen.dart';
 
 
 void main() {
@@ -32,7 +36,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: myCustomColor,
             fontFamily: "Avenir",
           ),
-          home:  SignUpScreen(),
+          home:   PassengerHome(name: '',),
         );
       }
     );

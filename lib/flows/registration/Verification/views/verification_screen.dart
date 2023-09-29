@@ -11,6 +11,7 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../constants/textstyle.dart';
 import '../../../../services/user_authentication.dart';
+import '../../AddPayment/views/addPayment.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
   final String email;
@@ -320,12 +321,20 @@ class _VerificationScreenConsumerState
                           setState(() {
                             isLoading = false;
                           });
+
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AddProfilePic(email: widget.email),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AppPayment(),
+                            ),
+                          );
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           AddProfilePic(email: widget.email),
+                          //     ));
                         } else {
                           setState(() {
                             isLoading = false;
@@ -343,7 +352,9 @@ class _VerificationScreenConsumerState
                       onTap: () async {
                         setState(() {
                           isLoading = false;
+                          code = '';
                         });
+                        print(code);
                         await verificationref
                             .resendVerificationCode(widget.email);
                         startCountdown();

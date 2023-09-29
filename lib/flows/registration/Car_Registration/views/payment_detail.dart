@@ -62,7 +62,6 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
 
   String firstName = '';
   String lastName = '';
-  String profilePic ='';
 
 
 
@@ -235,8 +234,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                 accountNumberParse,
                                 bankNameController.text,
                                 widget.vehicleColor);
-
-                            if (message == 'driver registration successful') {
+                            if (message == 'successful') {
                               setState(() {
                                 ismessage = true;
                               });
@@ -246,7 +244,6 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                               setState(() {
                                 firstName = prefs.getString('firstName')!;
                                 lastName = prefs.getString('lastName')!;
-                                profilePic = prefs.getString('profilePic')!;
                               });
                             }
 
@@ -311,7 +308,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              PassengerHome(name: name, profilePic: profilePic,),
+                                                              PassengerHome(name: name),
                                                         ));
                                                   },
                                                   label: "Exit registration"),
@@ -370,7 +367,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                           PassengerHome(name: name, profilePic: profilePic,),
+                                                           PassengerHome(name: name),
                                                     ));
                                               },
                                               label: "Exit registration"),

@@ -51,6 +51,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   var isLoading = false;
 
 
+  var docName = '';
   var licenseDocName ='';
   var ExtDocName ='';
   var IntDocName ='';
@@ -202,7 +203,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
 
                     });
                     //exteriorPhotoPath = await pickFile(exteriorPhoto);
-                    
+
                   }),
                   const SizedBox(width: 5),
                  Text(ExtDocName),
@@ -256,10 +257,10 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                   UpLoadButton(onPressed: () async {
                     var pickedInteriorPhotoPath = await pickIntFile();
                     setState(() {
-                      
+
  interiorPhotoPath = pickedInteriorPhotoPath;
                     });
-                   
+
 
                   }),
                   const SizedBox(width: 5),

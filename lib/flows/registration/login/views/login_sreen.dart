@@ -10,6 +10,7 @@ import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import '../../AddPayment/views/addPayment.dart';
 import '../../Add_ProficPic/views/add_profile_pic.dart';
 import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 import '../../Verification/views/verification_screen.dart';
@@ -30,7 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String firstName = '';
   String lastName = '';
   String isVerified = '';
-  String profilePic='';
+
 
   @override
   void dispose() {
@@ -161,8 +162,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   setState(() {
                                     firstName = prefs.getString('firstName')!;
                                     lastName = prefs.getString('lastName')!;
-                                    isVerified = prefs.getString('isVerified')!;
-                                    profilePic = prefs.getString('profilePic')!;
+                                    //isVerified = prefs.getString('isVerified')!;
                                   });
                                   final String name = '$firstName $lastName';
                                   if (isVerified == false){
@@ -177,12 +177,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       isLoading = false;
                                     });
                                   } else {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                               PassengerHomeScreen(name:name, profilePic: profilePic,),
+                                          AddProfilePic(email: emailController.text,),
                                         ));
+
+                                    // Navigator.pushReplacement(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //            PassengerHomeScreen(name:name),
+                                    //     ));
 
                                     setState(() {
                                       isLoading = false;
