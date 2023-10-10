@@ -23,7 +23,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
 
   void InsureSettinsSuccess() {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
         context: context,
@@ -40,7 +40,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                     success,
                     color: successColor,
                   )),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Center(
@@ -48,7 +48,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                     'Success!',
                     style: body2(successColor, TextDecoration.none),
                   )),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
@@ -56,7 +56,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                     'Your AutoInsure settings have been saved',
                     style: body3(black, TextDecoration.none),
                   )),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   AppButton(textColor: white,
@@ -64,7 +64,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                         Navigator.pop(context);
                       },
                       label: 'Exit'),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -81,7 +81,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: white,
-        leading: AppBackButton(),
+        leading: const AppBackButton(),
         centerTitle: true,
         title: Text(
           'My AutoInsure',
@@ -89,7 +89,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,7 +97,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
               'Set your AutoInsure policy',
               style: body3(black, TextDecoration.none),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Text('Select Car Insurance type',
@@ -110,7 +110,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                       carInsuranceType = value as String;
                     });
                   },
-                  selected: '$carInsuranceType',
+                  selected: 'carInsuranceType',
                   listTextFied: const [
                     'Liability Coverage',
                     'Others',
@@ -118,7 +118,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
             ),
             Text('NOTE Insurance Cost: N50,000.00 (1 year validity)',
                 style: body4(errorColor, TextDecoration.none)),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text('Account to Debit for your AutoInsure policy',
@@ -131,7 +131,7 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                       accountToCredit = value as String;
                     });
                   },
-                  selected: '$accountToCredit',
+                  selected: 'accountToCredit',
                   listTextFied: const [
                     'My Debit Card',
                     'Others',
@@ -147,13 +147,13 @@ class _AutoInsureSettingsState extends State<AutoInsureSettings> {
                       wantToAutoRenew = value as String;
                     });
                   },
-                  selected: '$wantToAutoRenew',
+                  selected: 'wantToAutoRenew',
                   listTextFied: const [
                     'Yes',
                     'No',
                   ]),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             AppButton(textColor: white,
                 onPressed: () {
                   InsureSettinsSuccess();

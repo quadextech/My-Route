@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mime/mime.dart';
+import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/payment_detail.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
 import 'package:file_picker/file_picker.dart';
@@ -205,7 +206,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                     
                   }),
                   const SizedBox(width: 5),
-                 Text(exteriorPhoto),
+                 Text(exteriorPhoto,style: body4(black, TextDecoration.none),),
                   //
                   Text(
                     ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
