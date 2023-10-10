@@ -52,6 +52,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   var isLoading = false;
 
 
+  var docName = '';
   var licenseDocName ='';
   var ExtDocName ='';
   var IntDocName ='';
@@ -75,7 +76,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
   
     return Scaffold(
       appBar: AppBar(
-        leading: AppBackButton(),
+        leading: const AppBackButton(),
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
@@ -107,7 +108,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -141,9 +142,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                         var pickedDriverLicensePath = await pickLicenseFile();
                         setState(() {
                           driversLicensePath = pickedDriverLicensePath;
-                          print('--------------$driversLicense');
-                          print(driversLicensePath);
-                          print(licenseDocName);
+                         
                         });
                       }),
                   const SizedBox(width: 5),
@@ -162,7 +161,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
               const SizedBox(
                 height: 15,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -203,26 +202,30 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
 
                     });
                     //exteriorPhotoPath = await pickFile(exteriorPhoto);
-                    
+
                   }),
                   const SizedBox(width: 5),
+ 
                  Text(exteriorPhoto,style: body4(black, TextDecoration.none),),
+
+                 Text(ExtDocName),
+
                   //
-                  Text(
-                    ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontFamily: "Avenir",
-                        fontSize: 10,
-                        color: ExternalPicError ? errorColor : black),
-                  ),
+                  // Text(
+                  //   ExternalPicError ? 'Upload your Car External Picture' : ExtDocName,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //       fontFamily: "Avenir",
+                  //       fontSize: 10,
+                  //       color: ExternalPicError ? errorColor : black),
+                  // ),
 
                 ],
               ),
               const SizedBox(
                 height: 15,
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -257,22 +260,22 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                   UpLoadButton(onPressed: () async {
                     var pickedInteriorPhotoPath = await pickIntFile();
                     setState(() {
-                      
+
  interiorPhotoPath = pickedInteriorPhotoPath;
                     });
-                   
+
 
                   }),
                   const SizedBox(width: 5),
-                  Text(interiorPhoto,),
-                  Text(
-                    InternalPicError ? 'Upload your Car External Picture' : IntDocName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontFamily: "Avenir",
-                        fontSize: 10,
-                        color: InternalPicError ? errorColor : black),
-                  ),
+                  Text(IntDocName),
+                  // Text(
+                  //   InternalPicError ? 'Upload your Car External Picture' : IntDocName,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //       fontFamily: "Avenir",
+                  //       fontSize: 10,
+                  //       color: InternalPicError ? errorColor : black),
+                  // ),
                 ],
               ),
               const SizedBox(

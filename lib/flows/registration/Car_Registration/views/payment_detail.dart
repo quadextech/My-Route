@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
@@ -58,6 +59,12 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
   bool bankNameError = false;
   bool isLoading = false;
   bool ismessage = false;
+
+  String firstName = '';
+  String lastName = '';
+
+
+
   @override
   void dispose() {
     addressController.dispose();
@@ -67,8 +74,11 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     final connectivityState = ref.watch(connectivityProvider);
     final driverServiceRef = ref.watch(driverServiceProvider);
     return Scaffold(
@@ -180,18 +190,6 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                             print (accountNumberController.text);
                             print(bankNameController.text,);
                             print(widget.vehicleColor);
-
-
-
-
-
-
-
-
-
-
-
-
                           });
                           if (addressController.text.isEmpty) {
                             setState(() {
@@ -218,6 +216,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                             });
                           }
                           if (isLoading == true) {
+                            int accountNumberParse = int.parse(accountNumberController.text);
                             String message = await driverServiceRef.uploadFiles(
                                 widget.userId,
                                 widget.referralCode,
@@ -232,18 +231,32 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                 widget.inSideCarPhoto,
                                 addressController.text,
                                 accountNameController.text,
-                                accountNumberController.text,
+                                accountNumberParse,
                                 bankNameController.text,
                                 widget.vehicleColor);
-                            if (message == 'Bank details added Successfully') {
+                            if (message == 'successful') {
                               setState(() {
                                 ismessage = true;
                               });
+
+                              SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                              setState(() {
+                                firstName = prefs.getString('firstName')!;
+                                lastName = prefs.getString('lastName')!;
+                              });
                             }
+
+                            final String name = '$firstName $lastName';
+
+
                             showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                               context: context,
                               builder: (context) => CustomPopUpContainer(
-                                height: 350,
+                                height: size.height*0.5,
                                 child: ismessage
                                     ? Expanded(
                                         child: Container(
@@ -291,11 +304,12 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                   textColor: black,
                                                   buttonColor: white,
                                                   onPressed: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //       builder: (context) => BottomNav(),
-                                                    //     ));
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PassengerHome(name: name),
+                                                        ));
                                                   },
                                                   label: "Exit registration"),
                                               const SizedBox(
@@ -353,7 +367,7 @@ class _PaymentDetailState extends ConsumerState<PaymentDetail> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                           PassengerHome(name:''),
+                                                           PassengerHome(name: name),
                                                     ));
                                               },
                                               label: "Exit registration"),

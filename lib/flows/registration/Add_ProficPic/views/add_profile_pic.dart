@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mime/mime.dart';
@@ -13,6 +12,7 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/update_dp.dart';
 import '../../../../services/user_authentication.dart';
+import '../../ninRegistration.dart';
 import '../utilities.dart';
 
 class AddProfilePic extends ConsumerStatefulWidget {
@@ -27,7 +27,6 @@ class AddProfilePic extends ConsumerStatefulWidget {
 
 class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   XFile? _imageFile;
-  final storage = new FlutterSecureStorage();
   bool isLoading = false;
 
 
@@ -40,7 +39,6 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
   var sex = "Male";
 
   String dataUri = '';
-  //bool isLLoading = false;
 
   bool isImageGood() {
     return _imageFile != null;
@@ -144,8 +142,8 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                             dataUri = "data:$mimeType;base64,$imageBase64";
 
                           });
+                          print(dataUri);
                         });
-                        print(dataUri);
                       },
                     child: Container(
                         width: 40,
@@ -204,7 +202,7 @@ class _AddProfilePicState extends ConsumerState<AddProfilePic> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const AppPayment(),
+                                    builder: (context) => const NinRegistration(),
                                   ),
                                 );
                               }

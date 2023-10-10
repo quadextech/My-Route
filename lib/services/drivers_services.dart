@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ class DriverService {
       String inSideCarPhoto,
       String address,
       String bankaccountholdername,
-      String bankaccountnumber,
+      bankaccountnumber,
       String bankname,
       String vehicleColor) async {
     
@@ -49,13 +50,13 @@ class DriverService {
           "bankName": bankname,
           "vehicleColor": vehicleColor
         },
-      )
-    );
+      ));
     if (response.statusCode == 201) {
       message = "successful";
       final responseBody = json.encode(response.body);
       print(responseBody);
-    } else {
+    }
+    else {
       message = response.body;
       print('Request failed with status code: ${response.statusCode}');
       print(response.body);

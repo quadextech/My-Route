@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'package:myroute/flows/registration/Forotten_password/views/forgotten_pas
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
 import 'package:myroute/services/user_authentication.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
@@ -42,16 +42,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool phoneError = false;
   bool emailError = false;
   bool nameError = false;
-  bool ninError = false;
+  //bool ninError = false;
   bool passwordMismatch = false;
   bool isLoading = false;
-  bool isPicked = false;
+  //bool isPicked = false;
 
 
-  final storage = new FlutterSecureStorage();
-
-  late var ninDocPath;
-  var ninDoc = '';
 
   bool isValidEmail(String email) {
     final RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
@@ -176,52 +172,52 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("NIN Document",
-                          style: body3(black, TextDecoration.none)),
-                      Text("Required*",
-                          style: body4(errorColor, TextDecoration.none)),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                      "Please provide a clear NIN document showing the NIN, your name and date of birth.",
-                      style: body4(black, TextDecoration.none)),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      UpLoadButton(onPressed: () async {
-                        var pickedNinDocPath = await pickFile();
-                        setState(() {
-                          ninDocPath = pickedNinDocPath;
-                        });
-                      }),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text("NIN Document",
+                  //         style: body3(black, TextDecoration.none)),
+                  //     Text("Required*",
+                  //         style: body4(errorColor, TextDecoration.none)),
+                  //   ],
+                  // // ),
+                  // const SizedBox(
+                  //   height: 8,
+                  // ),
+                  // Text(
+                  //     "Please provide a clear NIN document showing the NIN, your name and date of birth.",
+                  //     style: body4(black, TextDecoration.none)),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     UpLoadButton(onPressed: () async {
+                  //       var pickedNinDocPath = await pickFile();
+                  //       setState(() {
+                  //         ninDocPath = pickedNinDocPath;
+                  //         ninError = false;
+                  //       });
+                  //     }),
                      //   UpLoadButton(onPressed: () async {
                      //     setState(() async {
                      //       ninDocPath = await pickFile();
                      //     });
                      //
-                     // }),
-                      const SizedBox(width: 5),
-                      Text(
-                        ninError ? 'Upload your NIN' : ninDoc,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontFamily: "Avenir",
-                            fontSize: 9,
-                            color: ninError ? errorColor : black),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                     // // }),
+                     //  const SizedBox(width: 5),
+                     //  Text(
+                     //    ninError ? 'Upload your NIN' : ninDoc,
+                     //    overflow: TextOverflow.ellipsis,
+                     //    style: TextStyle(
+                     //        fontFamily: "Avenir",
+                     //        fontSize: 9,
+                     //        color: ninError ? errorColor : black),
+                     //  ),
+
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -309,12 +305,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                   isLoading = false;
                                 });
                               }
-                              if (ninDoc == '') {
-                                setState(() {
-                                  ninError = true;
-                                  isLoading = false;
-                                });
-                              }
+                              // if (ninDoc == '') {
+                              //   setState(() {
+                              //     ninError = true;
+                              //     isLoading = false;
+                              //   });
+                              // }
                               if (isLoading == true) {
                                 String message = await signUpref.userSignUp(
                                     emailController.text,
@@ -322,12 +318,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                     firstNameController.text,
                                     lastNameController.text,
                                     phoneNumberController.text,
-                                    sex,
-                                    ninDocPath);
-
-
+                                    sex);
                                 if (message == 'Sign Up Successful') {
-
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {
                                     ScaffoldMessenger.of(context)
@@ -338,14 +330,20 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                           style: TextStyle(fontSize: 16)),
                                     ));
                                   });
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddProfilePic(email: emailController.text,)));
+                                  //
                                   // Navigator.push(
                                   //     context,
                                   //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           VerificationScreen(
-                                  //               email: emailController.text),
+                                  //       builder: (context) => AddProfilePic(email: emailController.text),
                                   //     ));
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            VerificationScreen(
+                                                email: emailController.text),
+                                      ));
                                   setState(() {
                                     isLoading = false;
                                   });
@@ -513,37 +511,38 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       ),
     );
   }
-
-  Future pickFile() async {
-    PermissionStatus status = await Permission.storage.status;
-    if (status.isRestricted || status.isPermanentlyDenied) {
-      status = await Permission.storage.request();
-    }
-    if (status.isDenied) {
-      await Permission.storage.request();
-    }
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      PlatformFile platformFile = result.files.first;
-
-      File file = File(platformFile.path!);
-
-      List<int> fileBytes = await file.readAsBytes();
-      String ninDocBase64 = base64Encode(fileBytes);
-      String ninDocBase = ninDocBase64.replaceAll('/', '');
-      final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
-
-      final String dataUri = "data:$mimeType;base64,$ninDocBase";
-
-      setState(() {
-        ninDoc = platformFile.name;
-      });
-      print(dataUri);
-      return dataUri;
-    } else {
-      String message = 'File picking canceled';
-      return message;
-    }
-  }
+  //
+  // Future pickFile() async {
+  //   PermissionStatus status = await Permission.storage.status;
+  //   if (status.isRestricted || status.isPermanentlyDenied) {
+  //     status = await Permission.storage.request();
+  //   }
+  //   if (status.isDenied) {
+  //     await Permission.storage.request();
+  //   }
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //
+  //   if (result != null) {
+  //     PlatformFile platformFile = result.files.first;
+  //
+  //
+  //     File file = File(platformFile.path!);
+  //
+  //     List<int> fileBytes = await file.readAsBytes();
+  //     String ninDocBase64 = base64Encode(fileBytes);
+  //     String ninDocBase = ninDocBase64.replaceAll('/', '');
+  //     final String? mimeType = lookupMimeType('', headerBytes: fileBytes);
+  //
+  //     final String dataUri = "data:$mimeType;base64,$ninDocBase";
+  //
+  //     setState(() {
+  //       ninDoc = platformFile.name;
+  //     });
+  //     print(dataUri);
+  //     return dataUri;
+  //   } else {
+  //     String message = 'File picking canceled';
+  //     return message;
+  //   }
+  // }
 }

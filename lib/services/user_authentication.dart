@@ -1,20 +1,16 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 final userAuthProvider = Provider<UserAuth>((ref) => UserAuth());
 
 
-final storage = new FlutterSecureStorage();
-
 class UserAuth {
-  userSignUp(email, password, firstName, lastName, phone, gender,
-      String ninDoc) async {
+  userSignUp(email, password, firstName, lastName, phone, gender) async {
     String message = 'Something went wrong';
-    String? token = await storage.read(key: "token");
     final url =
         Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/signup');
     // List<int> imageBytes = await ninDoc.readAsBytes();
@@ -23,8 +19,6 @@ class UserAuth {
       url,
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": "Bearer $token"
-
       },
       body: jsonEncode({
         'email': email,
@@ -33,37 +27,33 @@ class UserAuth {
         'firstName': firstName,
         'phone': phone,
         'gender': gender,
-        'ninDocument': ninDoc
+      //'ninDocument': ninDoc
       }),
     );
-    if (response.statusCode == 201) {
-      message = 'Sign Up Successful';
+      if (response.statusCode == 201) {
+        message = 'Sign Up Successful';
 
-      Map<String, dynamic> output = jsonDecode(response.body);
-      print(output["token"]);
-      await storage.write(key: "token", value: output["token"]);
+        final responseData = json.decode(response.body);
 
-      final responseData = json.decode(response.body);
-
-      final token = responseData['token'];
-      final id = responseData['data']['user']['_id'];
-      if (token != null && id != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', token);
-        prefs.setString('id', id);
+        final token = responseData['token'];
+        final id = responseData['data']['user']['_id'];
+        if (token != null && id != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('token', token);
+          prefs.setString('id', id);
+        }
+        return message;
       }
-      return message;
-    }
-    if (response.statusCode == 403) {
-      message = 'This Email has been registered';
-      return message;
-    } else {
-      message = response.body;
-      print(message);
-      print(response.body);
-      print(response.statusCode);
-      return message;
-    }
+      if (response.statusCode == 403) {
+        message = 'This Email has been registered';
+        return message;
+      } else {
+        message = response.body;
+        print(message);
+        print(response.body);
+        print(response.statusCode);
+        return message;
+      }
   }
 
   userLogin(email, password) async {
@@ -86,12 +76,21 @@ class UserAuth {
       final id = responseData['data']['user']['_id'];
       final firstName = responseData['data']['user']['firstName'];
       final lastName = responseData['data']['user']['lastName'];
+      final email = responseData['data']['user']['email'];
+      final phoneNumber = responseData['data']['user']['phone'];
+      final gender = responseData['data']['user']['gender'];
+      //final bool isVerified = responseData['data']['user']['isVerified'];
+
       if (token != null && id != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
         prefs.setString('id', id);
         prefs.setString('firstName', firstName);
         prefs.setString('lastName', lastName);
+        prefs.setString('email', email);
+        prefs.setString('phoneNumber', phoneNumber);
+        prefs.setString('gender', gender);
+       // prefs.setString('isVerified', isVerified);
         message = 'LoggedIn';
         return message;
       } else {
@@ -102,7 +101,7 @@ class UserAuth {
     }
   }
 
-  Future verifyUser(email, verificationCode) async {
+  Future verifyUser(email, otp) async {
     String message = 'Wrong code';
     final url =
         Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/verify-user');
@@ -113,7 +112,7 @@ class UserAuth {
       },
       body: jsonEncode({
         'email': email,
-        'verificationCode': verificationCode,
+        'OTP': otp,
       }),
     );
     if (response.statusCode == 200) {
@@ -140,7 +139,7 @@ class UserAuth {
         'email': email,
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       message = 'verified';
       return message;
     } else {

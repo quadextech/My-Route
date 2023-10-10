@@ -6,10 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/registration/Add_ProficPic/views/add_profile_pic.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalFile.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../constants/textstyle.dart';
 import '../../../../services/user_authentication.dart';
+import '../../AddPayment/views/addPayment.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
   final String email;
@@ -19,6 +21,7 @@ class VerificationScreen extends ConsumerStatefulWidget {
   ConsumerState<VerificationScreen> createState() =>
       _VerificationScreenConsumerState();
 }
+
 
 class _VerificationScreenConsumerState
     extends ConsumerState<VerificationScreen> {
@@ -30,6 +33,7 @@ class _VerificationScreenConsumerState
     super.initState();
     startCountdown();
   }
+
 
   void startCountdown() {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -99,7 +103,6 @@ class _VerificationScreenConsumerState
                       onChanged: (value) {
                         setState(() {
                           String nevalue = ("$code$value");
-
                           code = nevalue;
                         });
                         if (value.length == 1) {
@@ -318,12 +321,20 @@ class _VerificationScreenConsumerState
                           setState(() {
                             isLoading = false;
                           });
+
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AddProfilePic(email: widget.email),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AppPayment(),
+                            ),
+                          );
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           AddProfilePic(email: widget.email),
+                          //     ));
                         } else {
                           setState(() {
                             isLoading = false;
@@ -339,9 +350,15 @@ class _VerificationScreenConsumerState
               coountDownOver
                   ? GestureDetector(
                       onTap: () async {
+                        setState(() {
+                          isLoading = false;
+                          code = '';
+                        });
+                        print(code);
                         await verificationref
                             .resendVerificationCode(widget.email);
                         startCountdown();
+
                       },
                       child: const Center(child: Text("Resend SMS code")))
                   : Center(child: Text("Resend SMS code ($countdown secs)"))

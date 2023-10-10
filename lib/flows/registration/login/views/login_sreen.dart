@@ -10,8 +10,10 @@ import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import '../../AddPayment/views/addPayment.dart';
 import '../../Add_ProficPic/views/add_profile_pic.dart';
 import '../../Do_you_have_car/views/do_you_have_a_car.dart';
+import '../../Verification/views/verification_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
@@ -28,6 +30,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool passwordError = false;
   String firstName = '';
   String lastName = '';
+  String isVerified = '';
+
 
   @override
   void dispose() {
@@ -158,18 +162,39 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   setState(() {
                                     firstName = prefs.getString('firstName')!;
                                     lastName = prefs.getString('lastName')!;
+                                    //isVerified = prefs.getString('isVerified')!;
                                   });
                                   final String name = '$firstName $lastName';
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  DoYouHaveACar()));
+                                  if (isVerified == false){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              VerificationScreen(
+                                                  email: emailController.text),
+                                        ));
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                          AddProfilePic(email: emailController.text,),
+                                        ));
 
+                                    // Navigator.pushReplacement(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //            PassengerHomeScreen(name:name),
+                                    //     ));
 
-                                  //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AddProfilePic(email: emailController.text,)));
-                                  // Navigator.pushReplacement(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //            PassengerHomeScreen(name:name),
-                                  //     ));
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
                                 } else {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((_) {

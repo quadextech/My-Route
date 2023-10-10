@@ -21,11 +21,11 @@ class ProfilePic{
         
       }),
     );
-    //print(response.body);
     if (response.statusCode == 200) {
       message = 'updated';
       return message;
-    } else {
+    }
+    else {
       message = response.body;
       return message;
     }

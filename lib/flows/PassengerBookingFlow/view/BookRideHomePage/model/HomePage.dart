@@ -14,6 +14,7 @@ import '../../../../../services/user_authentication.dart';
 import '../../../../my wallet/views/mywallet.dart';
 import '../../../../my_auto_save/auto_save_home_screen.dart';
 import '../../../../registration/login/views/login_sreen.dart';
+import '../../../../registration/ninRegistration.dart';
 import '../../SearchingAvailableRide/SearchavailableRide_method.dart';
 
 class PassengerHome extends StatefulWidget {
@@ -29,84 +30,6 @@ class _PassengerHomeState extends State<PassengerHome> {
   TextEditingController goingToEditingController = TextEditingController();
   TextEditingController whenEditingController = TextEditingController();
   TextEditingController howManyEditingController = TextEditingController();
-
-  double _dragSheetExtent = 0.0;
-
-  double? contentHeight;
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement initState
-    super.didChangeDependencies();
-    Future.delayed(
-      const Duration(seconds: 6),
-      () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) => CustomPopUpContainer(
-            height: MediaQuery.of(context).size.height * 0.45,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    GlobaltextField(
-                      keyboardType: TextInputType.none,
-                      u: true,
-                      controller: whereEditingController,
-                      preficIcon: const Icon(Icons.radio_button_checked),
-                      label: "Where are you leaving From",
-                    ),
-                    const SizedBox(height: 20),
-                    GlobaltextField(
-                      keyboardType: TextInputType.none,
-                      u: true,
-                      controller: goingToEditingController,
-                      preficIcon: const Icon(
-                        Icons.location_on,
-                        color: Colors.green,
-                      ),
-                      label: "Where are you going to?",
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.42,
-                          child: GlobaltextField(
-                            keyboardType: TextInputType.none,
-                            u: true,
-                            controller: whenEditingController,
-                            preficIcon: const Icon(Icons.calendar_month),
-                            label: "When are you going",
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.42,
-                          child: GlobaltextField(
-                            keyboardType: TextInputType.none,
-                            u: true,
-                            controller: howManyEditingController,
-                            preficIcon: const Icon(Icons.person),
-                            label: "How many Seats?",
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          isScrollControlled: true,
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,10 +95,12 @@ class AppDrawer extends ConsumerWidget {
                 children: [
                   Stack(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: grey5,
-                        radius: 30,
-                        backgroundImage: Image.asset(userIcon).image,
+                      Container(
+                        child: Icon(Icons.supervised_user_circle),
+                        decoration: BoxDecoration(
+                          color: grey5,
+                          borderRadius: BorderRadius.circular(30),
+                        )
                       ),
                       Positioned(
                         bottom: 0,
@@ -208,7 +133,7 @@ class AppDrawer extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Boluwatife Jennifer', style: headline4(white)),
+                        Text(name, style: headline4(white)),
                         const SizedBox(height: 7),
                         Text(
                           'Point score: 500',
@@ -240,6 +165,14 @@ class AppDrawer extends ConsumerWidget {
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => CarDetailsReg()));
+            },
+          ),
+          ListTile(
+            leading: SvgPicture.asset(license, color: black),
+            title: const Text('NINRegistration'),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => NinRegistration()));
             },
           ),
           ListTile(
