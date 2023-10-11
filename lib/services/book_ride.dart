@@ -42,7 +42,8 @@ class BookRide {
     if (response.statusCode == 200) {
       message = "Ride created";
     } else {
-      message = json.encode(response.body);
+      final jsonResponse = json.decode(response.body);
+   message = jsonResponse["message"];
       return message;
     }
   }

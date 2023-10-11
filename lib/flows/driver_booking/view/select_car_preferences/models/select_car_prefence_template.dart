@@ -90,6 +90,17 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
   }
 
   @override
+  void dispose() {
+    currentMapController.dispose();
+    goingToEditingController.dispose();
+    _timeController.dispose();
+    _dateController.dispose();
+    priceController.dispose();
+    routeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     dateTime = DateFormat.yMd().format(DateTime.now());
     final createRideRef = ref.watch(bookRideProvider);
@@ -150,7 +161,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 ),
                 label: "Where are you going to?"),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             const Text(
               "What route are you passing?",
@@ -165,6 +176,8 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                   controller: routeController,
                   preficIcon: const Icon(Icons.radio_button_checked),
                   label: "Ikeja"),
+            ),  const SizedBox(
+              height: 20,
             ),
             const Text(
               'When are you going?',
@@ -301,6 +314,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 ),
               ),
             ),
+             
             const Text(
               'How many seats are available',
               style: TextStyle(
@@ -308,6 +322,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 fontWeight: FontWeight.w500,
               ),
             ),
+            
             Padding(
               padding: const EdgeInsets.only(top: 15, bottom: 6),
               child: Container(
@@ -379,6 +394,9 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                   preficIcon: const Icon(Icons.radio_button_checked),
                   label: "\$100"),
             ),
+              const SizedBox(
+              height: 20,
+            ),
             const Text(
               "Your preferred payment method",
               style: TextStyle(
@@ -401,13 +419,14 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               buttonColor: black,
               label: "Create Trip",
               onPressed: () async {
-                setState(() {
+                if (currentMapController.text.isNotEmpty&&goingToEditingController.text.isNotEmpty&&_dateController.text.isNotEmpty&&_dateController.text.isNotEmpty&&priceController.text.isNotEmpty&&routeController.text.isNotEmpty ){
+  setState(() {
+
                   isLoading = true;
                 });
-                SharedPreferences prefs = await SharedPreferences.getInstance();
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
                 final userId = prefs.getString('id');
-                loadRide(isLoading, isSuccess);
-                final rideMessage = await createRideRef.driverCreateRide(
+                 final rideMessage = await createRideRef.driverCreateRide(
                     userId!,
                     currentMapController.text,
                     goingToEditingController.text,
@@ -420,6 +439,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                     priceController.text,
                     paymentMethod,
                     'example');
+                    
                 if (rideMessage == 'Ride created') {
                   setState(() {
                     isLoading = false;
@@ -431,12 +451,23 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                     isSuccess = false;
                     print(rideMessage);
                   });
+                   loadRide(isLoading, isSuccess, rideMessage);
                 }
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) =>  PassengerHomeScreen(name:name, profilePic: profilePic,),
-                //     ));
+                }
+else{
+    WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                        'Fill up all fields',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                });
+}
               },
             ),
             const SizedBox(
@@ -448,7 +479,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
     );
   }
 
-  void loadRide(isLoading, isSuccess) {
+  void loadRide(isLoading, isSuccess, message) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         context: context,
@@ -489,11 +520,11 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text('Error!', style: headline2(successColor)),
+                          Text('Error!', style: headline2(errorColor)),
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text('Something went wrong'),
+                           Text(message),
                           const SizedBox(
                             height: 30,
                           ),
