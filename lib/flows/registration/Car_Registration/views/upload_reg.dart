@@ -288,10 +288,7 @@ class _UploadFlieRegState extends ConsumerState<UploadFlieReg> {
                     )
                   : AppButton(textColor: white,
                       onPressed: () async {
-                    print(driversLicensePath);
-                    print(interiorPhotoPath);
-                    print(exteriorPhotoPath);
-                    print(expiryDateController.text);
+                   
 
 
 

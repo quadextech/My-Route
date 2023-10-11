@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: myCustomColor,
             fontFamily: "Avenir",
           ),
-          home:   PassengerHome(name: '',),
+          home:   Splash1()
         );
       }
     );

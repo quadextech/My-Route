@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
+import 'package:myroute/flows/driver_booking/view/BookRideHomePage/model/homepageUI.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
@@ -32,7 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String lastName = '';
   String isVerified = '';
 
-
+ 
   @override
   void dispose() {
     emailController.dispose();
@@ -165,7 +167,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     //isVerified = prefs.getString('isVerified')!;
                                   });
                                   final String name = '$firstName $lastName';
-                                  if (isVerified == false){
+                                  if (isVerified == false) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -181,7 +183,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                          AddProfilePic(email: emailController.text,),
+                                              DriverHomeScreen(name: 'name'),
                                         ));
 
                                     // Navigator.pushReplacement(
