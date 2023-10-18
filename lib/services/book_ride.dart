@@ -7,7 +7,7 @@ final bookRideProvider = Provider<BookRide>((ref) => BookRide());
 
 class BookRide {
   driverCreateRide(
-     String userId,
+     
      String pickupLocation,
      String dropOffLocation,
     String  whereAreyouGoing,
@@ -18,14 +18,14 @@ class BookRide {
     String  whatTimeAreYouGoing,
     String  price,
     String  paymentMethod,
-    String  example) async {
+     String token) async {
     String message = 'Something went wrong';
     final url = Uri.parse(
         'https://myroute-aqn5.onrender.com/api/v1/drivers/save-booking');
     final response = await http.post(url,   headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 'token':token
       }, body: jsonEncode({
-      "userId": userId,
+      
       "pickupLocation": pickupLocation,
       "dropOffLocation": dropOffLocation,
       "whereAreyouGoing": whereAreyouGoing,
@@ -36,7 +36,7 @@ class BookRide {
       "whatTimeAreYouGoing": whatTimeAreYouGoing,
       "price": price,
       "paymentMethod": paymentMethod,
-      "example": example
+      
     }));
 
     if (response.statusCode == 200) {
