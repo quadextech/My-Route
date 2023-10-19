@@ -152,7 +152,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               height: 20,
             ),
             GlobaltextField(
-                keyboardType: TextInputType.none,
+                keyboardType: TextInputType.text,
                 u: true,
                 controller: goingToEditingController,
                 preficIcon: const Icon(
@@ -426,8 +426,9 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 });
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                 final token = prefs.getString('token');
+                print(token);
                  final rideMessage = await createRideRef.driverCreateRide(
-                   
+
                     currentMapController.text,
                     goingToEditingController.text,
                     goingToEditingController.text,
@@ -439,7 +440,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                     priceController.text,
                     paymentMethod,
                     token!);
-                    
+
                 if (rideMessage == 'Ride created') {
                   setState(() {
                     isLoading = false;
@@ -480,6 +481,17 @@ else{
   }
 
   void loadRide(isLoading, isSuccess, message) {
+    final createRideRef = ref.watch(bookRideProvider);
+    String pickupLocation = '';
+    String  dropOffLocation = '';
+    String whenAreyouGoing = '';
+    String  seatsAvailable = '';
+    String currentMapLocation  = '';
+    String whereAreyouGoing = '';
+    String whatRouteAreYouPassing  = '';
+    String whatTimeAreYouGoing = '';
+    String price = '';
+    String paymentMethod = '';
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         context: context,
@@ -530,8 +542,26 @@ else{
                           ),
                           AppButton(
                               textColor: white,
-                              onPressed: () {
-                                Navigator.pop(context);
+                              onPressed: () async{
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                setState(() {
+                            pickupLocation = prefs.getString('pickupLocation')!;
+                            dropOffLocation = prefs.getString('dropOffLocation')!;
+                            whenAreyouGoing = prefs.getString('whenAreyouGoing')!;
+                            seatsAvailable = prefs.getString('seatsAvailable')!;
+                            currentMapLocation = prefs.getString('currentMapLocation')!;
+                            whereAreyouGoing = prefs.getString('whereAreyouGoing')!;
+                            currentMapLocation = prefs.getString('currentMapLocation')!;
+                            whatRouteAreYouPassing = prefs.getString('whatRouteAreYouPassing')!;
+                            whatTimeAreYouGoing =  prefs.getString('whatTimeAreYouGoing')!;
+                            price = prefs.getString('price')!;
+                            paymentMethod = prefs.getString('paymentMethod')!;
+                                });
+                                final token = prefs.getString('token');
+                                createRideRef.getDriver(token!, );
+
+
+                                //Navigator.pop(context);
                               },
                               label: 'Cancel'),
                           SizedBox(height: 20)

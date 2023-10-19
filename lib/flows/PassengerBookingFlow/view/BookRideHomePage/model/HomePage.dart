@@ -15,7 +15,6 @@ import '../../../../my wallet/views/mywallet.dart';
 import '../../../../my_auto_save/auto_save_home_screen.dart';
 import '../../../../registration/login/views/login_sreen.dart';
 import '../../../../registration/ninRegistration.dart';
-import '../../SearchingAvailableRide/SearchavailableRide_method.dart';
 
 class PassengerHome extends StatefulWidget {
   final String name;
