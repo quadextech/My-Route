@@ -90,5 +90,36 @@ class BookRide {
       }
     }
   }
+passengerSearchRide(
+     String currentMapLocation,
+     String whereAreYouGoing,
+     String whereAreYouLeavingFrom,
+     String whenAreYouGoing,
+     String preferredRoute,
+     String token
+    ) async {
+    String message = 'Something went wrong';
+    final url = Uri.parse(
+        'https://myroute-aqn5.onrender.com/api/v1/passengers/search-ride');
+    final response = await http.post(url,   headers: {
+        'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+      }, body: jsonEncode({
+      'currentMapLocation': currentMapLocation,
+      'whereAreYouGoing': whereAreYouGoing,
+      'whereAreYouLeavingFrom': whereAreYouLeavingFrom,
+      'whenAreYouGoing' : whenAreYouGoing,
+      'preferredRoute' : preferredRoute
+      
+    }));
+
+    if (response.statusCode == 200) {
+      message = "Ride found";
+    } else {
+      final jsonResponse = json.decode(response.body);
+   message = jsonResponse["message"];
+      return message;
+    }
+  }
 
 }

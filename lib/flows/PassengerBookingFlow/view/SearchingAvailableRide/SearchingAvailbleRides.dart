@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../global_file/swicher.dart';
 import '../BookRideHomePage/model/homepageUI.dart';
 import 'SearchavailableRide_method.dart';
 
-class SearchingRide extends StatefulWidget {
+class SearchingRide extends ConsumerStatefulWidget {
   const SearchingRide({Key? key}) : super(key: key);
 
   @override
-  State<SearchingRide> createState() => _SearchingRideState();
+  ConsumerState<SearchingRide> createState() => _SearchingRideState();
 }
 
-class _SearchingRideState extends State<SearchingRide> {
+class _SearchingRideState extends ConsumerState<SearchingRide> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     Future.delayed(
-      Duration(seconds: 6),
+      const Duration(seconds: 6),
       () {
         showModalBottomSheet(
           context: context,
-          builder: (context) => CustomPopUpContainer(
+          builder: (context) => const CustomPopUpContainer(
             height: 60,
             child: Text('BOY'),
           ),

@@ -1,38 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_file.dart';
-import 'package:myroute/flows/PassengerBookingFlow/view/SearchingAvailableRide/SearchingAvailbleRides.dart';
-import 'package:provider/provider.dart';
+import 'package:myroute/flows/driver_booking/view/SearchingAvailableRide/SearchavailableRide_method.dart';
+import 'package:myroute/services/book_ride.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../../constants/app_color.dart';
 import '../../../../../constants/app_image.dart';
 import '../../../../registration/Reg_global_File/App_button.dart';
-import '../../../../registration/SignUp/views/Sign_up.dart';
 
 import 'package:date_format/date_format.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../BookRideHomePage/model/HomePage.dart';
-import '../../BookRideHomePage/model/homepageUI.dart';
 import 'BorderButton.dart';
 
-class SelectedCar extends StatefulWidget {
+class SelectedCar extends ConsumerStatefulWidget {
   const SelectedCar({super.key});
 
   @override
-  State<SelectedCar> createState() => _SelectedCarState();
+  ConsumerState<SelectedCar> createState() => _SelectedCarState();
 }
 
-class _SelectedCarState extends State<SelectedCar> {
+class _SelectedCarState extends ConsumerState<SelectedCar> {
   TextEditingController currentMapController = TextEditingController();
   TextEditingController goingToEditingController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
+  TextEditingController routeController = TextEditingController();
   int numberOfSeats = 1;
 
   String? _setTime, _setDate;
-
+  bool isLoading = false;
   String? _hour, _minute, _time;
+  bool isSuccess = false;
 
   String? dateTime;
 
@@ -86,6 +89,8 @@ class _SelectedCarState extends State<SelectedCar> {
 
   @override
   Widget build(BuildContext context) {
+        final searchRideRef = ref.watch(bookRideProvider);
+
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
       appBar: AppBar(
@@ -144,26 +149,23 @@ class _SelectedCarState extends State<SelectedCar> {
                 ),
                 label: "Where are you going to?"),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             const Text(
-              "What’s your preferred route?",
+              "What route are you passing?",
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 30),
-              child: GlobalDroptextField(
-                  prificIcon: SvgPicture.asset(svgroute),
-                  selected: 'Ikeja - Ikorodu way',
-                  listTextFied: const [
-                    'Ikeja - Ikorodu way',
-                    "Ikeja - Express way",
-                    "Ibadan Express way",
-                    "BolaLe Street",
-                  ]),
+              padding: EdgeInsets.only(top: 18),
+              child: GlobaltextField(
+                  controller: routeController,
+                  preficIcon: const Icon(Icons.radio_button_checked),
+                  label: "Ikeja"),
+            ),  const SizedBox(
+              height: 20,
             ),
             const Text(
               'When are you going?',
@@ -368,12 +370,48 @@ class _SelectedCarState extends State<SelectedCar> {
               textColor: white,
               buttonColor: black,
               label: "Search for ride",
-              onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) =>  PassengerHomeScreen(name:name, profilePic: profilePic,),
-                //     ));
+              onPressed: () async {
+                if (currentMapController.text.isNotEmpty &&
+                    goingToEditingController.text.isNotEmpty &&
+                    _dateController.text.isNotEmpty &&
+                    _timeController.text.isNotEmpty && routeController.text.isNotEmpty
+                   ) {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  final token = prefs.getString('token');
+                  print(token);
+                  final rideMessage = await searchRideRef.passengerSearchRide(currentMapController.text, goingToEditingController.text, currentMapController.text
+                  , _timeController.text, routeController.text, token!);
+
+                  if (rideMessage == 'Ride created') {
+                    setState(() {
+                      isLoading = false;
+                      isSuccess = true;
+                    });
+                  } else {
+                    setState(() {
+                      isLoading = false;
+                      isSuccess = false;
+                      print(rideMessage);
+                    });
+                    loadRide(isLoading, isSuccess, rideMessage);
+                  }
+                } else {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(
+                          'Fill up all fields',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  });
+                }
               },
             ),
             const SizedBox(
@@ -384,4 +422,95 @@ class _SelectedCarState extends State<SelectedCar> {
       )),
     );
   }
+  void loadRide(isLoading, isSuccess, message) {
+    final createRideRef = ref.watch(bookRideProvider);
+    String pickupLocation = '';
+    String  dropOffLocation = '';
+    String whenAreyouGoing = '';
+    String  seatsAvailable = '';
+    String currentMapLocation  = '';
+    String whereAreyouGoing = '';
+    String whatRouteAreYouPassing  = '';
+    String whatTimeAreYouGoing = '';
+    String price = '';
+    String paymentMethod = '';
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        context: context,
+        builder: (context) {
+          return CustomPopUpContainer(
+            child: isLoading
+                ? LoadingAnimationWidget.inkDrop(color: successColor, size: 40)
+                : isSuccess
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          SvgPicture.asset(success, color: successColor),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text('Success!', style: headline2(successColor)),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                              'Your Trip has been published and passengers can now book a seat.'),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          AppButton(
+                              textColor: white,
+                              onPressed: () {
+                                //  Navigator.push(context, MaterialPageRoute(builder:(ccontext)=>MyWalletScreen()));
+                              },
+                              label: 'Proceed'),
+                          SizedBox(height: 20)
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          SvgPicture.asset(svgerror, color: errorColor),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text('Error!', style: headline2(errorColor)),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                           Text(message),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          AppButton(
+                              textColor: white,
+                              onPressed: () async{
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                setState(() {
+                            pickupLocation = prefs.getString('pickupLocation')!;
+                            dropOffLocation = prefs.getString('dropOffLocation')!;
+                            whenAreyouGoing = prefs.getString('whenAreyouGoing')!;
+                            seatsAvailable = prefs.getString('seatsAvailable')!;
+                            currentMapLocation = prefs.getString('currentMapLocation')!;
+                            whereAreyouGoing = prefs.getString('whereAreyouGoing')!;
+                            currentMapLocation = prefs.getString('currentMapLocation')!;
+                            whatRouteAreYouPassing = prefs.getString('whatRouteAreYouPassing')!;
+                            whatTimeAreYouGoing =  prefs.getString('whatTimeAreYouGoing')!;
+                            price = prefs.getString('price')!;
+                            paymentMethod = prefs.getString('paymentMethod')!;
+                                });
+                                final token = prefs.getString('token');
+                                createRideRef.getDriver(token!,);
+
+
+                                //Navigator.pop(context);
+                              },
+                              label: 'Cancel'),
+                          SizedBox(height: 20)
+                        ],
+                      ),
+          );
+        });
+  }
 }
+
