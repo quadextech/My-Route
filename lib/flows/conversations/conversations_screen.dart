@@ -45,7 +45,7 @@ class _ConversationsState extends State<Conversations> {
             onTap: () {
               Navigator.of(context).pop();
             },
-            Icons: Icons.arrow_back,
+            icons: Icons.arrow_back,
             size: 20,
           ),
         ),

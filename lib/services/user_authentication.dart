@@ -56,7 +56,7 @@ class UserAuth {
       }
   }
 
-  userLogin(email, password) async {
+  Future <String> userLogin(email, password) async {
     String message = 'Something went wrong';
     final url =
         Uri.parse('https://myroute-aqn5.onrender.com/api/v1/users/login');
@@ -98,7 +98,10 @@ class UserAuth {
 
         return message;
       }
+      
     }
+            return message;
+
   }
 
   Future verifyUser(email, otp) async {

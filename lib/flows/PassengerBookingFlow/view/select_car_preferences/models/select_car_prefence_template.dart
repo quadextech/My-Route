@@ -48,7 +48,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101));
     if (picked != null) {
       setState(() {
@@ -89,7 +89,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
 
   @override
   Widget build(BuildContext context) {
-        final searchRideRef = ref.watch(bookRideProvider);
+    final searchRideRef = ref.watch(bookRideProvider);
 
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
@@ -104,7 +104,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
             onTap: () {
               Navigator.of(context).pop();
             },
-            Icons: Icons.arrow_back,
+            icons: Icons.arrow_back,
             size: 20,
           ),
         ),
@@ -130,8 +130,9 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.only(top: 18),
               child: GlobaltextField(
+                  u: true,
                   controller: currentMapController,
                   preficIcon: const Icon(Icons.radio_button_checked),
                   label: "Current map location (Ikeja Lagos)"),
@@ -140,9 +141,8 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               height: 20,
             ),
             GlobaltextField(
-                keyboardType: TextInputType.none,
-                u: true,
                 controller: goingToEditingController,
+                u: true,
                 preficIcon: const Icon(
                   Icons.location_on,
                   color: Colors.green,
@@ -159,12 +159,13 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.only(top: 18),
               child: GlobaltextField(
                   controller: routeController,
                   preficIcon: const Icon(Icons.radio_button_checked),
                   label: "Ikeja"),
-            ),  const SizedBox(
+            ),
+            const SizedBox(
               height: 20,
             ),
             const Text(
@@ -203,7 +204,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                             height: 55,
                             alignment: Alignment.center,
                             child: TextFormField(
-                              style: const TextStyle(fontSize: 15),
+                              style: TextStyle(fontSize: 15, color: black),
                               textAlign: TextAlign.center,
                               enabled: false,
                               keyboardType: TextInputType.text,
@@ -271,7 +272,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                                 borderRadius: BorderRadius.circular(12),
                                 border: null),
                             child: TextFormField(
-                              style: const TextStyle(fontSize: 15),
+                              style: TextStyle(fontSize: 15, color: black),
                               textAlign: TextAlign.center,
                               onSaved: (val) {
                                 _setTime = val;
@@ -283,7 +284,6 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                                 disabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
-                                // labelText: 'Time',
                                 contentPadding: EdgeInsets.all(5),
                               ),
                             ),
@@ -335,7 +335,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                                 }
                               });
                             },
-                            Icons: Icons.horizontal_rule,
+                            icons: Icons.horizontal_rule,
                             size: 25),
                         const SizedBox(
                           width: 14,
@@ -357,7 +357,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                                 numberOfSeats++;
                               });
                             },
-                            Icons: Icons.add,
+                            icons: Icons.add,
                             size: 25),
                       ],
                     ),
@@ -374,31 +374,31 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 if (currentMapController.text.isNotEmpty &&
                     goingToEditingController.text.isNotEmpty &&
                     _dateController.text.isNotEmpty &&
-                    _timeController.text.isNotEmpty && routeController.text.isNotEmpty
-                   ) {
-                  setState(() {
-                    isLoading = true;
-                  });
+                    _timeController.text.isNotEmpty &&
+                    routeController.text.isNotEmpty) {
+                  // setState(() {
+                  //   isLoading = true;
+                  // });
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   final token = prefs.getString('token');
-                  print(token);
-                  final rideMessage = await searchRideRef.passengerSearchRide(currentMapController.text, goingToEditingController.text, currentMapController.text
-                  , _timeController.text, routeController.text, token!);
+                  final rideMessage = await searchRideRef.passengerSearchRide(
+                      goingToEditingController.text,
+                      currentMapController.text,
+                      token!);
 
-                  if (rideMessage == 'Ride created') {
-                    setState(() {
-                      isLoading = false;
-                      isSuccess = true;
-                    });
-                  } else {
-                    setState(() {
-                      isLoading = false;
-                      isSuccess = false;
-                      print(rideMessage);
-                    });
-                    loadRide(isLoading, isSuccess, rideMessage);
-                  }
+                  // if (rideMessage == 'Ride found') {
+                  //   setState(() {
+                  //     isLoading = false;
+                  //     isSuccess = true;
+                  //   });
+                  // } else {
+                  //   setState(() {
+                  //     isLoading = true;
+                  //     isSuccess = false;
+                  //   });
+                  loadRide(rideMessage);
+                  // }
                 } else {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -422,95 +422,177 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
       )),
     );
   }
-  void loadRide(isLoading, isSuccess, message) {
-    final createRideRef = ref.watch(bookRideProvider);
-    String pickupLocation = '';
-    String  dropOffLocation = '';
-    String whenAreyouGoing = '';
-    String  seatsAvailable = '';
-    String currentMapLocation  = '';
-    String whereAreyouGoing = '';
-    String whatRouteAreYouPassing  = '';
-    String whatTimeAreYouGoing = '';
-    String price = '';
-    String paymentMethod = '';
+
+  void loadRide(future) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         context: context,
         builder: (context) {
           return CustomPopUpContainer(
-            child: isLoading
-                ? LoadingAnimationWidget.inkDrop(color: successColor, size: 40)
-                : isSuccess
-                    ? Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          SvgPicture.asset(success, color: successColor),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text('Success!', style: headline2(successColor)),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(
-                              'Your Trip has been published and passengers can now book a seat.'),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          AppButton(
-                              textColor: white,
-                              onPressed: () {
-                                //  Navigator.push(context, MaterialPageRoute(builder:(ccontext)=>MyWalletScreen()));
-                              },
-                              label: 'Proceed'),
-                          SizedBox(height: 20)
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          SvgPicture.asset(svgerror, color: errorColor),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text('Error!', style: headline2(errorColor)),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                           Text(message),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          AppButton(
-                              textColor: white,
-                              onPressed: () async{
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                setState(() {
-                            pickupLocation = prefs.getString('pickupLocation')!;
-                            dropOffLocation = prefs.getString('dropOffLocation')!;
-                            whenAreyouGoing = prefs.getString('whenAreyouGoing')!;
-                            seatsAvailable = prefs.getString('seatsAvailable')!;
-                            currentMapLocation = prefs.getString('currentMapLocation')!;
-                            whereAreyouGoing = prefs.getString('whereAreyouGoing')!;
-                            currentMapLocation = prefs.getString('currentMapLocation')!;
-                            whatRouteAreYouPassing = prefs.getString('whatRouteAreYouPassing')!;
-                            whatTimeAreYouGoing =  prefs.getString('whatTimeAreYouGoing')!;
-                            price = prefs.getString('price')!;
-                            paymentMethod = prefs.getString('paymentMethod')!;
-                                });
-                                final token = prefs.getString('token');
-                                createRideRef.getDriver(token!,);
-
-
-                                //Navigator.pop(context);
-                              },
-                              label: 'Cancel'),
-                          SizedBox(height: 20)
-                        ],
+              child: FutureBuilder<List<String>>(
+            future: Future.value(future),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Column(children: [
+                  const SizedBox(height: 20),
+                  SvgPicture.asset(searchCar, color: successColor),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Searching for available Rides. Hang on!',
+                      style: headline2(grey3)),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  AppButton(
+                      textColor: white,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      label: 'Cancel Search'),
+                ]);
+              } else if (snapshot.hasError) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    SvgPicture.asset(svgerror, color: errorColor),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text('Error!', style: headline2(errorColor)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                        'Sorry there are no available rides goining the route ${snapshot.error}'),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    AppButton(
+                        textColor: white,
+                        onPressed: () async {
+                          //searchRide;
+                        },
+                        label: 'Search Again'),
+                    AppButton(
+                        buttonColor: white,
+                        borderColor: black,
+                        textColor: black,
+                        onPressed: () async {
+                          loadRide(future);
+                        },
+                        label: 'Cancel Search'),
+                    const SizedBox(height: 20)
+                  ],
+                );
+              } else if (snapshot.hasData) {
+                List<String> items = snapshot.data!;
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      SvgPicture.asset(success, color: successColor),
+                      const SizedBox(
+                        height: 20,
                       ),
-          );
+                      SizedBox(height:200,
+                        child: ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(items[index]),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                // This is a fallback in case none of the above conditions are met.
+                return const Text('Search in progress');
+              }
+            },
+          )
+              // isLoading
+              //     ? Column(children: [
+              //         const SizedBox(height: 20),
+              //         SvgPicture.asset(searchCar, color: successColor),
+              //         const SizedBox(
+              //           height: 20,
+              //         ),
+              //         Text('Searching for available Rides. Hang on!',
+              //             style: headline2(grey3)),
+              //         const SizedBox(
+              //           height: 30,
+              //         ),
+              //         AppButton(
+              //             textColor: white,
+              //             onPressed: () {
+              //               Navigator.pop(context);
+              //             },
+              //             label: 'Cancel Search'),
+              //       ])
+              //     : isSuccess
+              //         ? Column(
+              //             children: [
+              //               const SizedBox(height: 20),
+              //               SvgPicture.asset(success, color: successColor),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //               Text('Success!', style: headline2(successColor)),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //               ListView.builder(
+              //                   itemCount: message.length,
+              //                   itemBuilder: (context, index) {
+              //                     return ListTile(title: Text(message[index]));
+              //                   }),
+              //               const SizedBox(
+              //                 height: 30,
+              //               ),
+              //               AppButton(
+              //                   textColor: white,
+              //                   onPressed: () {},
+              //                   label: 'Proceed'),
+              //               SizedBox(height: 20)
+              //             ],
+              //           )
+              //         : Column(
+              //             children: [
+              //               const SizedBox(height: 20),
+              //               SvgPicture.asset(svgerror, color: errorColor),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //               Text('Error!', style: headline2(errorColor)),
+              //               const SizedBox(
+              //                 height: 20,
+              //               ),
+              //               Text('Sorry there are no available rides goining the route'),
+              //               const SizedBox(
+              //                 height: 30,
+              //               ),
+              //               AppButton(
+              //                   textColor: white,
+              //                   onPressed: () async {
+              //                     //searchRide;
+              //                   },
+              //                   label: 'Search Again'),
+              //               AppButton(
+              //                   buttonColor: white,
+              //                   borderColor: black,
+              //                   textColor: black,
+              //                   onPressed: () async {
+              //                     //Navigator.pop(context);
+              //                   },
+              //                   label: 'Cancel Search'),
+              //               SizedBox(height: 20)
+              //             ],
+              //           ),
+              );
         });
   }
 }
-

@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
+import 'package:myroute/flows/driver_booking/view/createRideHomePage/model/HomePage.dart';
 
 import '../../../../../constants/app_color.dart';
 import '../../../../../constants/app_image.dart';
 import '../../../../conversations/conversations_screen.dart';
 import '../../../../trips_history/Trips_History.dart';
-import '../../select_car_preferences/models/select_car_prefence_template.dart';
+import '../../select_ride_preferences/models/select_ride_prefence_template.dart';
 
 class DriverHomeScreen extends StatefulWidget {
   final String name;
@@ -20,7 +20,7 @@ class DriverHomeScreen extends StatefulWidget {
 class _DriverHomeScreenState extends State<DriverHomeScreen> {
   int _index = 0;
   late List pages = [
-     PassengerHome(name:widget.name),
+     DriverHome(name:widget.name),
     const SelectedCar(),
     const Center(child: Text("Routine Trips")),
     const TripHistory(),

@@ -53,7 +53,7 @@ class _DroptextFieldState extends State<GlobalDroptextField> {
                       value: e,
                     ))
                 .toList(),
-            // ignore: prefer_const_constructors
+           
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 prefixIcon: widget.prificIcon,

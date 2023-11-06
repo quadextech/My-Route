@@ -27,6 +27,9 @@ const routine = 'assets/images/routine.png';
 const map = 'assets/images/map.png';
 const svgerror = 'assets/images/ic_outline-error-outline.svg';
 const success = 'assets/images/mdi_success-circle-outline.svg';
+const searchCar = 'assets/images/searchCar.svg';
+const monie =  'assets/images/monie.svg';
+//const message = 'assets/images/message.svg';
 const svgarrowoutward =
     'assets/images/material-symbols_arrow-outward-rounded.svg';
 const svgarrowbottomleftred = 'assets/images/mdi_arrow-bottom-left.svg';

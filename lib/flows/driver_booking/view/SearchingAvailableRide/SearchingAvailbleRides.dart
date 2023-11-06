@@ -3,7 +3,7 @@ import 'package:myroute/flows/PassengerBookingFlow/global_file/swicher.dart';
 import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 
-import '../BookRideHomePage/model/homepageUI.dart';
+import '../createRideHomePage/model/homepageUI.dart';
 import 'SearchavailableRide_method.dart';
 
 class SearchingRide extends StatefulWidget {

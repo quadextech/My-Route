@@ -55,7 +55,7 @@ class _TripHistoryState extends State<TripHistory> {
             onTap: () {
               Navigator.of(context).pop();
             },
-            Icons: Icons.arrow_back,
+            icons: Icons.arrow_back,
             size: 20,
           ),
         ),

@@ -43,14 +43,14 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
   DateTime selectedDate = DateTime.now();
 
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
-  final paymentMethod = 'Debit Card';
+  var paymentMethod = 'Debit Card';
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101));
     if (picked != null) {
       setState(() {
@@ -142,7 +142,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.only(top: 18),
               child: GlobaltextField(
                   controller: currentMapController,
                   preficIcon: const Icon(Icons.radio_button_checked),
@@ -171,7 +171,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.only(top: 18),
               child: GlobaltextField(
                   controller: routeController,
                   preficIcon: const Icon(Icons.radio_button_checked),
@@ -215,7 +215,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                             height: 55,
                             alignment: Alignment.center,
                             child: TextFormField(
-                              style: const TextStyle(fontSize: 15),
+                              style:  TextStyle(fontSize: 15, color:black),
                               textAlign: TextAlign.center,
                               enabled: false,
                               keyboardType: TextInputType.text,
@@ -283,7 +283,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                                 borderRadius: BorderRadius.circular(12),
                                 border: null),
                             child: TextFormField(
-                              style: const TextStyle(fontSize: 15),
+                              style:  TextStyle(fontSize: 15, color:black),
                               textAlign: TextAlign.center,
                               onSaved: (val) {
                                 _setTime = val;
@@ -388,7 +388,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 18),
+              padding: const EdgeInsets.only(top: 18),
               child: GlobaltextField(
                   controller: priceController,
                   preficIcon: const Icon(Icons.radio_button_checked),
@@ -404,13 +404,21 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 30),
-              child: GlobalDroptextField(
-                  prificIcon: SvgPicture.asset(svgroute),
-                  selected: paymentMethod,
-                  listTextFied: const ['MyWallet', 'Debit Card']),
-            ),
+        Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 30),
+          child: GlobalDroptextField(
+                      hint: 'Yes',
+                      onChanged: (value) {
+                        setState(() {
+                          paymentMethod = value as String;
+                        });
+                      },
+                      selected: paymentMethod,
+                      listTextFied: const [
+                       'MyWallet', 'Debit Card',
+                      ]),
+        ),
+           
             const SizedBox(
               height: 30,
             ),
@@ -426,7 +434,6 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                 });
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                 final token = prefs.getString('token');
-                print(token);
                  final rideMessage = await createRideRef.driverCreateRide(
 
                     currentMapController.text,
@@ -522,7 +529,7 @@ else{
                                 //  Navigator.push(context, MaterialPageRoute(builder:(ccontext)=>MyWalletScreen()));
                               },
                               label: 'Proceed'),
-                          SizedBox(height: 20)
+                          const SizedBox(height: 20)
                         ],
                       )
                     : Column(
@@ -564,7 +571,7 @@ else{
                                 //Navigator.pop(context);
                               },
                               label: 'Cancel'),
-                          SizedBox(height: 20)
+                          const SizedBox(height: 20)
                         ],
                       ),
           );

@@ -315,7 +315,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                                       }
                                     });
                                   },
-                                  Icons: Icons.horizontal_rule,
+                                  icons: Icons.horizontal_rule,
                                   size: 25),
                               const SizedBox(
                                 width: 14,
@@ -337,7 +337,7 @@ class _CreateRoutineTripState extends State<CreateRoutineTrip> {
                                       numberOfSeats++;
                                     });
                                   },
-                                  Icons: Icons.add,
+                                  icons: Icons.add,
                                   size: 25),
                             ],
                           ),
