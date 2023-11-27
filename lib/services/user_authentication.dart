@@ -92,7 +92,10 @@ class UserAuth {
         prefs.setString('gender', gender);
        // prefs.setString('isVerified', isVerified);
         message = 'LoggedIn';
+        print(token);
+        print(id);
         return message;
+
       } else {
         message = response.body;
 
@@ -100,6 +103,7 @@ class UserAuth {
       }
     }
   }
+
 
   Future verifyUser(email, otp) async {
     String message = 'Wrong code';

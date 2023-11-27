@@ -12,6 +12,7 @@ import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import '../../../PassengerBookingFlow/view/select_car_preferences/models/select_car_prefence_template.dart';
 import '../../AddPayment/views/addPayment.dart';
 import '../../Add_ProficPic/views/add_profile_pic.dart';
 import '../../Do_you_have_car/views/do_you_have_a_car.dart';
@@ -183,7 +184,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              DriverHomeScreen(name: 'name'),
+                                          SelectedCar(),
                                         ));
 
                                     // Navigator.pushReplacement(

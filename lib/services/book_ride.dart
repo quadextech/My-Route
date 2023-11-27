@@ -122,4 +122,15 @@ passengerSearchRide(
     }
   }
 
+
+  rateRide(
+      String passengerId,
+      String driverId,
+      String ratings,
+      String reviews,
+
+      ){
+
+  }
+
 }

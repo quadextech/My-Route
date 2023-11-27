@@ -140,7 +140,7 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
               height: 20,
             ),
             GlobaltextField(
-                keyboardType: TextInputType.none,
+                keyboardType: TextInputType.text,
                 u: true,
                 controller: goingToEditingController,
                 preficIcon: const Icon(
@@ -513,4 +513,3 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
         });
   }
 }
-
