@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../constants/app_color.dart';
@@ -6,12 +5,12 @@ import '../../../../../constants/app_color.dart';
 class BorderButton extends StatelessWidget {
 
   final void Function()? onTap;
-  final IconData? Icons;
+  final IconData? icons;
   final double? size;
   final Color? color;
   final Color? backgroundColor;
 
-  const BorderButton({Key? key, required this.onTap, required this.Icons, required this.size, this.color, required this.backgroundColor});
+  const BorderButton({super.key, required this.onTap, required this.icons, required this.size, this.color, required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class BorderButton extends StatelessWidget {
             color: backgroundColor,
           ),
           child: Icon(
-            Icons,
+            icons,
             color: color,
             size: size,
           )),

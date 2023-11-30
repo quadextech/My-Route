@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
-import 'package:myroute/flows/driver_booking/view/BookRideHomePage/model/homepageUI.dart';
+import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
+import 'package:myroute/flows/driver_booking/view/createRideHomePage/model/homepageUI.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
@@ -11,6 +12,7 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
+
 import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
 import '../../../PassengerBookingFlow/view/select_car_preferences/models/select_car_prefence_template.dart';
 import '../../AddPayment/views/addPayment.dart';
@@ -35,7 +37,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   String lastName = '';
   String isVerified = '';
 
- 
   @override
   void dispose() {
     emailController.dispose();
@@ -162,6 +163,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   });
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
+                                
+                                  
                                   setState(() {
                                     firstName = prefs.getString('firstName')!;
                                     lastName = prefs.getString('lastName')!;
