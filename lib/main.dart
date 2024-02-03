@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:myroute/Map/Map.dart';
 import 'package:myroute/constants/app_color.dart';
 import 'package:myroute/flows/registration/login/views/login_sreen.dart';
-import 'package:myroute/services/verify_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
