@@ -5,7 +5,7 @@ import 'package:myroute/constants/app_color.dart';
 import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
 import 'package:myroute/flows/registration/Reg_global_File/back_button.dart';
-import 'package:myroute/services/book_ride.dart';
+import 'package:myroute/services/passengersRide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/app_image.dart';
@@ -98,7 +98,6 @@ class ShareRideDetails extends ConsumerWidget {
               final userId = prefs.getString('id')!;
               final token = prefs.getString('token')!;
               endTripRef.endRide(
-                  endTrip: 'endTrip',
                   userId: userId,
                   driverId: driverDetails.driverId,
                   token: token);

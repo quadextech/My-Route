@@ -1,37 +1,71 @@
 import "package:flutter/material.dart";
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myroute/Map/map_shared_prefs.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_file.dart';
 import 'package:myroute/flows/PointsAndReward/PointAndRewardHome.dart';
 import 'package:myroute/flows/my_auto_doc/autodoc_home.dart';
 import 'package:myroute/flows/my_autoinsure/autoinsure_homepage.dart';
 import 'package:myroute/flows/my_carEarn/my_carEarnHome.dart';
 import 'package:myroute/flows/registration/Car_Registration/views/car_details_reg.dart';
+import '../../../../../Map/Map.dart';
+import '../../../../../Map/map_suggestions.dart';
+import '../../../../../Map/mapbox_requests.dart';
 import '../../../../../constants/app_color.dart';
 import '../../../../../constants/app_image.dart';
 import '../../../../../constants/textstyle.dart';
+import '../../../../../main.dart';
 import '../../../../../services/user_authentication.dart';
 import '../../../../my wallet/views/mywallet.dart';
 import '../../../../my_auto_save/auto_save_home_screen.dart';
 import '../../../../registration/login/views/login_sreen.dart';
 import '../../../../registration/ninRegistration.dart';
 
-class PassengerHome extends StatefulWidget {
+class PassengerHome extends ConsumerStatefulWidget {
   final String name;
+
   const PassengerHome({super.key, required this.name});
 
   @override
-  State<PassengerHome> createState() => _PassengerHomeState();
+  ConsumerState<PassengerHome> createState() => _PassengerHomeState();
 }
 
-class _PassengerHomeState extends State<PassengerHome> {
+class _PassengerHomeState extends ConsumerState<PassengerHome> with TickerProviderStateMixin{
   TextEditingController whereEditingController = TextEditingController();
   TextEditingController goingToEditingController = TextEditingController();
   TextEditingController whenEditingController = TextEditingController();
   TextEditingController howManyEditingController = TextEditingController();
 
+
+  TextEditingController searchController = TextEditingController();
+
+
+  final currentlatlng = getLatLngFromSharedPrefs();
+  String name = '';
+  String mapBoxId = '';
+
+ late final AnimatedMapController animatedMapController;
+
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  animatedMapController = AnimatedMapController(
+       vsync: this,
+       duration: const Duration(milliseconds: 500),
+       curve: Curves.easeInOut
+   );
+
+  //desLocation = getdesLatLng();
+
+ }
+
+
   @override
   Widget build(BuildContext context) {
+final mapRequestRef = ref.watch(mapRequestsProvider);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -57,19 +91,47 @@ class _PassengerHomeState extends State<PassengerHome> {
         ],
       ),
       drawer:  AppDrawer(name: widget.name),
-      body: Stack(children: [
-        Container(
-          height: size.height,
-          width: size.width,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage(
-              city,
+      body: Stack(
+        children: [
+          MyRouteMap(animatedMapController: animatedMapController, ),
+          Positioned(
+                top: 90,
+            left: 40,
+            child: Container(
+              decoration: BoxDecoration(
+                color: white,
+                borderRadius: const BorderRadius.all(Radius.circular(30),
+              ),),
+              height: 50,
+              width: 300,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  icon: Padding(
+                    padding: EdgeInsets.only(left: 20),
+                      child: Icon(Icons.search)),
+                  hintText: 'Search for location',
+                  contentPadding: EdgeInsets.only(left: 30),
+                  fillColor: Colors.white,
+                  focusColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(30),
+                    ),
+                  ),),
+                controller: searchController,
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MapSuggestions(
+                            animatedMapController: animatedMapController,
+                            )));
+                },
+              ),
             ),
-            fit: BoxFit.fill,
-          )),
-        ),
-      ]),
+          ),
+        ],
+      )
     );
   }
 }

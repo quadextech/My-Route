@@ -267,8 +267,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                     content: Text(
                                       'No internet connection',
                                       textAlign: TextAlign.center,
-                                    ),
-                                  ),
+                                    ),),
                                 );
                               });
                             } else {
@@ -281,7 +280,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                   isLoading = false;
                                 });
                               }
-
                               if (passwordCcontroller.text !=
                                       passwordCcontroller2.text ||
                                   passwordCcontroller.text.isEmpty ||

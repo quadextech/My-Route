@@ -7,7 +7,7 @@ import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_form_feild.dart';
 import 'package:myroute/flows/registration/Reg_global_File/App_button.dart';
 import 'package:myroute/flows/registration/Reg_global_File/back_button.dart';
-import 'package:myroute/services/book_ride.dart';
+import 'package:myroute/services/passengersRide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RateTrip extends ConsumerStatefulWidget {

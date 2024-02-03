@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/HomePage.dart';
 import 'package:myroute/flows/PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
-import 'package:myroute/flows/driver_booking/view/createRideHomePage/model/homepageUI.dart';
 import 'package:myroute/flows/registration/SignUp/views/sign_up.dart';
 import 'package:myroute/flows/registration/Forotten_password/views/forgotten_password.dart';
 import 'package:myroute/flows/registration/Reg_global_File/globalfile.dart';
@@ -12,13 +10,12 @@ import '../../../../constants/app_color.dart';
 import '../../../../constants/app_image.dart';
 import '../../../../services/connectivity_provider.dart';
 import '../../../../services/user_authentication.dart';
-
-import '../../../PassengerBookingFlow/view/BookRideHomePage/model/homepageUI.dart';
-import '../../../PassengerBookingFlow/view/select_car_preferences/models/select_car_prefence_template.dart';
-import '../../AddPayment/views/addPayment.dart';
-import '../../Add_ProficPic/views/add_profile_pic.dart';
-import '../../Do_you_have_car/views/do_you_have_a_car.dart';
 import '../../Verification/views/verification_screen.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
+
+
+
 
 class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
@@ -43,6 +40,48 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     passwordCcontroller.dispose();
     super.dispose();
   }
+
+  void initState() {
+    super.initState();
+
+    initializeLocationAndSave();
+  }
+
+
+
+  void  initializeLocationAndSave() async{
+    try {
+      Location _location = Location();
+      bool? _serviceEnabled;
+      PermissionStatus? _permissionGranted;
+
+      _serviceEnabled = await _location.serviceEnabled();
+      if(!_serviceEnabled){
+        _serviceEnabled = await _location.requestService();
+      }
+
+      _permissionGranted = await _location.hasPermission();
+      if(_permissionGranted == PermissionStatus.denied){
+        _permissionGranted = await _location.requestPermission();
+      }
+
+      LocationData _locationData = await _location.getLocation();
+      LatLng currentLatLng = LatLng(_locationData.latitude!, _locationData.longitude!);
+
+      SharedPreferences prefs =
+      await SharedPreferences.getInstance();
+
+      prefs.setDouble("latitude", _locationData.latitude!);
+      prefs.setDouble("longitude", _locationData.longitude!);
+
+      print(_locationData.longitude!);
+      print(_locationData.latitude!);
+
+    } catch(e){
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +202,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   });
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
-                                
                                   
                                   setState(() {
                                     firstName = prefs.getString('firstName')!;
@@ -183,19 +221,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       isLoading = false;
                                     });
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                          SelectedCar(),
-                                        ));
-
-                                    // Navigator.pushReplacement(
+                                    // Navigator.push(
                                     //     context,
                                     //     MaterialPageRoute(
                                     //       builder: (context) =>
-                                    //            PassengerHomeScreen(name:name),
+                                    //       SelectedCar(),
                                     //     ));
+
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                               PassengerHomeScreen(name:name),
+                                        ));
 
                                     setState(() {
                                       isLoading = false;

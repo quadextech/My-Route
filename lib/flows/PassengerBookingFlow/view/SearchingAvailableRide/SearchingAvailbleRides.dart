@@ -14,24 +14,6 @@ class SearchingRide extends ConsumerStatefulWidget {
 }
 
 class _SearchingRideState extends ConsumerState<SearchingRide> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Future.delayed(
-      const Duration(seconds: 6),
-      () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) => const CustomPopUpContainer(
-            height: 60,
-            child: Text('BOY'),
-          ),
-          isDismissible: false,
-          isScrollControlled: true,
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +62,7 @@ class _SearchingRideState extends ConsumerState<SearchingRide> {
         body: Column(
           children: [
             Container(
-              height: size.height * 0.94,
+              height: size.height,
               width: size.width,
               decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -89,23 +71,6 @@ class _SearchingRideState extends ConsumerState<SearchingRide> {
                 ),
                 fit: BoxFit.fill,
               )),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: size.width,
-                height: size.height * 0.4,
-                child: TextButton(
-                  onPressed: () {
-                    didChangeDependencies();
-                  },
-                  child: Icon(
-                    Icons.horizontal_rule,
-                    size: 30,
-                    color: grey5,
-                  ),
-                ),
-              ),
             ),
           ],
         ));

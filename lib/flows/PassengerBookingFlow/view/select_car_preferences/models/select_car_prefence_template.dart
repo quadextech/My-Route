@@ -5,7 +5,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:myroute/constants/textstyle.dart';
 import 'package:myroute/flows/PassengerBookingFlow/global_file/global_file.dart';
 import 'package:myroute/flows/driver_booking/view/SearchingAvailableRide/SearchavailableRide_method.dart';
-import 'package:myroute/services/book_ride.dart';
+import 'package:myroute/services/passengersRide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../constants/app_color.dart';
@@ -382,7 +382,9 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                         goingToEditingController.text.isNotEmpty &&
                         _dateController.text.isNotEmpty &&
                         _timeController.text.isNotEmpty &&
-                        routeController.text.isNotEmpty) {
+                        routeController.text.isNotEmpty &&
+                        numberOfSeats.toString().isNotEmpty
+                    ) {
                       // setState(() {
                       //   isLoading = true;
                       // });
@@ -393,7 +395,14 @@ class _SelectedCarState extends ConsumerState<SelectedCar> {
                           .passengerSearchRide(
                           goingToEditingController.text,
                           currentMapController.text,
+                          _timeController.text,
+                          _dateController.text,
+                          numberOfSeats.toString(),
+                          routeController.text,
                           token!);
+
+
+
 
                       // if (rideMessage == 'Ride found') {
                       //   setState(() {

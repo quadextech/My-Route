@@ -4,35 +4,41 @@ import 'package:myroute/flows/Splash/views/splash2.dart';
 import '../../../constants/app_color.dart';
 import '../../../constants/app_image.dart';
 
+
+
+
 class Splash1 extends StatefulWidget {
-  const Splash1({super.key});
+
+
+  Splash1({super.key,});
 
   @override
   State<Splash1> createState() => _Splash1State();
 }
 
 class _Splash1State extends State<Splash1> {
+
   @override
-  void initState() {
-    super.initState();
-    navigat();
-  }
+
 
   navigat() {
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const Splash2(),
+            builder: (context) => Splash2(),
           ));
     });
   }
 
   @override
+
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: primaryColor,
-        body: Center(
+        body:
+        Center(
           child: Container(
               width: 130,
               height: 89.39203643798828,
@@ -42,6 +48,8 @@ class _Splash1State extends State<Splash1> {
                   fit: BoxFit.fitWidth,
                 ),
               )),
-        ));
+
+        )
+    );
   }
 }

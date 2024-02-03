@@ -36,6 +36,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs = ["-Xskip-metadata-version-check"]
     }
 
     sourceSets {
@@ -47,10 +48,12 @@ android {
         applicationId "com.example.myroute"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 18
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        //i added this one myself due to multidex64k methods limit
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -67,5 +70,8 @@ flutter {
 }
 
 dependencies {
+    //i added the first one myself too for multidex ...
+    implementation 'com.android.support:multidex:1.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
